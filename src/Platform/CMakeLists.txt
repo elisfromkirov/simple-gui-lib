@@ -26,5 +26,5 @@ target_sources(SGUI_PLATFORM
 
 target_link_libraries(SGUI_PLATFORM
     PUBLIC
-        SGUI_CORE
+        SGUI_MATH
     )
