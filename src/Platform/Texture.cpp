@@ -1,9 +1,6 @@
 #include "Renderer.hpp"
 #include "Texture.hpp"
 
-Texture::Texture(Renderer* renderer, uint32_t width, uint32_t height)
-    : Texture{renderer, Vector2<uint32_t>{width, height}} {}
-
 Texture::Texture(Renderer* renderer, Vector2<uint32_t> size) : texture_{nullptr}, size_{size} {
     assert(renderer != nullptr);
 
@@ -24,11 +21,5 @@ Texture::~Texture() {
 void* Texture::GetNativeTexture() {
     assert(texture_ != nullptr);
     
-    return texture_;
-}
-
-void* Texture::GetRenderTarget() {
-    assert(texture_ != nullptr);
-
     return texture_;
 }

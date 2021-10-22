@@ -7,7 +7,6 @@
 
 #include "Color.hpp"
 #include "Rect.hpp"
-#include "IRenderTarget.hpp"
 #include "Texture.hpp"
 #include "Window.hpp"
 
@@ -19,7 +18,8 @@ public:
 
     void* GetNativeRenderer();
 
-    void SetRenderTarget(IRenderTarget* target);
+    void SetRenderTarget(Texture* texture);
+    void SetRenderTarget(Window* window);
 
     void SetRenderColor(const Color& color);
     Color GetRenderColor() const;
@@ -29,6 +29,8 @@ public:
     void Present();
 
     void RenderPoint(Vector2<uint32_t> point);
+
+    void RenderLine(Vector2<uint32_t> begin, Vector2<uint32_t> end);
 
     void RenderTextureCopy(Texture* texture, const Rect& src_rect, const Rect& dst_rect);
 

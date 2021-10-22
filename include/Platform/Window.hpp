@@ -6,25 +6,20 @@
 #include <SDL.h>
 
 #include "Vector2.hpp"
-#include "IRenderTarget.hpp"
 
-class Window : public IRenderTarget {
+class Window {
 private:
     static const Vector2<uint32_t> kDefaultPosition;
     static const Vector2<uint32_t> kDefaultSize;
 
 public:
-    Window(const char* title); 
-
-    Window(const char* title, uint32_t x_pos, uint32_t y_pos, uint32_t width, uint32_t height);
+    Window(const char* title);
 
     Window(const char* title, Vector2<uint32_t> position, Vector2<uint32_t> size);
 
-    virtual ~Window() override;
+    ~Window();
 
     void* GetNativeWindow();
-
-    virtual void* GetRenderTarget() override;
 
 private:
     SDL_Window*       window_;

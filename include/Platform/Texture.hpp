@@ -6,21 +6,16 @@
 #include <SDL.h>
 
 #include "Vector2.hpp"
-#include "IRenderTarget.hpp"
 
 class Renderer;
 
-class Texture : public IRenderTarget {
+class Texture {
 public:
-    Texture(Renderer* renderer, uint32_t width, uint32_t height);
-
     Texture(Renderer* renderer, Vector2<uint32_t> size);
 
-    virtual ~Texture() override;
+    ~Texture();
 
     void* GetNativeTexture();
-
-    virtual void* GetRenderTarget() override;
 
 private:
     SDL_Texture*      texture_;

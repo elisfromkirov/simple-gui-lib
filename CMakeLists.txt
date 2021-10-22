@@ -18,10 +18,10 @@ target_sources(SGUI
 
 target_link_libraries(SGUI
     PUBLIC
-        SGUI_MATH
+        SGUI_CORE
         SGUI_PLATFORM
         ${SDL2_LIBRARIES}
     )
 
-add_subdirectory(src/Math)
+add_subdirectory(src/Core)
 add_subdirectory(src/Platform)

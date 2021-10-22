@@ -13,7 +13,6 @@ target_include_directories(SGUI_PLATFORM
 target_sources(SGUI_PLATFORM
     PUBLIC
         ${INCROOT}/Color.hpp
-        ${INCROOT}/IRenderTarget.hpp
         ${INCROOT}/Rect.hpp
         ${INCROOT}/Renderer.hpp
         ${INCROOT}/Texture.hpp
@@ -27,5 +26,5 @@ target_sources(SGUI_PLATFORM
 
 target_link_libraries(SGUI_PLATFORM
     PUBLIC
-        SGUI_MATH
-)
+        SGUI_CORE
+    )

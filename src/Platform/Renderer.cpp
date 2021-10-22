@@ -23,12 +23,19 @@ void* Renderer::GetNativeRenderer() {
     return renderer_;
 }
 
-void Renderer::SetRenderTarget(IRenderTarget* target) {
-    assert(target != nullptr);
+void Renderer::SetRenderTarget(Texture* texture) {
+    assert(texture != nullptr);
 
-    SDL_Texture* native_target = reinterpret_cast<SDL_Texture*>(target->GetRenderTarget());
+    SDL_Texture* native_texture = reinterpret_cast<SDL_Texture*>(texture->GetNativeTexture());
+    assert(native_texture != nullptr);
 
-    SDL_SetRenderTarget(renderer_, native_target);
+    SDL_SetRenderTarget(renderer_, native_texture);
+}
+
+void Renderer::SetRenderTarget(Window* window) {
+    assert(window != nullptr);
+
+    SDL_SetRenderTarget(renderer_, nullptr);
 }
 
 void Renderer::SetRenderColor(const Color& color) {

@@ -3,7 +3,7 @@
 #include "Window.hpp"
 
 int main() {
-    Window window{""};
+    Window window{"test sdl wrapper"};
     
     Renderer renderer{&window};
 
@@ -21,6 +21,9 @@ int main() {
 
         renderer.SetRenderColor(Color{1.f, 1.f, 1.f});
         renderer.RenderPoint(Vector2<uint32_t>{100, 100});
+        renderer.RenderPoint(Vector2<uint32_t>{100, 200});
+        renderer.RenderPoint(Vector2<uint32_t>{200, 100});
+        renderer.RenderPoint(Vector2<uint32_t>{200, 200});
 
         renderer.Present();
     }
