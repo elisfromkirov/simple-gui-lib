@@ -8,8 +8,8 @@ Window::Window(const char* title)
     : Window{title, kDefaultPosition, kDefaultSize} {}
 
 Window::Window(const char* title, Vector2<uint32_t> position, Vector2<uint32_t> size)
-    : window_{nullptr}, title_{title}, pos_{position}, size_{size} {
-    window_ = SDL_CreateWindow(title, pos_.x, pos_.y, size.y, size.y, SDL_WINDOW_SHOWN);
+    : window_{nullptr}, title_{title}, position_{position}, size_{size} {
+    window_ = SDL_CreateWindow(title, position_.x, position_.y, size.y, size.y, SDL_WINDOW_SHOWN);
     assert(window_ != nullptr);
 }
 

@@ -34,6 +34,8 @@ private:
     std::list<IEventListener*> listeners_;
 };
 
+#include <stdio.h>
+
 template <class EventT, class... Args>
 void EventDispatcher::SendEvent(Args&&... args) {
     auto event = new EventT(std::forward<Args>(args)...);

@@ -26,7 +26,7 @@ private:
 
     const char*       title_;
 
-    Vector2<uint32_t> pos_;
+    Vector2<uint32_t> position_;
     Vector2<uint32_t> size_;
 };
 

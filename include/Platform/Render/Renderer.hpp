@@ -5,10 +5,21 @@
 #include <cstdint>
 #include <SDL.h>
 
-#include "Color.hpp"
-#include "Rect.hpp"
 #include "Texture.hpp"
 #include "Window.hpp"
+
+struct Color {
+    float red;
+    float green;
+    float blue;
+};
+
+struct Rect {
+    uint32_t x_pos;
+    uint32_t y_pos;
+    uint32_t width;
+    uint32_t height;
+};
 
 class Renderer {
 public:
