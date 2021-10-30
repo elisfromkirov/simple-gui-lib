@@ -18,5 +18,8 @@ bin/
 tmp/
 temp/
 
-# Visual Studio Code directory
+# cmake build directory
+build/
+
+# visual studio code directory
 .vscode/

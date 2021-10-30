@@ -2,28 +2,25 @@ cmake_minimum_required(VERSION 3.7)
 
 project(SGUI)
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -O1 -W -Wall -Wextra -Wno-unused-parameter -Wno-unused-private-field")
-set(CMAKE_EXE_LINKER_FLAGS "-lm -lSDL2")
+set(CMAKE_CXX_FLAGS "-std=c++11 -O1 -Wall -Wextra -Wno-unused-parameter")
 
-add_executable(SGUI)
+add_executable(paint)
 
-find_package(SDL2 REQUIRED)
-
-include_directories(SGUI ${SDL2_INCLUDE_DIRS})
-
-target_sources(SGUI
+target_sources(paint
     PRIVATE
         src/main.cpp
     )
 
-target_link_libraries(SGUI
+target_link_libraries(paint
     PUBLIC
-        SGUI_EVENT_SYSTEM
-        SGUI_MATH
+        SGUI_APPLICAION
+        SGUI_CORE_EVENT_SYSTEM
+        SGUI_CORE_MATH
+        SGUI_GUI_EVENT
         SGUI_PLATFORM
-        ${SDL2_LIBRARIES}
     )
 
-add_subdirectory(src/EventSystem)
-add_subdirectory(src/Math)
+add_subdirectory(src/Application)
+add_subdirectory(src/Core)
+add_subdirectory(src/GUI)
 add_subdirectory(src/Platform)

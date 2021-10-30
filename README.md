@@ -1,2 +1,1 @@
-# Simle GUI library overview #
-
+# Simple GUI library overview #
