@@ -16,23 +16,23 @@ enum MouseButton : uint32_t {
 
 class IMouseEvent : public IEvent {
 public:
-    IMouseEvent(const Vector2i& position, MouseButton button, bool pressed);
+    IMouseEvent(const Vector2u& position, MouseButton button, bool pressed);
 
-    const Vector2i& GetPosition() const;
+    const Vector2u& GetPosition() const;
 
     MouseButton GetButton() const;
 
     bool IsButtonPressed() const;
 
 protected:
-    Vector2i    position_;
+    Vector2u    position_;
     MouseButton button_;
     bool        pressed_;
 };
 
 class MouseButtonPressEvent : public IMouseEvent {
 public:
-    MouseButtonPressEvent(const Vector2i& position, MouseButton button, bool pressed);
+    MouseButtonPressEvent(const Vector2u& position, MouseButton button, bool pressed);
     virtual ~MouseButtonPressEvent() override;
 
     virtual uint64_t GetCategory() const override;
@@ -42,7 +42,7 @@ public:
 
 class MouseButtonReleaseEvent : public IMouseEvent {
 public:
-    MouseButtonReleaseEvent(const Vector2i& position, MouseButton button, bool pressed);
+    MouseButtonReleaseEvent(const Vector2u& position, MouseButton button, bool pressed);
     virtual ~MouseButtonReleaseEvent() override;
 
     virtual uint64_t GetCategory() const override;
@@ -52,7 +52,7 @@ public:
 
 class MouseMoveEvent : public IMouseEvent {
 public:
-    MouseMoveEvent(const Vector2i& position, MouseButton button, bool Press);
+    MouseMoveEvent(const Vector2u& position, MouseButton button, bool Press);
     virtual ~MouseMoveEvent() override;
 
     virtual uint64_t GetCategory() const override;

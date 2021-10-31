@@ -21,7 +21,7 @@ private:
 
     EventDispatcher*  event_dispatcher_;
 
-    Vector2i          position_;
+    Vector2u          position_;
     MouseButton       button_;
     bool              button_pressed_;
 

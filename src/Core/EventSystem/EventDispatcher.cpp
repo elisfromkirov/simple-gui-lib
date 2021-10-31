@@ -28,13 +28,13 @@ void EventDispatcher::DispatchEvents() {
     }
 }
 
-void EventDispatcher::RegisterListener(IEventListener* listener) {
+void EventDispatcher::AddListener(IEventListener* listener) {
     assert(listener != nullptr);
 
     listeners_.push_back(listener);
 }
 
-void EventDispatcher::UnregisterListener(IEventListener* listener) {
+void EventDispatcher::RemoveListener(IEventListener* listener) {
     assert(listener != nullptr);
 
     listeners_.remove(listener);

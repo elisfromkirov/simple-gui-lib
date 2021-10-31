@@ -60,7 +60,11 @@ bool Input::PumpEvents() {
 
 void Input::SendMouseButtonEvent(const sf::Event& event) {
     assert(event_dispatcher_ != nullptr);
-    
+
+    if (event.mouseButton.x < 0 || event.mouseButton.y < 0) {
+        return;
+    }
+
     position_.x = event.mouseButton.x;
     position_.y = event.mouseButton.y;
 
@@ -76,6 +80,10 @@ void Input::SendMouseButtonEvent(const sf::Event& event) {
 
 void Input::SendMouseMoveEvent(const sf::Event& event) {
     assert(event_dispatcher_ != nullptr);
+
+    if (event.mouseMove.x < 0 || event.mouseMove.y < 0) {
+        return;
+    }
 
     position_.x = event.mouseMove.x;
     position_.y = event.mouseMove.y;

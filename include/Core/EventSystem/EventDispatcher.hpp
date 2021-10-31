@@ -23,8 +23,8 @@ public:
     template <typename EventT, typename... Args>
     void SendEvent(Args&&... args);
 
-    void RegisterListener(IEventListener* listener);
-    void UnregisterListener(IEventListener* listener);
+    void AddListener(IEventListener* listener);
+    void RemoveListener(IEventListener* listener);
 
 private:
     EventDispatcher();

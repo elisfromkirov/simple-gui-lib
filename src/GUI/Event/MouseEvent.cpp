@@ -1,11 +1,11 @@
 #include "MouseEvent.hpp"
 
-IMouseEvent::IMouseEvent(const Vector2i& position, MouseButton button, bool pressed)
+IMouseEvent::IMouseEvent(const Vector2u& position, MouseButton button, bool pressed)
     : position_{position},
       button_{button},
       pressed_{pressed} {}
 
-const Vector2i& IMouseEvent::GetPosition() const {
+const Vector2u& IMouseEvent::GetPosition() const {
     return position_;
 }
 
@@ -17,7 +17,7 @@ bool IMouseEvent::IsButtonPressed() const {
     return pressed_;    
 }
 
-MouseButtonPressEvent::MouseButtonPressEvent(const Vector2i& position, MouseButton button,
+MouseButtonPressEvent::MouseButtonPressEvent(const Vector2u& position, MouseButton button,
                                              bool pressed)
     : IMouseEvent{position, button, pressed} {}
 
@@ -31,7 +31,7 @@ uint64_t MouseButtonPressEvent::GetMask() const {
     return kMouseButtonPress;
 }
 
-MouseButtonReleaseEvent::MouseButtonReleaseEvent(const Vector2i& position, MouseButton button, 
+MouseButtonReleaseEvent::MouseButtonReleaseEvent(const Vector2u& position, MouseButton button, 
                                                  bool pressed)
     : IMouseEvent{position, button, pressed} {}
 
@@ -45,7 +45,7 @@ uint64_t MouseButtonReleaseEvent::GetMask() const {
     return kMouseButtonRelease;
 }
 
-MouseMoveEvent::MouseMoveEvent(const Vector2i& position, MouseButton button, bool pressed)
+MouseMoveEvent::MouseMoveEvent(const Vector2u& position, MouseButton button, bool pressed)
     : IMouseEvent{position, button, pressed} {}
 
 MouseMoveEvent::~MouseMoveEvent() {}

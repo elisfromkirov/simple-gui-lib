@@ -5,6 +5,8 @@ Application::Application()
       input_{&window_},
       renderer_{&window_} {
     event_dispatcher_ = EventDispatcher::GetEventDispatcher();
+
+
 }
 
 Application::~Application() {}

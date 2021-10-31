@@ -12,6 +12,8 @@ public:
     Sprite(const std::string& filename);
     ~Sprite();
 
+    Vector2u GetSize() const;
+
     void SetPosition(const Vector2u& position);
 
     const NativeSprite& GetNativeSprite() const;

@@ -24,7 +24,7 @@ void Renderer::Present() {
 
 void Renderer::RenderText(Text* text, const Vector2u& position) {
     assert(native_window_ != nullptr);
-    assert(text != nullptr);
+    assert(text           != nullptr);
 
     text->SetPosition(position);
     native_window_->draw(text->GetNativeText());
@@ -32,7 +32,7 @@ void Renderer::RenderText(Text* text, const Vector2u& position) {
 
 void Renderer::RenderSprite(Sprite* sprite, const Vector2u& position) {
     assert(native_window_ != nullptr);
-    assert(sprite != nullptr);
+    assert(sprite         != nullptr);
 
     sprite->SetPosition(position);
     native_window_->draw(sprite->GetNativeSprite());
