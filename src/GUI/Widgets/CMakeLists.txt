@@ -1,13 +1,12 @@
-add_library(SGUI_GUI_WIDGETS)
-
 set(INCROOT ${SGUI_SOURCE_DIR}/include/GUI/Widgets)
+set(SRCROOT ${SGUI_SOURCE_DIR}/src/GUI/Widgets)
 
-target_include_directories(SGUI_GUI_WIDGETS
+target_include_directories(SGUI_GUI
     PUBLIC
         ${INCROOT}
     )
 
-target_sources(SGUI_GUI_WIDGETS
+target_sources(SGUI_GUI
     PUBLIC
         ${INCROOT}/Button.hpp
         ${INCROOT}/ContainerWidget.hpp
@@ -15,18 +14,9 @@ target_sources(SGUI_GUI_WIDGETS
         ${INCROOT}/TextWidget.hpp
         ${INCROOT}/Widget.hpp
     PRIVATE
-        Button.cpp
-        ContainerWidget.cpp
-        ImageWidget.cpp
-        TextWidget.cpp
-        Widget.cpp
-    )
-
-target_link_libraries(SGUI_GUI_WIDGETS
-    PUBLIC
-        SGUI_CORE_EVENT_SYSTEM
-        SGUI_CORE_MATH
-        SGUI_GUI_EVENT
-        SGUI_GUI_HANDLER
-        SGUI_PLATFORM
+        ${SRCROOT}/Button.cpp
+        ${SRCROOT}/ContainerWidget.cpp
+        ${SRCROOT}/ImageWidget.cpp
+        ${SRCROOT}/TextWidget.cpp
+        ${SRCROOT}/Widget.cpp
     )

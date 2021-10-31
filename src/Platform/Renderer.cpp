@@ -10,10 +10,15 @@ Renderer::Renderer(Window* window)
 
 Renderer::~Renderer() {}
 
-void Renderer::Clear() {
+void Renderer::Clear(const Color& color) {
     assert(native_window_ != nullptr);
-    
-    native_window_->clear();
+
+    sf::Color native_color{static_cast<sf::Uint8>(color.red   * 255.f),
+                           static_cast<sf::Uint8>(color.green * 255.f),
+                           static_cast<sf::Uint8>(color.blue  * 255.f),
+                           static_cast<sf::Uint8>(color.alpha * 255.f)};
+
+    native_window_->clear(native_color);
 }
 
 void Renderer::Present() {

@@ -33,7 +33,7 @@ bool ContainerWidget::OnMouseButtonPress(const MouseButtonPressEvent* event) {
         }
     }
 
-    return HandleEvent<MouseButtonPressEvent, kMouseButtonPress>(event);
+    return OnMouseEvent<MouseButtonPressEvent, kMouseButtonPress>(event);
 }
 
 bool ContainerWidget::OnMouseButtonRelease(const MouseButtonReleaseEvent* event) {
@@ -50,7 +50,7 @@ bool ContainerWidget::OnMouseButtonRelease(const MouseButtonReleaseEvent* event)
         }
     }
 
-    return HandleEvent<MouseButtonReleaseEvent, kMouseButtonRelease>(event);
+    return OnMouseEvent<MouseButtonReleaseEvent, kMouseButtonRelease>(event);
 }
 
 bool ContainerWidget::OnMouseMove(const MouseMoveEvent* event) {
@@ -67,7 +67,7 @@ bool ContainerWidget::OnMouseMove(const MouseMoveEvent* event) {
         }
     }
 
-    return HandleEvent<MouseMoveEvent, kMouseMove>(event);
+    return OnMouseEvent<MouseMoveEvent, kMouseMove>(event);
 }
 
 bool ContainerWidget::Attach(Widget* widget, const Vector2u& relative_position) {

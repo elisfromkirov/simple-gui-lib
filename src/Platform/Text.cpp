@@ -28,12 +28,12 @@ void Text::SetCharacterSize(uint32_t size) {
 }
 
 void Text::SetFillColor(const Color& color) {
-    sf::Color native_color_{static_cast<sf::Uint8>(color.red   * 255.f),
-                            static_cast<sf::Uint8>(color.green * 255.f),
-                            static_cast<sf::Uint8>(color.blue  * 255.f),
-                            static_cast<sf::Uint8>(color.alpha * 255.f)};
+    sf::Color native_color{static_cast<sf::Uint8>(color.red   * 255.f),
+                           static_cast<sf::Uint8>(color.green * 255.f),
+                           static_cast<sf::Uint8>(color.blue  * 255.f),
+                           static_cast<sf::Uint8>(color.alpha * 255.f)};
 
-    native_text_.setFillColor(native_color_);
+    native_text_.setFillColor(native_color);
 }
 
 void Text::SetPosition(const Vector2u& position) {

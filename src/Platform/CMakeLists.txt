@@ -29,8 +29,7 @@ target_sources(SGUI_PLATFORM
 
 target_link_libraries(SGUI_PLATFORM
     PUBLIC
-        SGUI_CORE_EVENT_SYSTEM
-        SGUI_CORE_MATH
-        SGUI_GUI_EVENT
+        SGUI_CORE
+        SGUI_GUI
         sfml-graphics
     )

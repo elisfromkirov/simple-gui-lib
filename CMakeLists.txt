@@ -14,9 +14,8 @@ target_sources(paint
 target_link_libraries(paint
     PUBLIC
         SGUI_APPLICAION
-        SGUI_CORE_EVENT_SYSTEM
-        SGUI_CORE_MATH
-        SGUI_GUI_EVENT
+        SGUI_CORE
+        SGUI_GUI
         SGUI_PLATFORM
     )
 

@@ -15,7 +15,7 @@ public:
 
     virtual ~ButtonHandler() override;
 
-    bool OnEvent(const MouseButtonPressEvent* event);
+    virtual bool HandleEvent(const MouseButtonPressEvent* event) override;
 
 private:
     Functor functor_;
@@ -24,13 +24,13 @@ private:
 template <class Functor>
 template <class... Args>
 ButtonHandler<Functor>::ButtonHandler(Args&&... args) 
-    : Functor{std::forward<Args>(args)...} {}
+    : functor_(std::forward<Args>(args)...) {}
 
 template <class Functor>
 ButtonHandler<Functor>::~ButtonHandler() {}
 
 template <class Functor>
-bool ButtonHandler<Functor>::OnEvent(const MouseButtonPressEvent* event) {
+bool ButtonHandler<Functor>::HandleEvent(const MouseButtonPressEvent* event) {
     assert(event != nullptr);
 
     functor_();

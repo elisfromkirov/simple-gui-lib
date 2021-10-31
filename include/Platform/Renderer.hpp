@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cstdint>
 
+#include "Color.hpp"
 #include "Text.hpp"
 #include "Sprite.hpp"
 #include "Window.hpp"
@@ -13,7 +14,7 @@ public:
     Renderer(Window* window);
     ~Renderer();
 
-    void Clear();
+    void Clear(const Color& color = Color());
 
     void Present();
 

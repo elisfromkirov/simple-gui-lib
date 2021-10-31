@@ -34,11 +34,11 @@ public:
     void SetParent(Widget* parent);
 
     template <uint64_t EventMask>
-    void SetHadnler(Handler* handler);
+    void SetHandler(Handler* handler);
 
 protected:
     template <class EventT, uint64_t EventMask>
-    bool HandleEvent(const EventT* event);
+    bool OnMouseEvent(const EventT* event);
 
 protected:
     typedef std::map<uint64_t, Handler*> HandlerMap;
@@ -52,21 +52,25 @@ protected:
 };
 
 template <uint64_t EventMask>
-void Widget::SetHadnler(Handler* handler) {
+void Widget::SetHandler(Handler* handler) {
     assert(handler != nullptr);
 
     handlers_[EventMask] = handler;
 }
 
 template <class EventT, uint64_t EventMask>
-bool Widget::HandleEvent(const EventT* event) {
+bool Widget::OnMouseEvent(const EventT* event) {
     assert(event != nullptr);
+
+    if (!HitTest(event->GetPosition())) {
+        return false;
+    }
 
     if (handlers_.count(EventMask) == 0) {
         return false;
     }
 
-    return handlers_[EventMask]->OnEvent(event);
+    return handlers_[EventMask]->HandleEvent(event);
 }
 
 #endif // __WIDGET_HPP__

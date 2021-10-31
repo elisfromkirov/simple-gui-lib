@@ -19,19 +19,19 @@ void Widget::OnRender(Renderer* renderer) {}
 bool Widget::OnMouseButtonPress(const MouseButtonPressEvent* event) {
     assert(event != nullptr);
 
-    return HandleEvent<MouseButtonPressEvent, kMouseButtonPress>(event);    
+    return OnMouseEvent<MouseButtonPressEvent, kMouseButtonPress>(event);    
 }
 
 bool Widget::OnMouseButtonRelease(const MouseButtonReleaseEvent* event) {
     assert(event != nullptr);
 
-    return HandleEvent<MouseButtonReleaseEvent, kMouseButtonRelease>(event);
+    return OnMouseEvent<MouseButtonReleaseEvent, kMouseButtonRelease>(event);
 }
 
 bool Widget::OnMouseMove(const MouseMoveEvent* event) {
     assert(event != nullptr);
 
-    return HandleEvent<MouseMoveEvent, kMouseMove>(event);
+    return OnMouseEvent<MouseMoveEvent, kMouseMove>(event);
 }
 
 Vector2u Widget::GetSize() const {

@@ -16,6 +16,7 @@ target_sources(SGUI_APPLICAION
 
 target_link_libraries(SGUI_APPLICAION
     PUBLIC
-        SGUI_CORE_EVENT_SYSTEM
+        SGUI_CORE
+        SGUI_GUI
         SGUI_PLATFORM
     )
