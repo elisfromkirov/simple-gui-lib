@@ -1,45 +1,29 @@
 #ifndef __APPLICATION_HPP__
 #define __APPLICATION_HPP__
 
-#include "Button.hpp"
-#include "ButtonHandler.hpp"
+#include "CommandQueue.hpp"
 #include "EventDispatcher.hpp"
 #include "Input.hpp"
-#include "MouseEvent.hpp"
+#include "MainPanel.hpp"
 #include "Renderer.hpp"
 #include "Window.hpp"
 
-class Application : public IEventListener {
+class Application {
 public:
     Application();
-    virtual ~Application() override;
-
-    virtual bool OnEvent(const IEvent* event) override;
-
-    void Close();
+    ~Application();
 
     void Run();
 
 private:
     EventDispatcher* event_dispatcher_;
+    CommandQueue*    command_queue_;
 
-    Window   window_;
-    Input    input_;
-    Renderer renderer_;
+    Window           window_;
+    Input            input_;
+    Renderer         renderer_;
 
-    Sprite*  sprite_;
-    Button*  button_;
-};
-
-class CloseApplicationFunctor {
-public:
-    CloseApplicationFunctor(Application* application);
-    ~CloseApplicationFunctor();
-
-    void operator()();
-
-private:
-    Application* application_;
+    MainPanel        main_panel_;
 };
 
 #endif // __APPLICATION_HPP__

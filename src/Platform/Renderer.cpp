@@ -42,3 +42,18 @@ void Renderer::RenderSprite(Sprite* sprite, const Vector2u& position) {
     sprite->SetPosition(position);
     native_window_->draw(sprite->GetNativeSprite());
 }
+
+void Renderer::RenderRectangle(const Vector2u& position, const Vector2u& size, const Color& color) {
+    assert(native_window_ != nullptr);
+
+    static sf::RectangleShape native_shape;
+
+    native_shape.setSize     (sf::Vector2f(size.x,     size.y    ));
+    native_shape.setPosition (sf::Vector2f(position.x, position.y));
+    native_shape.setFillColor(sf::Color(static_cast<sf::Uint8>(color.red   * 255.f),
+                                        static_cast<sf::Uint8>(color.green * 255.f),
+                                        static_cast<sf::Uint8>(color.blue  * 255.f),
+                                        static_cast<sf::Uint8>(color.alpha * 255.f)));
+
+    native_window_->draw(native_shape);
+}

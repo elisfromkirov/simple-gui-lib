@@ -7,7 +7,7 @@ Sprite::Sprite(const std::string& filename)
       native_texture_{} {
     bool loaded = native_texture_.loadFromFile(filename);
     if (!loaded) {
-        printf("Unable to load texture from file %s\n", filename.c_str());
+        printf("Unable to load texture from file \"%s\"\n", filename.c_str());
     }
 
     native_sprite_.setTexture(native_texture_);

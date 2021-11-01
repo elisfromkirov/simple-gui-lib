@@ -2,7 +2,7 @@
 
 const uint32_t Text::kDefaultSize{32};
 
-const Color Text::kDefaultColor{0.f, 0.f, 0.f, 0.f};
+const Color Text::kDefaultColor{0.f, 0.f, 0.f, 1.f};
 
 Text::Text(const std::string& string, const Font& font)
     : Text{string, font, kDefaultSize, kDefaultColor} {}

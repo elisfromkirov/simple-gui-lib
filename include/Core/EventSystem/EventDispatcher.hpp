@@ -38,7 +38,7 @@ private:
 
 template <class EventT, class... Args>
 void EventDispatcher::SendEvent(Args&&... args) {
-    auto event = new EventT(std::forward<Args>(args)...);
+    EventT* event = new EventT(std::forward<Args>(args)...);
 
     queue_.push_back(event);
 }

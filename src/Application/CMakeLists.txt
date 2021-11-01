@@ -1,6 +1,7 @@
 add_library(SGUI_APPLICAION)
 
 set(INCROOT ${SGUI_SOURCE_DIR}/include/Application)
+set(SRCROOT ${SGUI_SOURCE_DIR}/src/Application)
 
 target_include_directories(SGUI_APPLICAION
     PUBLIC
@@ -10,8 +11,10 @@ target_include_directories(SGUI_APPLICAION
 target_sources(SGUI_APPLICAION
     PUBLIC
         ${INCROOT}/Application.hpp
+        ${INCROOT}/MainPanel.hpp
     PRIVATE
-        Application.cpp
+        ${SRCROOT}/Application.cpp
+        ${SRCROOT}/MainPanel.cpp
     )
 
 target_link_libraries(SGUI_APPLICAION

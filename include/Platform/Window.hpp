@@ -23,6 +23,8 @@ public:
 
     NativeWindow* GetNativeWindow();
 
+    const Vector2u& GetSize() const;
+
 public:
     sf::RenderWindow native_window_;
 

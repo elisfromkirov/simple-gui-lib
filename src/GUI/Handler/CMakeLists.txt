@@ -12,4 +12,5 @@ target_sources(SGUI_GUI
         ${INCROOT}/ButtonHandler.hpp
     PRIVATE
         ${SRCROOT}/Handler.cpp
+        ${SRCROOT}/ButtonHandler.cpp
     )

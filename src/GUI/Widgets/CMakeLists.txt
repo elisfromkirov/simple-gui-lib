@@ -9,14 +9,16 @@ target_include_directories(SGUI_GUI
 target_sources(SGUI_GUI
     PUBLIC
         ${INCROOT}/Button.hpp
-        ${INCROOT}/ContainerWidget.hpp
         ${INCROOT}/ImageWidget.hpp
+        ${INCROOT}/RectWidget.hpp
         ${INCROOT}/TextWidget.hpp
+        ${INCROOT}/Title.hpp
         ${INCROOT}/Widget.hpp
     PRIVATE
         ${SRCROOT}/Button.cpp
-        ${SRCROOT}/ContainerWidget.cpp
         ${SRCROOT}/ImageWidget.cpp
+        ${SRCROOT}/RectWidget.cpp
         ${SRCROOT}/TextWidget.cpp
+        ${SRCROOT}/Title.cpp
         ${SRCROOT}/Widget.cpp
     )

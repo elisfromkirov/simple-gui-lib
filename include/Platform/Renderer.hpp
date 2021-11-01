@@ -22,6 +22,8 @@ public:
 
     void RenderSprite(Sprite* sprite, const Vector2u& position);
 
+    void RenderRectangle(const Vector2u& position, const Vector2u& size, const Color& color);
+
 private:
     sf::RenderWindow* native_window_;
 };

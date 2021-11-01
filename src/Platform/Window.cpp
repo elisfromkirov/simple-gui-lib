@@ -5,7 +5,7 @@
 const Vector2u Window::kDefaultSize{1600, 1200};
 
 Window::Window(const char* title)
-    : native_window_{sf::VideoMode(kDefaultSize.x, kDefaultSize.y), title},
+    : native_window_{sf::VideoMode(kDefaultSize.x, kDefaultSize.y), title, /* sf::Style::None */},
       title_{title},
       size_{kDefaultSize},
       position_{} {
@@ -34,4 +34,8 @@ void Window::Close() {
 
 NativeWindow* Window::GetNativeWindow() {
     return &native_window_;
+}
+
+const Vector2u& Window::GetSize() const {
+    return size_;
 }

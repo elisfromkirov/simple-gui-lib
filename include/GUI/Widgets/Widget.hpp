@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <cstdint>
+#include <list>
 #include <map>
 
 #include "Handler.hpp"
@@ -18,11 +19,14 @@ public:
 
     virtual bool HitTest(const Vector2u& point) const;
 
-    virtual void OnRender(Renderer* renderer);
-    
     virtual bool OnMouseButtonPress(const MouseButtonPressEvent* event);
     virtual bool OnMouseButtonRelease(const MouseButtonReleaseEvent* event);
     virtual bool OnMouseMove(const MouseMoveEvent* event);
+
+    virtual void OnRender(Renderer* renderer);
+
+    bool Attach(Widget* widget, const Vector2u& relative_position);
+    bool Detach(Widget* widget);
 
     Vector2u GetSize() const;
     void SetSize(const Vector2u& size);
@@ -41,14 +45,17 @@ protected:
     bool OnMouseEvent(const EventT* event);
 
 protected:
-    typedef std::map<uint64_t, Handler*> HandlerMap;
+    typedef std::list<Widget*> ChildrenList;
 
-    Vector2u   size_;
-    Vector2u   position_;
+    typedef std::map<uint64_t, Handler*> HandlerMap;    
 
-    Widget*    parent_;
+    Vector2u     size_;
+    Vector2u     position_;
 
-    HandlerMap handlers_;
+    Widget*      parent_;
+    ChildrenList children_;
+
+    HandlerMap   handlers_;
 };
 
 template <uint64_t EventMask>

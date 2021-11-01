@@ -6,6 +6,20 @@
 
 #include "Handler.hpp"
 #include "MouseEvent.hpp"
+#include "Commands.hpp"
+#include "CommandQueue.hpp"
+
+class CloseButtonHandler : public Handler {
+public:
+    CloseButtonHandler(Widget* widget);
+
+    virtual ~CloseButtonHandler() override;
+
+    virtual bool HandleEvent(const MouseButtonPressEvent* event) override;
+
+private:
+    Widget* widget_;
+};
 
 template <class Functor>
 class ButtonHandler : public Handler {
