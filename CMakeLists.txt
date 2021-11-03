@@ -4,22 +4,22 @@ project(SGUI)
 
 set(CMAKE_CXX_FLAGS "-std=c++11 -O1 -Wall -Wextra -Wno-unused-parameter")
 
-add_executable(paint)
+add_executable(editor)
 
-target_sources(paint
+target_sources(editor
     PRIVATE
         src/main.cpp
     )
 
-target_link_libraries(paint
+target_link_libraries(editor
     PUBLIC
-        SGUI_APPLICAION
         SGUI_CORE
+        SGUI_EDITOR
         SGUI_GUI
         SGUI_PLATFORM
     )
 
-add_subdirectory(src/Application)
 add_subdirectory(src/Core)
+add_subdirectory(src/Editor)
 add_subdirectory(src/GUI)
 add_subdirectory(src/Platform)

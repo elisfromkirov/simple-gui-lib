@@ -5,10 +5,10 @@
 #include <cstdint>
 #include <string>
 
-#include "Color.hpp"
-#include "Font.hpp"
-#include "SFMLPlatform.hpp"
-#include "Vector2.hpp"
+#include "Core/Math/Vector2.hpp"
+#include "Platform/Color.hpp"
+#include "Platform/Font.hpp"
+#include "Platform/Platform.hpp"
 
 class Text {
 private:

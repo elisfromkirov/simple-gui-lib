@@ -1,7 +1,7 @@
-#include "Application.hpp"
+#include "Editor/Editor.hpp"
 
 int main() {
-    Application application{};
-    application.Run();
+    Editor editor{};
+    editor.Run();
     return 0;
 }

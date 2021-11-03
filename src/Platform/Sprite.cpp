@@ -1,14 +1,9 @@
-#include <cstdio>
-
-#include "Sprite.hpp"
+#include "Platform/Sprite.hpp"
 
 Sprite::Sprite(const std::string& filename) 
     : native_sprite_{}, 
       native_texture_{} {
-    bool loaded = native_texture_.loadFromFile(filename);
-    if (!loaded) {
-        printf("Unable to load texture from file \"%s\"\n", filename.c_str());
-    }
+    native_texture_.loadFromFile(filename);
 
     native_sprite_.setTexture(native_texture_);
 }

@@ -1,4 +1,4 @@
-#include "Renderer.hpp"
+#include "Platform/Renderer.hpp"
 
 Renderer::Renderer(Window* window) 
     : native_window_{nullptr} {
@@ -27,19 +27,17 @@ void Renderer::Present() {
     native_window_->display();
 }
 
-void Renderer::RenderText(Text* text, const Vector2u& position) {
+void Renderer::RenderText(const Text* text) {
     assert(native_window_ != nullptr);
     assert(text           != nullptr);
 
-    text->SetPosition(position);
     native_window_->draw(text->GetNativeText());
 }
 
-void Renderer::RenderSprite(Sprite* sprite, const Vector2u& position) {
+void Renderer::RenderSprite(const Sprite* sprite) {
     assert(native_window_ != nullptr);
     assert(sprite         != nullptr);
 
-    sprite->SetPosition(position);
     native_window_->draw(sprite->GetNativeSprite());
 }
 
@@ -48,8 +46,10 @@ void Renderer::RenderRectangle(const Vector2u& position, const Vector2u& size, c
 
     static sf::RectangleShape native_shape;
 
-    native_shape.setSize     (sf::Vector2f(size.x,     size.y    ));
-    native_shape.setPosition (sf::Vector2f(position.x, position.y));
+    native_shape.setSize(sf::Vector2f(size.x, size.y));
+
+    native_shape.setPosition(sf::Vector2f(position.x, position.y));
+
     native_shape.setFillColor(sf::Color(static_cast<sf::Uint8>(color.red   * 255.f),
                                         static_cast<sf::Uint8>(color.green * 255.f),
                                         static_cast<sf::Uint8>(color.blue  * 255.f),

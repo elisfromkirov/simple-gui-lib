@@ -4,37 +4,39 @@
 #include <cassert>
 #include <cstdio>
 
-#include "EventDispatcher.hpp"
-#include "KeyEvent.hpp"
-#include "MouseEvent.hpp"
-#include "Window.hpp"
+#include "Core/EventManager/EventManager.hpp"
+#include "GUI/Event/InputEvent.hpp"
+#include "Platform/Platform.hpp"
+#include "Platform/Window.hpp"
 
 class Input {
 public:
     Input(Window* window);
     ~Input();
 
-    bool PumpEvents();
+    void PumpEvents();
 
 private:
     sf::RenderWindow* native_window_;
 
-    EventDispatcher*  event_dispatcher_;
+    EventManager*     event_manager_;
 
     Vector2u          position_;
     MouseButton       button_;
     bool              button_pressed_;
 
 private:
-    void SendMouseButtonEvent(const sf::Event& event);
+    void SendCloseEvent      (const NativeEvent& event);
 
-    void SendMouseMoveEvent(const sf::Event& event);
+    void SendMouseButtonEvent(const NativeEvent& event);
 
-    void SendKeyEvent(const sf::Event& event);
+    void SendMouseMoveEvent  (const NativeEvent& event);
 
-    MouseButton GetButton(const sf::Event& event);
+    void SendKeyEvent        (const NativeEvent& event);
 
-    Key GetKey(const sf::Event& event);
+    MouseButton GetButton    (const NativeEvent& event);
+
+    Key GetKey               (const NativeEvent& event);
 };
 
 #endif // __INPUT_HPP__

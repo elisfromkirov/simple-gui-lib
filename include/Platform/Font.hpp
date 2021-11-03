@@ -5,12 +5,9 @@
 #include <cstdint>
 #include <string>
 
-#include "SFMLPlatform.hpp"
+#include "Platform/Platform.hpp"
 
 class Font {
-public:
-    typedef sf::Font NativeFont;
-
 public:
     Font(const std::string& filename);
     ~Font();

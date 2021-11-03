@@ -4,8 +4,8 @@
 #include <cassert>
 #include <cstdint>
 
-#include "SFMLPlatform.hpp"
-#include "Vector2.hpp"
+#include "Core/Math/Vector2.hpp"
+#include "Platform/Platform.hpp"
 
 class Sprite {
 public:

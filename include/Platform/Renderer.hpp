@@ -4,10 +4,10 @@
 #include <cassert>
 #include <cstdint>
 
-#include "Color.hpp"
-#include "Text.hpp"
-#include "Sprite.hpp"
-#include "Window.hpp"
+#include "Platform/Color.hpp"
+#include "Platform/Text.hpp"
+#include "Platform/Sprite.hpp"
+#include "Platform/Window.hpp"
 
 class Renderer {
 public:
@@ -18,9 +18,9 @@ public:
 
     void Present();
 
-    void RenderText(Text* text, const Vector2u& position);
+    void RenderText(const Text* text);
 
-    void RenderSprite(Sprite* sprite, const Vector2u& position);
+    void RenderSprite(const Sprite* sprite);
 
     void RenderRectangle(const Vector2u& position, const Vector2u& size, const Color& color);
 

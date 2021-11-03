@@ -1,7 +1,7 @@
 #include <math.h>
-#include <cfloat>
+#include <float.h>
 
-#include "Vector2.hpp"
+#include "Core/Math/Vector2.hpp"
 
 static bool IsEqual(float lhs, float rhs) {
     return fabs(lhs - rhs) < FLT_EPSILON;

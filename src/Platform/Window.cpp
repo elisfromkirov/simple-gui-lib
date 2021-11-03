@@ -1,6 +1,4 @@
-#include <new>
-
-#include "Window.hpp"
+#include "Platform/Window.hpp"
 
 const Vector2u Window::kDefaultSize{1600, 1200};
 

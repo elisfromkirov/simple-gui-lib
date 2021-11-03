@@ -1,4 +1,4 @@
-#include "Text.hpp"
+#include "Platform/Text.hpp"
 
 const uint32_t Text::kDefaultSize{32};
 

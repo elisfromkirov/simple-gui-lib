@@ -4,80 +4,47 @@
 #include <cassert>
 #include <cstdint>
 #include <list>
-#include <map>
 
-#include "Handler.hpp"
-#include "MouseEvent.hpp"
-#include "Renderer.hpp"
-#include "Vector2.hpp"
+#include "Core/EventManager/IEventListener.hpp"
+#include "Core/Math/Vector2.hpp"
+#include "GUI/Event/InputEvent.hpp"
+#include "Platform/Renderer.hpp"
 
-class Widget {
+class Widget : public IEventListener {
 public:
     Widget(const Vector2u& size, const Vector2u& postion = Vector2u());
 
     virtual ~Widget();
 
+    virtual bool OnEvent(const Event* event) override;
+
     virtual bool HitTest(const Vector2u& point) const;
 
-    virtual bool OnMouseButtonPress(const MouseButtonPressEvent* event);
-    virtual bool OnMouseButtonRelease(const MouseButtonReleaseEvent* event);
-    virtual bool OnMouseMove(const MouseMoveEvent* event);
+    virtual void OnRender(Renderer* renderer) const;
 
-    virtual void OnRender(Renderer* renderer);
+    bool Attach(Widget* widget);
 
-    bool Attach(Widget* widget, const Vector2u& relative_position);
     bool Detach(Widget* widget);
 
-    Vector2u GetSize() const;
-    void SetSize(const Vector2u& size);
+    const Vector2u& GetSize() const;
 
-    Vector2u GetPosition() const;
-    void SetPosition(const Vector2u& position);
+    const Vector2u& GetPosition() const;
 
     Widget* GetParent() const;
-    void SetParent(Widget* parent);
-
-    template <uint64_t EventMask>
-    void SetHandler(Handler* handler);
 
 protected:
-    template <class EventT, uint64_t EventMask>
-    bool OnMouseEvent(const EventT* event);
+    virtual bool OnMouseButtonPress(const MouseButtonPressEvent* event);
+
+    virtual bool OnMouseButtonRelease(const MouseButtonReleaseEvent* event);
+
+    virtual bool OnMouseMove(const MouseMoveEvent* event);
 
 protected:
-    typedef std::list<Widget*> ChildrenList;
+    Vector2u           size_;
+    Vector2u           position_;
 
-    typedef std::map<uint64_t, Handler*> HandlerMap;    
-
-    Vector2u     size_;
-    Vector2u     position_;
-
-    Widget*      parent_;
-    ChildrenList children_;
-
-    HandlerMap   handlers_;
+    Widget*            parent_;
+    std::list<Widget*> children_;
 };
-
-template <uint64_t EventMask>
-void Widget::SetHandler(Handler* handler) {
-    assert(handler != nullptr);
-
-    handlers_[EventMask] = handler;
-}
-
-template <class EventT, uint64_t EventMask>
-bool Widget::OnMouseEvent(const EventT* event) {
-    assert(event != nullptr);
-
-    if (!HitTest(event->GetPosition())) {
-        return false;
-    }
-
-    if (handlers_.count(EventMask) == 0) {
-        return false;
-    }
-
-    return handlers_[EventMask]->HandleEvent(event);
-}
 
 #endif // __WIDGET_HPP__
