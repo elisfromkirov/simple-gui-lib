@@ -1,6 +1,6 @@
 #include "Platform/Font.hpp"
 
-Font::Font(const std::string& filename) 
+Font::Font(const char* filename) 
     : native_font_{} {
     native_font_.loadFromFile(filename);
 }

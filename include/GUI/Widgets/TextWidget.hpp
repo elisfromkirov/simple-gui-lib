@@ -9,11 +9,11 @@
 #include "Platform/Renderer.hpp"
 #include "Platform/Text.hpp"
 
-class TextVeiw : public Widget {
+class TextWidget : public Widget {
 public:
-    TextVeiw(Text* text, const Vector2u& size, const Vector2u& postion = Vector2u());
+    TextWidget(const std::string& string);
 
-    virtual ~TextVeiw() override;
+    virtual ~TextWidget() override;
 
     virtual void OnRender(Renderer* renderer) const override;
 

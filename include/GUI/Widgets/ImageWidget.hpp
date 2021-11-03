@@ -1,5 +1,5 @@
-#ifndef __IMAGE_VEIW_HPP__
-#define __IMAGE_VEIW_HPP__
+#ifndef __IMAGE_WIDGET_HPP__
+#define __IMAGE_WIDGET_HPP__
 
 #include <cassert>
 #include <cstdint>
@@ -9,11 +9,13 @@
 #include "Platform/Renderer.hpp"
 #include "Platform/Sprite.hpp"
 
-class ImageVeiw : public Widget {
+class ImageWidget : public Widget {
 public:
-    ImageVeiw(Sprite* sprite, const Vector2u& position = Vector2u());
+    ImageWidget(const char* image_name);
 
-    virtual ~ImageVeiw() override;
+    ImageWidget(Sprite* sprite);
+
+    virtual ~ImageWidget() override;
 
     virtual void OnRender(Renderer* renderer) const override;
 

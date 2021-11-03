@@ -11,6 +11,11 @@ target_sources(editor
         src/main.cpp
     )
 
+add_subdirectory(src/Core)
+add_subdirectory(src/Editor)
+add_subdirectory(src/GUI)
+add_subdirectory(src/Platform)    
+
 target_link_libraries(editor
     PUBLIC
         SGUI_CORE
@@ -19,7 +24,3 @@ target_link_libraries(editor
         SGUI_PLATFORM
     )
 
-add_subdirectory(src/Core)
-add_subdirectory(src/Editor)
-add_subdirectory(src/GUI)
-add_subdirectory(src/Platform)

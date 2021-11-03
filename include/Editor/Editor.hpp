@@ -2,6 +2,7 @@
 #define __EDITOR_HPP__
 
 #include "Core/Application/Application.hpp"
+#include "GUI/Widgets/ImageWidget.hpp"
 #include "Platform/Input.hpp"
 #include "Platform/Renderer.hpp"
 #include "Platform/Window.hpp"

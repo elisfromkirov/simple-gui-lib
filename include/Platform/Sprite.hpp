@@ -9,7 +9,7 @@
 
 class Sprite {
 public:
-    Sprite(const std::string& filename);
+    Sprite(const char* filename);
     ~Sprite();
 
     Vector2u GetSize() const;

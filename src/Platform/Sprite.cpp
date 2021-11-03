@@ -1,6 +1,6 @@
 #include "Platform/Sprite.hpp"
 
-Sprite::Sprite(const std::string& filename) 
+Sprite::Sprite(const char* filename) 
     : native_sprite_{}, 
       native_texture_{} {
     native_texture_.loadFromFile(filename);

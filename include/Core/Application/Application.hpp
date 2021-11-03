@@ -3,6 +3,7 @@
 
 #include "Core/EventManager/EventManager.hpp"
 #include "Core/LogManager/LogManager.hpp"
+#include "Core/ResourceManager/ResourceManager.hpp"
 
 class Application {
 public:
@@ -10,8 +11,9 @@ public:
     ~Application();
 
 protected:
-    EventManager*   event_manager_;
-    LogManager*     log_manager_;
+    EventManager*    event_manager_;
+    LogManager*      log_manager_;
+    ResourceManager* resource_manager_;
 };
 
 #endif // __APPLICATION_HPP__

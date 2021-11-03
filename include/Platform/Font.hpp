@@ -3,13 +3,12 @@
 
 #include <cassert>
 #include <cstdint>
-#include <string>
 
 #include "Platform/Platform.hpp"
 
 class Font {
 public:
-    Font(const std::string& filename);
+    Font(const char* filename);
     ~Font();
 
     const NativeFont& GetNativeFont() const;
