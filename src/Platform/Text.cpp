@@ -4,11 +4,12 @@ const uint32_t Text::kDefaultSize{32};
 
 const Color Text::kDefaultColor{0.f, 0.f, 0.f, 1.f};
 
-Text::Text(const std::string& string, const Font& font)
+Text::Text(const std::string& string, const Font* font)
     : Text{string, font, kDefaultSize, kDefaultColor} {}
 
-Text::Text(const std::string& string, const Font& font, uint32_t size, const Color& color)
-    : native_text_{string, font.GetNativeFont()} {
+Text::Text(const std::string& string, const Font* font, uint32_t size, const Color& color)
+    : native_font_{font->GetNativeFont()},
+      native_text_{string, native_font_} {    
     SetCharacterSize(size);
     SetFillColor(color);
 }

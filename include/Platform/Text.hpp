@@ -16,9 +16,9 @@ private:
     static const Color kDefaultColor;
 
 public:
-    Text(const std::string& string, const Font& font);
+    Text(const std::string& string, const Font* font);
 
-    Text(const std::string& string, const Font& font, uint32_t size, const Color& color);
+    Text(const std::string& string, const Font* font, uint32_t size, const Color& color);
 
     ~Text();
 
@@ -35,6 +35,7 @@ public:
     const NativeText& GetNativeText() const;
 
 private:
+    sf::Font native_font_;
     sf::Text native_text_;
 };
 

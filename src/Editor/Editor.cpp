@@ -9,6 +9,7 @@ Editor::~Editor() {}
 
 void Editor::Run() {
     ImageWidget image("Close.bmp");
+    TextWidget text("Some text");
 
     while (window_.IsOpen()) {
         input_.PumpEvents();
@@ -18,6 +19,7 @@ void Editor::Run() {
         renderer_.Clear(Color{1, 0, 0, 1});
 
         image.OnRender(&renderer_);
+        text.OnRender(&renderer_);
 
         renderer_.Present();
     }

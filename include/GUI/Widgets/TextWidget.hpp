@@ -10,12 +10,17 @@
 #include "Platform/Text.hpp"
 
 class TextWidget : public Widget {
+private:
+    static const char* kDefaultFontName;
+
 public:
     TextWidget(const std::string& string);
 
     virtual ~TextWidget() override;
 
     virtual void OnRender(Renderer* renderer) const override;
+
+    void SetString(const std::string& string);
 
 protected:
     Text* text_;

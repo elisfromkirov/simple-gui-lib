@@ -3,6 +3,7 @@
 
 #include "Core/Application/Application.hpp"
 #include "GUI/Widgets/ImageWidget.hpp"
+#include "GUI/Widgets/TextWidget.hpp"
 #include "Platform/Input.hpp"
 #include "Platform/Renderer.hpp"
 #include "Platform/Window.hpp"
