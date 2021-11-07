@@ -6,6 +6,7 @@ target_include_directories(SGUI_GUI
     )
 
 add_subdirectory(Event)
+add_subdirectory(WidgetManager)
 add_subdirectory(Widgets)
 
 target_link_libraries(SGUI_GUI

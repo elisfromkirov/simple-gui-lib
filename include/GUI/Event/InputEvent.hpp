@@ -13,9 +13,11 @@ enum InputEventType : uint64_t {
     kMouseButtonPress   = kInputEventCategory | 0x00000001,
     kMouseButtonRelease = kInputEventCategory | 0x00000002,
     kMouseMove          = kInputEventCategory | 0x00000004,
+    kMouseHover         = kInputEventCategory | 0x00000008,
+    kMouseLeave         = kInputEventCategory | 0x00000010,
 
-    kKeyPress           = kInputEventCategory | 0x00000008,
-    kKeyRelease         = kInputEventCategory | 0x00000010
+    kKeyPress           = kInputEventCategory | 0x00000020,
+    kKeyRelease         = kInputEventCategory | 0x00000040
 };
 
 // ------------------------------------------------------------------------- //
@@ -66,6 +68,20 @@ public:
     MouseMoveEvent(const Vector2u& position, MouseButton button, bool pressed);
 
     virtual ~MouseMoveEvent() override;
+};
+
+class MouseHoverEvent : public MouseEvent {
+public:
+    MouseHoverEvent(const MouseEvent* event);
+
+    virtual ~MouseHoverEvent() override;
+};
+
+class MouseLeaveEvent : public MouseEvent {
+public:
+    MouseLeaveEvent(const MouseEvent* event);
+
+    virtual ~MouseLeaveEvent() override;
 };
 
 // ------------------------------------------------------------------------- //

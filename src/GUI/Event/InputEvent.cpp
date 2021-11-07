@@ -35,6 +35,18 @@ MouseMoveEvent::MouseMoveEvent(const Vector2u& position, MouseButton button, boo
 
 MouseMoveEvent::~MouseMoveEvent() {}
 
+MouseHoverEvent::MouseHoverEvent(const MouseEvent* event)
+    : MouseEvent{kMouseHover, event->GetMousePosition(), event->GetPressedButton(), 
+                 event->IsButtonPressed()} {}
+
+MouseHoverEvent::~MouseHoverEvent() {}
+
+MouseLeaveEvent::MouseLeaveEvent(const MouseEvent* event)
+    : MouseEvent{kMouseLeave, event->GetMousePosition(), event->GetPressedButton(), 
+                 event->IsButtonPressed()} {}
+
+MouseLeaveEvent::~MouseLeaveEvent() {}
+
 // ------------------------------------------------------------------------- //
 
 KeyEvent::KeyEvent(uint64_t type, Key key, bool alt, bool control, bool shift, bool system)

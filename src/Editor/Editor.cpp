@@ -1,26 +1,19 @@
+#include "Config.hpp"
 #include "Editor/Editor.hpp"
 
 Editor::Editor()
-    : window_{"editor"},
-      input_{&window_},
-      renderer_{&window_} {}
+    : Application{"editor"},
+      main_panel_{window_.GetSize()},
+      widget_manager_{&main_panel_} {
+    event_manager_->RegisterListener(&widget_manager_);
+}
 
 Editor::~Editor() {}
 
-void Editor::Run() {
-    ImageWidget image("Close.bmp");
-    TextWidget text("Some text");
+void Editor::OnRender() {
+    renderer_.Clear(Color{1, 0, 0, 1});
 
-    while (window_.IsOpen()) {
-        input_.PumpEvents();
+    main_panel_.OnRender(&renderer_);
 
-        event_manager_->DispatchEvents();
-
-        renderer_.Clear(Color{1, 0, 0, 1});
-
-        image.OnRender(&renderer_);
-        text.OnRender(&renderer_);
-
-        renderer_.Present();
-    }
+    renderer_.Present();
 }

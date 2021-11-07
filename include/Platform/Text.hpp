@@ -12,13 +12,18 @@
 
 class Text {
 private:
+    static const Font     kDefaultFont;
+
     static const uint32_t kDefaultSize;
-    static const Color kDefaultColor;
+    
+    static const Color    kDefaultColor;
 
 public:
+    Text(const std::string& string);
+
     Text(const std::string& string, const Font* font);
 
-    Text(const std::string& string, const Font* font, uint32_t size, const Color& color);
+    Text(const std::string& string, const Font* font, uint32_t char_size, const Color& fill_color);
 
     ~Text();
 
@@ -30,13 +35,17 @@ public:
 
     void SetFillColor(const Color& color);
 
-    void SetPosition(const Vector2u& position);
+    void SetPosition(const Vector2i& position);
+
+    Vector2u GetSize() const;
 
     const NativeText& GetNativeText() const;
 
 private:
     sf::Font native_font_;
     sf::Text native_text_;
+
+    Vector2u size_;
 };
 
 #endif // __TEXT_HPP__

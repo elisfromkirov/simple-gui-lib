@@ -2,23 +2,19 @@
 #define __EDITOR_HPP__
 
 #include "Core/Application/Application.hpp"
-#include "GUI/Widgets/ImageWidget.hpp"
-#include "GUI/Widgets/TextWidget.hpp"
-#include "Platform/Input.hpp"
-#include "Platform/Renderer.hpp"
-#include "Platform/Window.hpp"
+#include "Editor/MainPanel.hpp"
+#include "GUI/WidgetManager/WidgetManager.hpp"
 
 class Editor : public Application {
 public:
     Editor();
     ~Editor();
 
-    void Run();
+protected:
+    virtual void OnRender() override;
 
-private:
-    Window   window_;
-    Input    input_;
-    Renderer renderer_;
+    MainPanel     main_panel_;
+    WidgetManager widget_manager_;
 };
 
 #endif // __EDITOR_HPP__

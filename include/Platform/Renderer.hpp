@@ -18,11 +18,11 @@ public:
 
     void Present();
 
-    void RenderText(const Text* text);
+    void RenderText(const Text& text);
 
-    void RenderSprite(const Sprite* sprite);
+    void RenderSprite(const Sprite& sprite);
 
-    void RenderRectangle(const Vector2u& position, const Vector2u& size, const Color& color);
+    void RenderRectangle(const Vector2i& position, const Vector2u& size, const Color& color);
 
 private:
     sf::RenderWindow* native_window_;

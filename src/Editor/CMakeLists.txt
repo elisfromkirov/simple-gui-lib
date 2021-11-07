@@ -10,9 +10,12 @@ set(SRCROOT ${SGUI_SOURCE_DIR}/src/Editor)
 
 target_sources(SGUI_EDITOR
     PUBLIC
+        ${INCROOT}/ColorSheme.hpp
         ${INCROOT}/Editor.hpp
+        ${INCROOT}/MainPanel.hpp
     PRIVATE
         ${SRCROOT}/Editor.cpp
+        ${SRCROOT}/MainPanel.cpp
     )
 
 target_link_libraries(SGUI_EDITOR

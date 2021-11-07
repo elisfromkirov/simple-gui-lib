@@ -9,7 +9,6 @@ add_subdirectory(Application)
 add_subdirectory(EventManager)
 add_subdirectory(Math)
 add_subdirectory(LogManager)
-add_subdirectory(ResourceManager)
 
 target_link_libraries(SGUI_CORE
     PUBLIC

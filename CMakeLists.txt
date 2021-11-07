@@ -14,7 +14,7 @@ target_sources(editor
 add_subdirectory(src/Core)
 add_subdirectory(src/Editor)
 add_subdirectory(src/GUI)
-add_subdirectory(src/Platform)    
+add_subdirectory(src/Platform)
 
 target_link_libraries(editor
     PUBLIC
@@ -23,4 +23,3 @@ target_link_libraries(editor
         SGUI_GUI
         SGUI_PLATFORM
     )
-

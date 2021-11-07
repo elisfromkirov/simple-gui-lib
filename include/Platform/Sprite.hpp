@@ -12,9 +12,9 @@ public:
     Sprite(const char* filename);
     ~Sprite();
 
-    Vector2u GetSize() const;
+    void SetPosition(const Vector2i& position);
 
-    void SetPosition(const Vector2u& position);
+    Vector2u GetSize() const;
 
     const NativeSprite& GetNativeSprite() const;
 

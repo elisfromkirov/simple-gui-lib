@@ -3,11 +3,12 @@ set(SRCROOT ${SGUI_SOURCE_DIR}/src/GUI/Widgets)
 
 target_sources(SGUI_GUI
     PUBLIC
-        ${INCROOT}/ImageWidget.hpp
-        ${INCROOT}/TextWidget.hpp
+        ${INCROOT}/Button.hpp
+        ${INCROOT}/Label.hpp
+        ${INCROOT}/Image.hpp
         ${INCROOT}/Widget.hpp
     PRIVATE
-        ${SRCROOT}/ImageWidget.cpp
-        ${SRCROOT}/TextWidget.cpp
+        ${SRCROOT}/Label.cpp
+        ${SRCROOT}/Image.cpp
         ${SRCROOT}/Widget.cpp
     )

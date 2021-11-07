@@ -10,15 +10,14 @@ Sprite::Sprite(const char* filename)
 
 Sprite::~Sprite() {}
 
+void Sprite::SetPosition(const Vector2i& position) {
+    native_sprite_.setPosition(sf::Vector2f(position.x, position.y));
+}
+
 Vector2u Sprite::GetSize() const {
     sf::Vector2u size = native_texture_.getSize();
 
     return Vector2u{size.x, size.y};
-}
-
-void Sprite::SetPosition(const Vector2u& position) {
-    native_sprite_.setPosition(sf::Vector2f{static_cast<float>(position.x),
-                                            static_cast<float>(position.y)});
 }
 
 const NativeSprite& Sprite::GetNativeSprite() const {

@@ -27,21 +27,19 @@ void Renderer::Present() {
     native_window_->display();
 }
 
-void Renderer::RenderText(const Text* text) {
+void Renderer::RenderText(const Text& text) {
     assert(native_window_ != nullptr);
-    assert(text           != nullptr);
 
-    native_window_->draw(text->GetNativeText());
+    native_window_->draw(text.GetNativeText());
 }
 
-void Renderer::RenderSprite(const Sprite* sprite) {
+void Renderer::RenderSprite(const Sprite& sprite) {
     assert(native_window_ != nullptr);
-    assert(sprite         != nullptr);
 
-    native_window_->draw(sprite->GetNativeSprite());
+    native_window_->draw(sprite.GetNativeSprite());
 }
 
-void Renderer::RenderRectangle(const Vector2u& position, const Vector2u& size, const Color& color) {
+void Renderer::RenderRectangle(const Vector2i& position, const Vector2u& size, const Color& color) {
     assert(native_window_ != nullptr);
 
     static sf::RectangleShape native_shape;
