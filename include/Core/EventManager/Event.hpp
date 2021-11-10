@@ -8,7 +8,8 @@ enum EventCategory : uint64_t {
     kNoneEventCategory   = 0x00000000,
     kInputEventCategory  = 0x10000000,
     kGUIEventCategory    = 0x20000000,
-    kCustomEventCategory = 0x40000000
+    kActionEventCategory = 0x40000000,
+    kCustomEventCategory = 0x80000000
 };
 
 class Event {

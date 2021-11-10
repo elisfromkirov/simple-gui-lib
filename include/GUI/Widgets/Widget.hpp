@@ -11,7 +11,7 @@
 
 class Widget {
 public:
-    Widget(const Vector2u& size = Vector2u(), const Vector2i& postion = Vector2i());
+    Widget(const Vector2u& size = Vector2u(), const Vector2i& position = Vector2i());
 
     virtual ~Widget();
 
@@ -21,20 +21,7 @@ public:
 
     virtual void OnMove(const Vector2i& displacement);
 
-    virtual Widget* OnHitTest(const Vector2u& point);
-
-    bool Attach(Widget* widget);
-
-    bool Detach(Widget* widget);
-
-    const Vector2u& GetSize() const;
-
-    const Vector2i& GetPosition() const;
-
-    Widget* GetParent() const;
-
-    bool IsVisible();
-    void SetVisible(bool visible);
+    virtual bool HitTest(const Vector2u& point) const;
 
     virtual bool OnMouseButtonPress(const MouseButtonPressEvent* event);
 
@@ -44,10 +31,40 @@ public:
 
     virtual bool OnMouseHover(const MouseHoverEvent* event);
 
-    virtual bool OnMouseLeave(const MouseLeaveEvent* event);
+    virtual bool OnMouseLeave(const MouseLeaveEvent* event); 
+
+    const Vector2u& GetSize() const;
+
+    const Vector2i& GetPosition() const;
+
+    Widget* GetParent() const;
+
+    bool Attach(Widget* widget);
+    bool Detach(Widget* widget);
+
+    bool IsVisible() const;
+    void SetVisible(bool visible);
+
+    bool IsResizable() const;
+    void SetResizable(bool resizable);
+
+    bool IsMovable() const;
+    void SetMovable(bool movable);
+
+    bool IsActive() const;
+    void SetActive(bool active);
+
+    bool IsFilled() const;
+    void SetFilled(bool filled);
+
+    const Color& GetFillColor() const;
+    void SetFillColor(const Color& color);
+
+    template <class WidgetVisitor>
+    void Accept(WidgetVisitor* visitor);
 
 protected:
-    virtual bool Contains(const Vector2u& point) const;
+    virtual void RenderBackGround(Renderer* renderer) const;
 
     virtual void Render(Renderer* renderer) const;
 
@@ -63,6 +80,28 @@ protected:
     std::list<Widget*> children_;
 
     bool               visible_;
+
+    bool               resizable_; 
+
+    bool               movable_;
+
+    bool               active_;
+
+    bool               filled_;
+    Color              fill_color_;
 };
+
+template <class WidgetVisitor>
+void Widget::Accept(WidgetVisitor* visitor) {
+    assert(visitor != nullptr);
+
+    visitor->StartWidget(this);
+
+    for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
+        (*iter)->Accept(visitor);
+    }
+
+    visitor->FinishWidget(this);
+}
 
 #endif // __WIDGET_HPP__

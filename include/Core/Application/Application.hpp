@@ -12,20 +12,15 @@ public:
     Application(const char* name);
     ~Application();
 
-    void Run();
+    virtual void Run();
 
 protected:
-    virtual void OnRender();
+    EventManager* event_manager_;
+    LogManager*   log_manager_;
 
-    virtual void OnInput();
-
-protected:
-    EventManager*    event_manager_;
-    LogManager*      log_manager_;
-
-    Window   window_;
-    Input    input_;
-    Renderer renderer_;
+    Window        window_;
+    Input         input_;
+    Renderer      renderer_;
 };
 
 #endif // __APPLICATION_HPP__

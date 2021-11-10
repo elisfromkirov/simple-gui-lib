@@ -10,9 +10,9 @@ public:
     Editor();
     ~Editor();
 
-protected:
-    virtual void OnRender() override;
+    virtual void Run() override;
 
+protected:
     MainPanel     main_panel_;
     WidgetManager widget_manager_;
 };

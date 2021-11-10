@@ -5,7 +5,12 @@ Widget::Widget(const Vector2u& size, const Vector2i& position)
       position_{position},
       parent_{nullptr},
       children_{},
-      visible_{true} {}
+      visible_{true},
+      resizable_{true},
+      movable_{true},
+      active_{false},
+      filled_{false},
+      fill_color_{} {}
 
 Widget::~Widget() {
     for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
@@ -15,6 +20,10 @@ Widget::~Widget() {
 
 void Widget::OnRender(Renderer* renderer) const {
     assert(renderer != nullptr);
+
+    if (IsFilled()) {
+        RenderBackGround(renderer);
+    }
 
     Render(renderer);
 
@@ -29,7 +38,9 @@ void Widget::OnResize(const Vector2u& size) {
     Resize(size);
 
     for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
-        (*iter)->Resize(size);
+        if ((*iter)->IsResizable()) {
+            (*iter)->OnResize(size);
+        }
     }
 }
 
@@ -37,69 +48,17 @@ void Widget::OnMove(const Vector2i& displacement) {
     Move(displacement);
 
     for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
-        (*iter)->Move(displacement);
-    }
-}
-
-Widget* Widget::OnHitTest(const Vector2u& point) {
-    for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
-        Widget* hit_widget = (*iter)->OnHitTest(point);
-        if (hit_widget != nullptr) {
-            return hit_widget;
+        if ((*iter)->IsMovable()) {
+            (*iter)->OnMove(displacement);
         }
     }
-
-    if (Contains(point)) {
-        return this;
-    }
-
-    return nullptr;
 }
 
-bool Widget::Attach(Widget* widget) {
-    assert(widget != nullptr);
+bool Widget::HitTest(const Vector2u& point) const {
+    Vector2u position(static_cast<uint32_t>(position_.x), static_cast<uint32_t>(position_.y));
 
-    if (widget->GetParent() != nullptr) {
-        return false;
-    }
-
-    widget->parent_ = this;
-    children_.push_front(widget);
-
-    return true;
-}
-
-bool Widget::Detach(Widget* widget) {
-    assert(widget != nullptr);
-
-    if (widget->GetParent() != this) {
-        return false;
-    }
-
-    widget->parent_ = nullptr;
-    children_.remove(widget);
-
-    return true;
-}
-
-const Vector2u& Widget::GetSize() const {
-    return size_;
-}
-
-const Vector2i& Widget::GetPosition() const {
-    return position_;
-}
-
-Widget* Widget::GetParent() const {
-    return parent_;
-}
-
-bool Widget::IsVisible() {
-    return visible_;
-}
-
-void Widget::SetVisible(bool visible) {
-    visible_ = visible;
+    return  position.x < point.x && point.x < position.x + size_.x &&
+            position.y < point.y && point.y < position_.y + size_.y; 
 }
 
 bool Widget::OnMouseButtonPress(const MouseButtonPressEvent* event) {
@@ -144,18 +103,105 @@ bool Widget::OnMouseMove(const MouseMoveEvent* event) {
 bool Widget::OnMouseHover(const MouseHoverEvent* event) {
     assert(event != nullptr);
 
-    return true;
+    return false;
 }
 
 bool Widget::OnMouseLeave(const MouseLeaveEvent* event) {
     assert(event != nullptr);
 
+    return false;
+}
+
+bool Widget::Attach(Widget* widget) {
+    assert(widget != nullptr);
+
+    if (widget->GetParent() != nullptr) {
+        return false;
+    }
+
+    widget->parent_ = this;
+    children_.push_front(widget);
+
     return true;
 }
 
-bool Widget::Contains(const Vector2u& point) const {
-    return static_cast<uint32_t>(position_.x) < point.x && point.x < position_.x + size_.x &&
-           static_cast<uint32_t>(position_.y) < point.y && point.y < position_.y + size_.y; 
+bool Widget::Detach(Widget* widget) {
+    assert(widget != nullptr);
+
+    if (widget->GetParent() != this) {
+        return false;
+    }
+
+    widget->parent_ = nullptr;
+    children_.remove(widget);
+
+    return true;
+}
+
+const Vector2u& Widget::GetSize() const {
+    return size_;
+}
+
+const Vector2i& Widget::GetPosition() const {
+    return position_;
+}
+
+Widget* Widget::GetParent() const {
+    return parent_;
+}
+
+bool Widget::IsVisible() const {
+    return visible_;
+}
+
+void Widget::SetVisible(bool visible) {
+    visible_ = visible;
+}
+
+bool Widget::IsResizable() const {
+    return resizable_;
+}
+
+void Widget::SetResizable(bool resizable) {
+    resizable_ = resizable;
+}
+
+bool Widget::IsMovable() const {
+    return movable_;
+}
+
+void Widget::SetMovable(bool movable) {
+    movable_ = movable;
+}
+
+bool Widget::IsActive() const {
+    return active_;
+}
+
+void Widget::SetActive(bool active) {
+    active_ = active;
+}
+
+bool Widget::IsFilled() const {
+    return filled_;
+}
+
+void Widget::SetFilled(bool filled) {
+    filled_ = filled;
+}
+
+const Color& Widget::GetFillColor() const {
+    return fill_color_;
+}
+
+void Widget::SetFillColor(const Color& color) {
+    fill_color_ = color;
+}
+
+void Widget::RenderBackGround(Renderer* renderer) const {
+    assert(renderer != nullptr);
+
+    renderer->RenderRectangle(position_, size_, fill_color_);
 }
 
 void Widget::Render(Renderer* renderer) const {

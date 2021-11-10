@@ -10,7 +10,6 @@ set(SRCROOT ${SGUI_SOURCE_DIR}/src/Editor)
 
 target_sources(SGUI_EDITOR
     PUBLIC
-        ${INCROOT}/ColorSheme.hpp
         ${INCROOT}/Editor.hpp
         ${INCROOT}/MainPanel.hpp
     PRIVATE

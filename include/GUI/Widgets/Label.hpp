@@ -8,7 +8,7 @@
 
 class Label : public Widget {
 public:
-    Label(const std::string& string, const Color& color = Color{0, 0, 0, 1});
+    Label(const std::string& string, const Color& color = Color(0, 0, 0, 1));
 
     virtual ~Label() override;
 

@@ -14,15 +14,10 @@ public:
 
     ~WidgetManager();
 
-    virtual bool OnEvent(const Event* event) override;
-
-private:
-    void UpdateHitWidget(const MouseEvent* event);
+    virtual void OnEvent(const Event* event) override;
 
 private:
     Widget* root_widget_;
-
-    Widget* hit_widget_;
 };
 
 #endif // __WIDGET_MANAGER_HPP__

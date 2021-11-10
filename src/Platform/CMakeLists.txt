@@ -21,6 +21,7 @@ target_sources(SGUI_PLATFORM
         ${INCROOT}/Text.hpp
         ${INCROOT}/Window.hpp
     PRIVATE
+        ${SRCROOT}/Color.cpp
         ${SRCROOT}/Font.cpp
         ${SRCROOT}/Input.cpp
         ${SRCROOT}/Renderer.cpp

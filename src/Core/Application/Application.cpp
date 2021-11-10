@@ -20,19 +20,12 @@ Application::~Application() {
 
 void Application::Run() {
     while (window_.IsOpen()) {
-        OnInput();
-        OnRender();
+        input_.PumpEvents();
+
+        event_manager_->DispatchEvents();
+
+        renderer_.Clear(Color());
+
+        renderer_.Present();
     }
-}
-
-void Application::OnRender() {
-    renderer_.Clear(Color{0, 0, 0, 1});
-
-    renderer_.Present();
-}
-
-void Application::OnInput() {
-    input_.PumpEvents();
-
-    event_manager_->DispatchEvents();
 }

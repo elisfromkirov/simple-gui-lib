@@ -41,13 +41,13 @@ float GetLength(const Vector2<float>& vector);
 
 Vector2<float> Normalize(const Vector2<float>& vector);
 
-// -------------------------------------------------------------------------- //
+// ---------------------------------------------------------------------------------------------- //
 
 typedef Vector2<int32_t>  Vector2i;
 typedef Vector2<uint32_t> Vector2u;
 typedef Vector2<float>    Vector2f;
 
-// -------------------------------------------------------------------------- //
+// ---------------------------------------------------------------------------------------------- //
 
 template <typename T>
 Vector2<T>::Vector2() : x{}, y{} {}

@@ -1,9 +1,9 @@
-#include "Config.hpp"
+#include "GUI/Config.hpp"
 #include "Platform/Text.hpp"
 
 const Font Text::kDefaultFont{kMediumFontFileName};
 
-const uint32_t Text::kDefaultSize{32};
+const uint32_t Text::kDefaultSize{24};
 
 const Color Text::kDefaultColor{0.f, 0.f, 0.f, 1.f};
 
