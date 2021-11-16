@@ -1,7 +1,7 @@
 #ifndef __I_EVENT_LISTENER_HPP__
 #define __I_EVENT_LISTENER_HPP__
 
-#include "Core/EventManager/Event.hpp"
+class Event;
 
 class IEventListener {
 public:

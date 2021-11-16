@@ -5,8 +5,8 @@
 #include <cstdint>
 #include <list>
 
-#include "Core/EventManager/Event.hpp"
-#include "Core/EventManager/IEventListener.hpp"
+class Event;
+class IEventListener;
 
 class EventManager {
 private:
@@ -21,7 +21,7 @@ public:
     void DispatchEvents();
 
     template <class EventT, class... Args>
-    void SendEvent(Args&&... args);
+    void PostEvent(Args&&... args);
 
     void RegisterListener(IEventListener* listener);
 
@@ -36,7 +36,7 @@ private:
 };
 
 template <class EventT, class... Args>
-void EventManager::SendEvent(Args&&... args) {
+void EventManager::PostEvent(Args&&... args) {
     EventT* event = new(std::nothrow) EventT(std::forward<Args>(args)...);
     assert(event != nullptr);
 

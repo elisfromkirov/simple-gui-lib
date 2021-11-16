@@ -3,7 +3,7 @@ set(SRCROOT ${SGUI_SOURCE_DIR}/src/GUI/Event)
 
 target_sources(SGUI_GUI
     PUBLIC
-        ${INCROOT}/InputEvent.hpp
+        ${INCROOT}/WidgetEvent.hpp
     PRIVATE
-        ${SRCROOT}/InputEvent.cpp
+        ${SRCROOT}/WidgetEvent.cpp
     )

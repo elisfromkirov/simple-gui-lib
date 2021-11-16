@@ -95,7 +95,6 @@ private:
     MethodPointer method_pointer_;
 };
 
-
 template <class T, class R, class ...Args>
 MethodWrap<T, R, Args...>::MethodWrap(
     typename MethodWrap<T, R, Args...>::ObjectPointer object_pointer, 

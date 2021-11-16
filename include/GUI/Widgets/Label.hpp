@@ -4,24 +4,25 @@
 #include <cassert>
 #include <cstdint>
 
+#include "Core/Platform/Text.hpp"
 #include "GUI/Widgets/Widget.hpp"
 
 class Label : public Widget {
 public:
-    Label(const std::string& string, const Color& color = Color(0, 0, 0, 1));
-
+    Label(const std::string& string, const Font& font, const Vector2i& position = Vector2i());
     virtual ~Label() override;
+
+    virtual void OnRender(Renderer* renderer) override;
+
+    virtual bool OnMoveEvent(const MoveEvent* event) override;
+
+    virtual bool OnResizeEvent(const ResizeEvent* event) override;
 
     void SetCharacterSize(uint32_t char_size);
 
     void SetString(const std::string& string);
 
-protected:
-    virtual void Render(Renderer* renderer) const override;
-
-    virtual void Resize(const Vector2u& size) override; 
-
-    virtual void Move(const Vector2i& displacement) override;
+    void SetTextColor(const Color& color);
 
 protected:
     Text text_;

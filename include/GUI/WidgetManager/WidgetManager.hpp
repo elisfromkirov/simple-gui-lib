@@ -5,19 +5,30 @@
 #include <cstdint>
 
 #include "Core/EventManager/IEventListener.hpp"
-#include "GUI/Event/InputEvent.hpp"
 #include "GUI/Widgets/Widget.hpp"
 
 class WidgetManager : public IEventListener {
-public:
-    WidgetManager(Widget* root_widget);
+    static WidgetManager* singleton;
 
-    ~WidgetManager();
+private:
+    WidgetManager();
+
+public:
+    virtual ~ WidgetManager() override;
 
     virtual void OnEvent(const Event* event) override;
 
-private:
+    Widget* GetRootWidget();
+    void SetRootWidget(Widget* widget);
+
+    static  WidgetManager* GetWidgetManager();
+
+protected:
     Widget* root_widget_;
+
+    Widget* grabbing_widget_;
+
+    Widget* focused_widget_;
 };
 
 #endif // __WIDGET_MANAGER_HPP__

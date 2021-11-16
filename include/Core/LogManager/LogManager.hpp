@@ -2,9 +2,9 @@
 #define __LOG_MANAGER_HPP__
 
 #include <cassert>
+#include <cstdarg>
 #include <cstdint>
 #include <cstdio>
-#include <cstdarg>
 
 class LogManager {
 private:

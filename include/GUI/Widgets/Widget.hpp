@@ -5,103 +5,74 @@
 #include <cstdint>
 #include <list>
 
+#include "Core/EventManager/IEventListener.hpp"
+#include "Core/Math/Rect2.hpp"
 #include "Core/Math/Vector2.hpp"
-#include "GUI/Event/InputEvent.hpp"
-#include "Platform/Renderer.hpp"
+#include "Core/Platform/InputEvent.hpp"
+#include "Core/Platform/Renderer.hpp"
+#include "GUI/Event/WidgetEvent.hpp"
+#include "GUI/Style/IStyle.hpp"
 
-class Widget {
+class CompositeWidget;
+
+class Widget : public IEventListener {
+public:
+    enum State : uint32_t {
+        kNone     = 0x0000,
+        kReleased = 0x0001,
+        kPressed  = 0x0002,
+        kHovered  = 0x0004        
+    };
+
 public:
     Widget(const Vector2u& size = Vector2u(), const Vector2i& position = Vector2i());
-
     virtual ~Widget();
+    
+    virtual void OnEvent(const Event* event) override;
 
-    virtual void OnRender(Renderer* renderer) const;
+    virtual void OnRender(Renderer* renderer);
 
-    virtual void OnResize(const Vector2u& size);
+    virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event);
 
-    virtual void OnMove(const Vector2i& displacement);
+    virtual bool OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event);
 
-    virtual bool HitTest(const Vector2u& point) const;
+    virtual bool OnMouseMoveEvent(const MouseMoveEvent* event);
 
-    virtual bool OnMouseButtonPress(const MouseButtonPressEvent* event);
+    virtual bool OnFocusInEvent(const FocusInEvent* event);
 
-    virtual bool OnMouseButtonRelease(const MouseButtonReleaseEvent* event);
+    virtual bool OnFocusOutEvent(const FocusOutEvent* event);
 
-    virtual bool OnMouseMove(const MouseMoveEvent* event);
+    virtual bool OnCloseEvent(const CloseEvent* event);
 
-    virtual bool OnMouseHover(const MouseHoverEvent* event);
+    virtual bool OnMoveEvent(const MoveEvent* event);
 
-    virtual bool OnMouseLeave(const MouseLeaveEvent* event); 
+    virtual bool OnResizeEvent(const ResizeEvent* event);
+
+    virtual bool HitTest(const Vector2i& point) const;
 
     const Vector2u& GetSize() const;
 
     const Vector2i& GetPosition() const;
 
-    Widget* GetParent() const;
+    const CompositeWidget* GetParent() const;
+    void SetParent(CompositeWidget* parent);
+    
+    State GetState() const;
 
-    bool Attach(Widget* widget);
-    bool Detach(Widget* widget);
-
-    bool IsVisible() const;
-    void SetVisible(bool visible);
-
-    bool IsResizable() const;
-    void SetResizable(bool resizable);
-
-    bool IsMovable() const;
-    void SetMovable(bool movable);
-
-    bool IsActive() const;
-    void SetActive(bool active);
-
-    bool IsFilled() const;
-    void SetFilled(bool filled);
-
-    const Color& GetFillColor() const;
-    void SetFillColor(const Color& color);
-
-    template <class WidgetVisitor>
-    void Accept(WidgetVisitor* visitor);
+    void ApplyStyle(IStyle* style);
 
 protected:
-    virtual void RenderBackGround(Renderer* renderer) const;
-
-    virtual void Render(Renderer* renderer) const;
-
-    virtual void Resize(const Vector2u& size);
-
-    virtual void Move(const Vector2i& displacement);
+    void Render(Renderer* renderer);
 
 protected:
     Vector2u           size_;
     Vector2i           position_;
 
-    Widget*            parent_;
-    std::list<Widget*> children_;
+    CompositeWidget*   parent_;
 
-    bool               visible_;
+    State              state_;
 
-    bool               resizable_; 
-
-    bool               movable_;
-
-    bool               active_;
-
-    bool               filled_;
-    Color              fill_color_;
+    std::list<IStyle*> styles_;
 };
-
-template <class WidgetVisitor>
-void Widget::Accept(WidgetVisitor* visitor) {
-    assert(visitor != nullptr);
-
-    visitor->StartWidget(this);
-
-    for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
-        (*iter)->Accept(visitor);
-    }
-
-    visitor->FinishWidget(this);
-}
 
 #endif // __WIDGET_HPP__

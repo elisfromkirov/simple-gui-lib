@@ -1,5 +1,5 @@
-#ifndef __BUTTON_BASE_HPP__
-#define __BUTTON_BASE_HPP__
+#ifndef __BUTTON_HPP__
+#define __BUTTON_HPP__
 
 #include <cassert>
 #include <cstdint>
@@ -9,20 +9,17 @@
 
 class ButtonBase : public Widget {
 public:
-    ButtonBase(const Vector2u& size, const Vector2i& position);
-
+    ButtonBase(const Vector2u& size, const Vector2i& position = Vector2i());
     virtual ~ButtonBase() override;
 
-    virtual bool OnMouseButtonPress(const MouseButtonPressEvent* event) override;
+    virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event) override;
 
-    virtual bool OnMouseButtonRelease(const MouseButtonReleaseEvent* event) override;
+    virtual bool OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) override;
+    
+    virtual bool OnMouseMoveEvent(const MouseMoveEvent* event) override;
 
 public:
-    Signal<void> Pressed;
-    Signal<void> Click;
-
-protected:
-    bool pressed_;
+    Signal<void> Clicked;
 };
 
 #endif // __BUTTON_BASE_HPP__

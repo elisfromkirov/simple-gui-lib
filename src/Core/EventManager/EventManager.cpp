@@ -1,4 +1,6 @@
+#include "Core/EventManager/Event.hpp"
 #include "Core/EventManager/EventManager.hpp"
+#include "Core/EventManager/IEventListener.hpp"
 
 EventManager* EventManager::singleton{nullptr};
 

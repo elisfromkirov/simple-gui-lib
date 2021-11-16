@@ -1,12 +1,37 @@
 #include "GUI/Widgets/Label.hpp"
 
-Label::Label(const std::string& string, const Color& color)
-    : text_{string} {
-    text_.SetFillColor(color);
-    size_ = text_.GetSize();    
+Label::Label(const std::string& string, const Font& font, const Vector2i& position)
+    : Widget{},
+      text_{string, font} {
+    size_ = text_.GetSize();
+
+    position_ = position;
+    text_.SetPosition(position_);
 }
 
 Label::~Label() {}
+
+void Label::OnRender(Renderer* renderer) {
+    assert(renderer != nullptr);
+
+    renderer->RenderText(text_);    
+}
+
+bool Label::OnMoveEvent(const MoveEvent* event) {
+    assert(event != nullptr);
+
+    position_ = event->GetNewPosition();
+
+    text_.SetPosition(position_);
+
+    return true;
+}
+
+bool Label::OnResizeEvent(const ResizeEvent* event) {
+    assert(event != nullptr);
+
+    return true;
+}
 
 void Label::SetCharacterSize(uint32_t char_size) {
     text_.SetCharacterSize(char_size);
@@ -18,16 +43,7 @@ void Label::SetString(const std::string& string) {
     size_ = text_.GetSize();
 }
 
-void Label::Render(Renderer* renderer) const {
-    assert(renderer != nullptr);
-
-    renderer->RenderText(text_);    
-}
-
-void Label::Resize(const Vector2u& size) {}
-
-void Label::Move(const Vector2i& displacement) {
-    position_ += displacement;
-
-    text_.SetPosition(position_);
+void Label::SetTextColor(const Color& color) {
+    text_.SetFillColor(color);
+    size_ = text_.GetSize();
 }
