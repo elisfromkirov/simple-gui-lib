@@ -14,24 +14,17 @@ Label::~Label() {}
 void Label::OnRender(Renderer* renderer) {
     assert(renderer != nullptr);
 
+    ApplyStyles(renderer);
+
     renderer->RenderText(text_);    
 }
 
-bool Label::OnMoveEvent(const MoveEvent* event) {
-    assert(event != nullptr);
-
-    position_ = event->GetNewPosition();
-
-    text_.SetPosition(position_);
-
-    return true;
+void Label::Move(const Vector2i& position) {
+    position_ = position;
+    text_.SetPosition(position);
 }
 
-bool Label::OnResizeEvent(const ResizeEvent* event) {
-    assert(event != nullptr);
-
-    return true;
-}
+void Label::Resize(const Vector2u& size) {}
 
 void Label::SetCharacterSize(uint32_t char_size) {
     text_.SetCharacterSize(char_size);

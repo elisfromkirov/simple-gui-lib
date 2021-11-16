@@ -14,9 +14,9 @@ public:
 
     virtual void OnRender(Renderer* renderer) override;
 
-    virtual bool OnMoveEvent(const MoveEvent* event) override;
+    virtual void Resize(const Vector2u& size) override;
 
-    virtual bool OnResizeEvent(const ResizeEvent* event) override;
+    virtual void Move(const Vector2i& position) override;
 
 protected:
     Image image_;

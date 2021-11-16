@@ -27,10 +27,16 @@ public:
 public:
     Widget(const Vector2u& size = Vector2u(), const Vector2i& position = Vector2i());
     virtual ~Widget();
-    
-    virtual void OnEvent(const Event* event) override;
 
     virtual void OnRender(Renderer* renderer);
+
+    virtual void Resize(const Vector2u& size);
+
+    virtual void Move(const Vector2i& position);
+
+    virtual bool HitTest(const Vector2i& point) const;
+
+    virtual void OnEvent(const Event* event) override;
 
     virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event);
 
@@ -48,10 +54,8 @@ public:
 
     virtual bool OnResizeEvent(const ResizeEvent* event);
 
-    virtual bool HitTest(const Vector2i& point) const;
-
     const Vector2u& GetSize() const;
-
+    
     const Vector2i& GetPosition() const;
 
     const CompositeWidget* GetParent() const;
@@ -62,7 +66,7 @@ public:
     void ApplyStyle(IStyle* style);
 
 protected:
-    void Render(Renderer* renderer);
+    void ApplyStyles(Renderer* renderer);
 
 protected:
     Vector2u           size_;

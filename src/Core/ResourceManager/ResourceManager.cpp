@@ -32,26 +32,28 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager() {}
 
-const Font* ResourceManager::LoadFont(const std::string& name) {
+const Font& ResourceManager::LoadFont(const std::string& name) {
     if (loaded_fonts_.count(name) != 0) {
-        return loaded_fonts_[name];
+        Font* font = loaded_fonts_[name];
+        return *font;
     }
 
     Font* font = new Font(fonts_directory_ + name);
     loaded_fonts_[name] = font;
 
-    return font;
+    return *font;
 }
 
-const Texture* ResourceManager::LoadTexture(const std::string& name) {
+const Texture& ResourceManager::LoadTexture(const std::string& name) {
     if (loaded_textures_.count(name) != 0) {
-        return loaded_textures_[name];
+        Texture* texture = loaded_textures_[name];
+        return *texture;
     }
 
     Texture* texture = new Texture(textures_directory_ + name);
     loaded_textures_[name] = texture;
 
-    return texture;
+    return *texture;
 }
 
 ResourceManager* ResourceManager::GetResourceManager() {

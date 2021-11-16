@@ -16,14 +16,29 @@ Widget::~Widget() {
     }
 }
 
-void Widget::OnEvent(const Event* event) {
-    assert(event != nullptr);
-}
-
 void Widget::OnRender(Renderer* renderer) {
     assert(renderer != nullptr);
 
-    Render(renderer);
+    ApplyStyles(renderer);
+}
+
+void Widget::Resize(const Vector2u& size) {
+    size_ = size;    
+}
+
+void Widget::Move(const Vector2i& position) {
+    position_ = position;
+}
+
+bool Widget::HitTest(const Vector2i& point) const {
+    Vector2i relative_position = point - position_;
+ 
+    return 0.f < relative_position.x && relative_position.x < static_cast<int32_t>(size_.x) &&
+           0.f < relative_position.y && relative_position.y < static_cast<int32_t>(size_.y);
+}
+
+void Widget::OnEvent(const Event* event) {
+    assert(event != nullptr);
 }
 
 bool Widget::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
@@ -70,7 +85,7 @@ bool Widget::OnCloseEvent(const CloseEvent* event) {
 bool Widget::OnMoveEvent(const MoveEvent* event) {
     assert(event != nullptr);
 
-    position_ = event->GetNewPosition();
+    Move(event->GetNewPosition());    
 
     return true;
 }
@@ -78,16 +93,9 @@ bool Widget::OnMoveEvent(const MoveEvent* event) {
 bool Widget::OnResizeEvent(const ResizeEvent* event) {
     assert(event != nullptr);
 
-    size_ = event->GetNewSize();
+    Resize(event->GetNewSize());
 
     return true;
-}
-
-bool Widget::HitTest(const Vector2i& point) const {
-    Vector2i relative_position = point - position_;
- 
-    return 0.f < relative_position.x && relative_position.x < static_cast<int32_t>(size_.x) &&
-           0.f < relative_position.y && relative_position.y < static_cast<int32_t>(size_.y);
 }
 
 const Vector2u& Widget::GetSize() const {
@@ -116,7 +124,7 @@ void Widget::ApplyStyle(IStyle* style) {
     styles_.push_back(style);
 }
 
-void Widget::Render(Renderer* renderer) {
+void Widget::ApplyStyles(Renderer* renderer) {
     assert(renderer != nullptr);
 
     for (auto iter = styles_.begin(); iter != styles_.end(); ++iter) {

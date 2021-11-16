@@ -5,6 +5,7 @@
 #include "GUI/Style/FilledStyle.hpp"
 #include "GUI/Widgets/ButtonBase.hpp"
 #include "GUI/Widgets/Icon.hpp"
+#include "GUI/Widgets/List.hpp"
 #include "GUI/Widgets/Label.hpp"
 
 #include <cstdio>
@@ -15,11 +16,18 @@ void ClickResponse() {
 
 MainPanel::MainPanel(const Vector2u& size)
     : CompositeWidget{size} {
-    ButtonBase* button = new ButtonBase(Vector2u{50, 50}, Vector2i{50, 50});
-    button->Clicked.Connect(ClickResponse);
-    button->ApplyStyle(new FilledStyle(kButtonColorOnRelease, kButtonColorOnPress, kButtonColorOnHover));
+    ResourceManager* resource_manager = ResourceManager::GetResourceManager();
+    assert(resource_manager != nullptr);
 
-    Attach(button);
+    VerticalList* list = new VerticalList(Vector2u{200, 200});
+    list->ApplyStyle(new FilledStyle(Color(1.f, 0.f, 0.f, 1.f)));
+    
+    list->InsertItem(new Label("string 1", resource_manager->LoadFont(kBoldFont)));
+    list->InsertItem(new Label("string 2", resource_manager->LoadFont(kBoldFont)));
+    list->InsertItem(new Label("string 3", resource_manager->LoadFont(kBoldFont)));
+    list->InsertItem(new Label("string 4", resource_manager->LoadFont(kBoldFont)));
+
+    Attach(list);
 }
 
 MainPanel::~MainPanel() {}

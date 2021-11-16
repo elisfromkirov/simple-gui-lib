@@ -21,7 +21,8 @@ void CompositeWidget::OnRender(Renderer* renderer) {
 
     renderer->Clear();
 
-    Render(renderer);
+    ApplyStyles(renderer);
+
     RenderChildren(renderer);
 
     renderer->Display();

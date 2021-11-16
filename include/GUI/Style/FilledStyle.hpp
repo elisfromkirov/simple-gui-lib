@@ -6,8 +6,11 @@
 
 class FilledStyle : public IStyle {
 public:
+    FilledStyle(const Color& color);
+
     FilledStyle(const Color& color_on_release, const Color& color_on_hover, 
                 const Color& color_on_press);
+
     virtual ~FilledStyle() override;
 
     virtual void Apply(Widget* widget, Renderer* renderer) override; 

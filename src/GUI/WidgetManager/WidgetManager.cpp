@@ -5,7 +5,7 @@ WidgetManager* WidgetManager::singleton{nullptr};
 WidgetManager::WidgetManager() 
     : root_widget_{nullptr}, 
       grabbing_widget_{nullptr},
-      focused_widget_{nullptr} {}
+      focus_widget_{nullptr} {}
 
 WidgetManager::~WidgetManager() {}
 

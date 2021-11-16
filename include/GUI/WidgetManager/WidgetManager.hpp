@@ -14,7 +14,7 @@ private:
     WidgetManager();
 
 public:
-    virtual ~ WidgetManager() override;
+    virtual ~WidgetManager() override;
 
     virtual void OnEvent(const Event* event) override;
 
@@ -28,7 +28,7 @@ protected:
 
     Widget* grabbing_widget_;
 
-    Widget* focused_widget_;
+    Widget* focus_widget_;
 };
 
 #endif // __WIDGET_MANAGER_HPP__

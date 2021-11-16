@@ -19,8 +19,8 @@ private:
 public:
     ~ResourceManager();
 
-    const Font*    LoadFont   (const std::string& name);
-    const Texture* LoadTexture(const std::string& name); 
+    const Font&    LoadFont   (const std::string& name);
+    const Texture& LoadTexture(const std::string& name); 
 
     static ResourceManager* GetResourceManager();
 

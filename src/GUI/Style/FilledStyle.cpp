@@ -2,6 +2,11 @@
 #include "GUI/Style/FilledStyle.hpp"
 #include "GUI/Widgets/Widget.hpp"
 
+FilledStyle::FilledStyle(const Color& color)
+    : color_on_release_{color},
+      color_on_hover_{color},
+      color_on_press_{color} {}
+
 FilledStyle::FilledStyle(const Color& color_on_release,
                          const Color& color_on_hover, 
                          const Color& color_on_press)

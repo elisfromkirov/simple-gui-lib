@@ -14,21 +14,14 @@ Icon::~Icon() {}
 void Icon::OnRender(Renderer* renderer) {
     assert(renderer != nullptr);
 
+    ApplyStyles(renderer);
+
     renderer->RenderImage(image_);
 }
 
-bool Icon::OnMoveEvent(const MoveEvent* event) {
-    assert(event != nullptr);
+void Icon::Resize(const Vector2u& size) {}
 
-    position_ = event->GetNewPosition();
-
-    image_.SetPosition(position_);
-
-    return true;
-}
-
-bool Icon::OnResizeEvent(const ResizeEvent* event) {
-    assert(event != nullptr);
-
-    return true;
+void Icon::Move(const Vector2i& position) {
+    position_ = position;
+    image_.SetPosition(position);
 }
