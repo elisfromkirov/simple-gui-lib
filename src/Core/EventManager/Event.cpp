@@ -8,3 +8,7 @@ Event::~Event() {}
 uint64_t Event::GetType() const {
     return type_;
 }
+
+uint64_t Event::GetStaticType() {
+    return 0;
+}

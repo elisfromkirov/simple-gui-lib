@@ -8,6 +8,18 @@ EventManager::EventManager() {}
 
 EventManager::~EventManager() {}
 
+EventManager* EventManager::GetInstance() {
+    if (singleton == nullptr) {
+        singleton = new EventManager();
+    }
+
+    return singleton;
+}
+
+void EventManager::Release() {
+    delete this;
+}
+
 void EventManager::DispatchEvents() {
     while (!queue_.empty()) {
         Event* event = queue_.front();
@@ -32,12 +44,4 @@ void EventManager::UnregisterListener(IEventListener* listener) {
     assert(listener != nullptr);
 
     listeners_.remove(listener);
-}
-
-EventManager* EventManager::GetEventManager() {
-    if (singleton == nullptr) {
-        singleton = new EventManager();
-    }
-
-    return singleton;
 }

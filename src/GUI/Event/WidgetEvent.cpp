@@ -11,37 +11,61 @@ Widget* WidgetEvent::GetWidget() const {
     return widget_;
 }
 
-MouseCaptureRequestEvent::MouseCaptureRequestEvent(Widget* widget)
-    : WidgetEvent{kMouseCaptureRequest, widget} {}
+MouseCaptureEvent::MouseCaptureEvent(Widget* widget)
+    : WidgetEvent{kMouseCaptureEvent, widget} {}
 
-MouseCaptureRequestEvent::~MouseCaptureRequestEvent() {}
+MouseCaptureEvent::~MouseCaptureEvent() {}
+
+uint64_t MouseCaptureEvent::GetStaticType() {
+    return kMouseCaptureEvent;
+}
 
 MouseCaptureLostEvent::MouseCaptureLostEvent(Widget* widget)
-    : WidgetEvent{kMouseCaptureLost, widget} {}
+    : WidgetEvent{kMouseCaptureLostEvent, widget} {}
 
 MouseCaptureLostEvent::~MouseCaptureLostEvent() {}
 
+uint64_t MouseCaptureLostEvent::GetStaticType() {
+    return kMouseCaptureLostEvent;
+}
+
 FocusInEvent::FocusInEvent(Widget* widget)
-    : WidgetEvent{kFocusIn, widget} {}
+    : WidgetEvent{kFocusInEvent, widget} {}
 
 FocusInEvent::~FocusInEvent() {}
 
+uint64_t FocusInEvent::GetStaticType() {
+    return kFocusInEvent;
+}
+
 FocusOutEvent::FocusOutEvent(Widget* widget)
-    : WidgetEvent{kFocusOut, widget} {}
+    : WidgetEvent{kFocusOutEvent, widget} {}
 
 FocusOutEvent::~FocusOutEvent() {}
 
+uint64_t FocusOutEvent::GetStaticType() {
+    return kFocusOutEvent;
+}
+
 CloseEvent::CloseEvent(Widget* widget)
-    : WidgetEvent{kClose, widget} {}
+    : WidgetEvent{kCloseEvent, widget} {}
 
 CloseEvent::~CloseEvent() {}
 
+uint64_t CloseEvent::GetStaticType() {
+    return kCloseEvent;
+}
+
 MoveEvent::MoveEvent(Widget* widget, const Vector2i& position, const Vector2i& new_position)
-    : WidgetEvent{kMove, widget},
+    : WidgetEvent{kMoveEvent, widget},
       position_{position},
       new_position_{new_position} {}
 
 MoveEvent::~MoveEvent() {}
+
+uint64_t MoveEvent::GetStaticType() {
+    return kMoveEvent;
+}
 
 const Vector2i& MoveEvent::GetPosition() const {
     return position_;
@@ -52,11 +76,15 @@ const Vector2i& MoveEvent::GetNewPosition() const {
 }
 
 ResizeEvent::ResizeEvent(Widget* widget, const Vector2u& size, const Vector2u& new_size)
-    : WidgetEvent{kResize, widget},
+    : WidgetEvent{kResizeEvent, widget},
       size_{size},
       new_size_{new_size} {}
 
 ResizeEvent::~ResizeEvent() {}
+
+uint64_t ResizeEvent::GetStaticType() {
+    return kResizeEvent;
+}
 
 const Vector2u& ResizeEvent::GetSize() const {
     return size_;

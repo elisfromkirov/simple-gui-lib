@@ -1,5 +1,5 @@
-set(INCROOT ${SGUI_SOURCE_DIR}/include/GUI/Style)
-set(SRCROOT ${SGUI_SOURCE_DIR}/src/GUI/Style)
+set(INCROOT ${SGUI_SOURCE_DIR}/include/GUI/Styles)
+set(SRCROOT ${SGUI_SOURCE_DIR}/src/GUI/Styles)
 
 target_sources(SGUI_GUI
     PUBLIC

@@ -10,19 +10,22 @@ class Font;
 class Texture;
 
 class ResourceManager {
-private:
-    static ResourceManager* singleton;
-
-private:
-    ResourceManager();
-
 public:
-    ~ResourceManager();
+    static ResourceManager* GetInstance();
+
+    void Release();
 
     const Font&    LoadFont   (const std::string& name);
     const Texture& LoadTexture(const std::string& name); 
 
-    static ResourceManager* GetResourceManager();
+private:
+    ResourceManager();
+    ~ResourceManager();
+
+    ResourceManager(const ResourceManager& other) = delete;
+    ResourceManager& operator=(const ResourceManager& other) = delete;
+
+    static ResourceManager* singleton;
 
 private:
     std::unordered_map<std::string, Font*>    loaded_fonts_;

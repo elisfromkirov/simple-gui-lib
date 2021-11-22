@@ -11,7 +11,7 @@
 #include "Core/Platform/InputEvent.hpp"
 #include "Core/Platform/Renderer.hpp"
 #include "GUI/Event/WidgetEvent.hpp"
-#include "GUI/Style/IStyle.hpp"
+#include "GUI/Styles/IStyle.hpp"
 
 class CompositeWidget;
 

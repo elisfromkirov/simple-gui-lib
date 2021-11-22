@@ -2,8 +2,8 @@
 #include "Application/ColorSheme.hpp"
 #include "Core/ResourceManager/Resources.hpp"
 #include "Core/ResourceManager/ResourceManager.hpp"
-#include "GUI/Style/FilledStyle.hpp"
-#include "GUI/Widgets/ButtonBase.hpp"
+#include "GUI/Styles/FilledStyle.hpp"
+#include "GUI/Widgets/Button.hpp"
 #include "GUI/Widgets/Icon.hpp"
 #include "GUI/Widgets/List.hpp"
 #include "GUI/Widgets/Label.hpp"
@@ -16,8 +16,14 @@ void ClickResponse() {
 
 MainPanel::MainPanel(const Vector2u& size)
     : CompositeWidget{size} {
-    ResourceManager* resource_manager = ResourceManager::GetResourceManager();
+    ResourceManager* resource_manager = ResourceManager::GetInstance();
     assert(resource_manager != nullptr);
+
+    Button* button = new Button(Vector2u{100, 100}, Vector2i{300, 300});
+    button->ApplyStyle(new FilledStyle(Color(0.f, 1.f, 0.f, 1.f), Color(1.f, 0.f, 0.f, 1.f), Color(1.f, 0.f, 0.f, 1.f)));
+    button->Clicked.Connect(ClickResponse);
+
+    Attach(button);
 
     VerticalList* list = new VerticalList(Vector2u{200, 200});
     list->ApplyStyle(new FilledStyle(Color(1.f, 0.f, 0.f, 1.f)));

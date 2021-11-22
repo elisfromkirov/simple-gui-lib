@@ -1,12 +1,12 @@
 #include "Core/EventManager/EventManager.hpp"
-#include "GUI/Widgets/ButtonBase.hpp"
+#include "GUI/Widgets/Button.hpp"
 
-ButtonBase::ButtonBase(const Vector2u& size, const Vector2i& position)
+Button::Button(const Vector2u& size, const Vector2i& position)
     : Widget{size, position} {}
 
-ButtonBase::~ButtonBase() {}
+Button::~Button() {}
 
-bool ButtonBase::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
+bool Button::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
     assert(event != nullptr);
 
     if (!HitTest(event->GetMousePosition())) {
@@ -15,15 +15,15 @@ bool ButtonBase::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
 
     state_ = kPressed;
 
-    EventManager* event_manager = EventManager::GetEventManager();
+    EventManager* event_manager = EventManager::GetInstance();
     assert(event_manager != nullptr);
 
-    event_manager->PostEvent<MouseCaptureRequestEvent>(this);
+    event_manager->PostEvent<MouseCaptureEvent>(this);
 
     return true;
 }
 
-bool ButtonBase::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
+bool Button::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
     assert(event != nullptr);
 
     if (state_ != kPressed) {
@@ -32,7 +32,7 @@ bool ButtonBase::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event)
 
     state_ = kReleased;
 
-    EventManager* event_manager = EventManager::GetEventManager();
+    EventManager* event_manager = EventManager::GetInstance();
     assert(event_manager != nullptr);
 
     event_manager->PostEvent<MouseCaptureLostEvent>(this);
@@ -45,15 +45,10 @@ bool ButtonBase::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event)
     return true;
 }
 
-bool ButtonBase::OnMouseMoveEvent(const MouseMoveEvent* event) {
+bool Button::OnMouseMoveEvent(const MouseMoveEvent* event) {
     assert(event != nullptr);
 
     if (state_ == kPressed) {
-        return true;
-    }
-
-    if (HitTest(event->GetMousePosition())) {
-        state_ = kHovered;
         return true;
     }
 

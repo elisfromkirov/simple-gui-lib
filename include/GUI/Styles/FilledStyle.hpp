@@ -2,7 +2,7 @@
 #define __FILLED_STYLE_HPP__
 
 #include "Core/Platform/Color.hpp"
-#include "GUI/Style/IStyle.hpp"
+#include "GUI/Styles/IStyle.hpp"
 
 class FilledStyle : public IStyle {
 public:

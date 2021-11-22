@@ -12,29 +12,27 @@ Application::Application(const std::string& name)
       window_{name, Vector2u(1600, 1200)},
       renderer_{&window_},
       input_{&window_} {
-    event_manager_ = EventManager::GetEventManager();
+    event_manager_ = EventManager::GetInstance();
     assert(event_manager_ != nullptr);
 
-    log_manager_ = LogManager::GetLogManager();
+    log_manager_ = LogManager::GetInstance();
     assert(log_manager_ != nullptr);
 
-    resource_manager_ = ResourceManager::GetResourceManager();
+    resource_manager_ = ResourceManager::GetInstance();
     assert(resource_manager_ != nullptr);
 
-    widget_manager_ = WidgetManager::GetWidgetManager();
+    widget_manager_ = WidgetManager::GetInstance();
     assert(widget_manager_ != nullptr);
-
-    event_manager_->RegisterListener(widget_manager_);
 
     MainPanel* main_panel = new MainPanel(Vector2u(1600, 1200));
     widget_manager_->SetRootWidget(main_panel);
 }
 
 Application::~Application() {
-    delete event_manager_;
-    delete log_manager_;
-    delete resource_manager_;
-    delete widget_manager_;
+    event_manager_->Release();
+    log_manager_->Release();
+    resource_manager_->Release();
+    widget_manager_->Release();
 }
 
 void Application::Run() {

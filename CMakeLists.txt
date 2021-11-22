@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.7)
 
 project(SGUI)
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -O1 -Wall -Wextra -Wno-unused-parameter")
+set(CMAKE_CXX_FLAGS "-std=c++11 -O1 -Wall -Wextra")
 
 add_executable(paint)
 

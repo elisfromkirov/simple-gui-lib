@@ -9,25 +9,27 @@ class Event;
 class IEventListener;
 
 class EventManager {
-private:
-    static EventManager* singleton;
-
-private:
-    EventManager();
-
 public:
-    ~EventManager();
+    static EventManager* GetInstance();
+
+    void Release();
 
     void DispatchEvents();
 
     template <class EventT, class... Args>
     void PostEvent(Args&&... args);
 
-    void RegisterListener(IEventListener* listener);
-
+    void RegisterListener  (IEventListener* listener);
     void UnregisterListener(IEventListener* listener);
 
-    static EventManager* GetEventManager();
+private:
+    EventManager();
+    ~EventManager();
+
+    EventManager(const EventManager& other) = delete;
+    EventManager& operator=(const EventManager& other) = delete;
+
+    static EventManager* singleton;
 
 private:
     std::list<Event*>          queue_;
@@ -37,7 +39,7 @@ private:
 
 template <class EventT, class... Args>
 void EventManager::PostEvent(Args&&... args) {
-    EventT* event = new(std::nothrow) EventT(std::forward<Args>(args)...);
+    EventT* event = new EventT(std::forward<Args>(args)...);
     assert(event != nullptr);
 
     queue_.push_back(event);

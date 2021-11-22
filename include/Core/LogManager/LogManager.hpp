@@ -7,23 +7,25 @@
 #include <cstdio>
 
 class LogManager {
-private:
-    static const char* kLogFileName;
-
-    static LogManager* singleton;
-
-private:
-    LogManager();
-
 public:
-    static LogManager* GetLogManager();
+    static LogManager* GetInstance();
 
-public:
-    ~LogManager();
+    void Release();
 
     void Print(const char* format, ...);
 
 private:
+    LogManager();
+    ~LogManager();
+
+    LogManager(const LogManager& other);
+    LogManager& operator=(const LogManager& other);
+
+    static LogManager* singleton;
+
+private:
+    static const char* kLogFileName;
+
     FILE* log_file_;
 };
 

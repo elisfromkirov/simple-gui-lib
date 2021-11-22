@@ -19,6 +19,8 @@ public:
 
     uint64_t GetType() const;
 
+    static uint64_t GetStaticType();
+
 protected:
     uint64_t type_;
 };

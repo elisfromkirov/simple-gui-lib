@@ -25,19 +25,31 @@ bool MouseEvent::IsButtonPressed() const {
 }
 
 MouseButtonPressEvent::MouseButtonPressEvent(const Vector2i& position, MouseButton button)
-    : MouseEvent{kMouseButtonPress, position, button, true} {}
+    : MouseEvent{kMouseButtonPressEvent, position, button, true} {}
 
 MouseButtonPressEvent::~MouseButtonPressEvent() {}
 
+uint64_t MouseButtonPressEvent::GetStaticType() {
+    return kMouseButtonPressEvent;
+}
+
 MouseButtonReleaseEvent::MouseButtonReleaseEvent(const Vector2i& position, MouseButton button)
-    : MouseEvent{kMouseButtonRelease, position, button, false} {}
+    : MouseEvent{kMouseButtonReleaseEvent, position, button, false} {}
 
 MouseButtonReleaseEvent::~MouseButtonReleaseEvent() {}
 
+uint64_t MouseButtonReleaseEvent::GetStaticType() {
+    return kMouseButtonReleaseEvent;
+}
+
 MouseMoveEvent::MouseMoveEvent(const Vector2i& position, MouseButton button, bool pressed)
-    : MouseEvent{kMouseMove, position, button, pressed} {}
+    : MouseEvent{kMouseMoveEvent, position, button, pressed} {}
 
 MouseMoveEvent::~MouseMoveEvent() {}
+
+uint64_t MouseMoveEvent::GetStaticType() {
+    return kMouseMoveEvent;
+}
 
 KeyEvent::KeyEvent(uint64_t type, Key key, bool alt, bool control, bool shift, bool system)
     : Event{type},
@@ -70,11 +82,19 @@ bool KeyEvent::IsSystemPressed() const {
 }
 
 KeyPressEvent::KeyPressEvent(Key key, bool alt, bool control, bool shift, bool system)
-    : KeyEvent{kKeyPress, key, alt, control, shift, system} {}
+    : KeyEvent{kKeyPressEvent, key, alt, control, shift, system} {}
 
 KeyPressEvent::~KeyPressEvent() {}
 
+uint64_t KeyPressEvent::GetStaticType() {
+    return kKeyPressEvent;
+}
+
 KeyReleaseEvent::KeyReleaseEvent(Key key, bool alt, bool control, bool shift, bool system)
-    : KeyEvent{kKeyRelease, key, alt, control, shift, system} {}
+    : KeyEvent{kKeyReleaseEvent, key, alt, control, shift, system} {}
 
 KeyReleaseEvent::~KeyReleaseEvent() {}
+
+uint64_t KeyReleaseEvent::GetStaticType() {
+    return kKeyReleaseEvent;
+}

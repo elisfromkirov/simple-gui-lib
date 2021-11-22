@@ -5,6 +5,17 @@
 
 ResourceManager* ResourceManager::singleton{nullptr};
 
+ResourceManager* ResourceManager::GetInstance() {
+    if (singleton == nullptr) {
+        singleton = new ResourceManager();
+    }
+    return singleton;
+}
+
+void ResourceManager::Release() {
+    delete this;
+}
+
 ResourceManager::ResourceManager()
     : loaded_fonts_{},
       fonts_directory_{kFontsDirectory},
@@ -54,11 +65,4 @@ const Texture& ResourceManager::LoadTexture(const std::string& name) {
     loaded_textures_[name] = texture;
 
     return *texture;
-}
-
-ResourceManager* ResourceManager::GetResourceManager() {
-    if (singleton == nullptr) {
-        singleton = new ResourceManager();
-    }
-    return singleton;
 }

@@ -8,14 +8,14 @@
 #include "Core/Math/Vector2.hpp"
 
 enum InputEventType : uint64_t {
-    kNoneInputEvent     = kInputEventCategory | 0x00000000,
+    kNoneInputEvent          = kInputEventCategory | 0x00000000,
 
-    kMouseButtonPress   = kInputEventCategory | 0x00000001,
-    kMouseButtonRelease = kInputEventCategory | 0x00000002,
-    kMouseMove          = kInputEventCategory | 0x00000004,
+    kMouseButtonPressEvent   = kInputEventCategory | 0x00000001,
+    kMouseButtonReleaseEvent = kInputEventCategory | 0x00000002,
+    kMouseMoveEvent          = kInputEventCategory | 0x00000004,
 
-    kKeyPress           = kInputEventCategory | 0x00000008,
-    kKeyRelease         = kInputEventCategory | 0x00000010
+    kKeyPressEvent           = kInputEventCategory | 0x00000008,
+    kKeyReleaseEvent         = kInputEventCategory | 0x00000010
 };
 
 enum MouseButton : uint32_t {
@@ -52,6 +52,8 @@ public:
     MouseButtonPressEvent(const Vector2i& position, MouseButton button);
 
     virtual ~MouseButtonPressEvent() override;
+
+    static uint64_t GetStaticType();
 };
 
 class MouseButtonReleaseEvent : public MouseEvent {
@@ -59,6 +61,8 @@ public:
     MouseButtonReleaseEvent(const Vector2i& position, MouseButton button);
 
     virtual ~MouseButtonReleaseEvent() override;
+
+    static uint64_t GetStaticType();
 };
 
 class MouseMoveEvent : public MouseEvent {
@@ -66,6 +70,8 @@ public:
     MouseMoveEvent(const Vector2i& position, MouseButton button, bool pressed);
 
     virtual ~MouseMoveEvent() override;
+
+    static uint64_t GetStaticType();
 };
 
 enum Key : uint32_t {
@@ -144,6 +150,8 @@ public:
     KeyPressEvent(Key key, bool alt, bool control, bool shift, bool system);
 
     virtual ~KeyPressEvent() override;
+
+    static uint64_t GetStaticType();
 };
 
 class KeyReleaseEvent : public KeyEvent {
@@ -151,6 +159,8 @@ public:
     KeyReleaseEvent(Key key, bool alt, bool control, bool shift, bool system);
 
     virtual ~KeyReleaseEvent() override;
+
+    static uint64_t GetStaticType();
 };
 
 #endif // __INPUT_EVENT_HPP__

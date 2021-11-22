@@ -10,23 +10,23 @@
 class Widget;
 
 enum WidgetEventType : uint64_t {
-    kNoneWidgetEvent     = kWidgetEventCategory | 0x00000000,
+    kNoneWidgetEvent       = kWidgetEventCategory | 0x00000000,
 
-    kMouseCaptureRequest = kWidgetEventCategory | 0x00000001,
-    kMouseCaptureLost    = kWidgetEventCategory | 0x00000002,
+    kMouseCaptureEvent     = kWidgetEventCategory | 0x00000001,
+    kMouseCaptureLostEvent = kWidgetEventCategory | 0x00000002,
 
-    kMouseHover          = kWidgetEventCategory | 0x00000004,
-    kMouseLeave          = kWidgetEventCategory | 0x00000008,
+    kMouseHoverEvent       = kWidgetEventCategory | 0x00000004,
+    kMouseLeaveEvent       = kWidgetEventCategory | 0x00000008,
 
-    kFocusIn             = kWidgetEventCategory | 0x00000010,
-    kFocusOut            = kWidgetEventCategory | 0x00000020,
+    kFocusInEvent          = kWidgetEventCategory | 0x00000010,
+    kFocusOutEvent         = kWidgetEventCategory | 0x00000020,
 
-    kClose               = kWidgetEventCategory | 0x00000040,
-    kMove                = kWidgetEventCategory | 0x00000080,
-    kResize              = kWidgetEventCategory | 0x00000100,
+    kCloseEvent            = kWidgetEventCategory | 0x00000040,
+    kMoveEvent             = kWidgetEventCategory | 0x00000080,
+    kResizeEvent           = kWidgetEventCategory | 0x00000100,
     
-    kShow                = kWidgetEventCategory | 0x00000200,
-    kHide                = kWidgetEventCategory | 0x00000400
+    kShowEvent             = kWidgetEventCategory | 0x00000200,
+    kHideEvent             = kWidgetEventCategory | 0x00000400
 };
 
 class WidgetEvent : public Event {
@@ -41,40 +41,52 @@ protected:
     Widget* widget_;
 };
 
-class MouseCaptureRequestEvent : public WidgetEvent {
+class MouseCaptureEvent : public WidgetEvent {
 public:
-    MouseCaptureRequestEvent(Widget* widget);
-    virtual ~MouseCaptureRequestEvent() override;
+    MouseCaptureEvent(Widget* widget);
+    virtual ~MouseCaptureEvent() override;
+
+    static uint64_t GetStaticType();
 };
 
 class MouseCaptureLostEvent : public WidgetEvent {
 public:
     MouseCaptureLostEvent(Widget* widget);
     virtual ~MouseCaptureLostEvent() override;
+
+    static uint64_t GetStaticType();
 };
 
 class FocusInEvent : public WidgetEvent {
 public:
     FocusInEvent(Widget* widget);
     virtual ~FocusInEvent() override;
+
+    static uint64_t GetStaticType();
 };
 
 class FocusOutEvent : public WidgetEvent {
 public:
     FocusOutEvent(Widget* widget);
     virtual ~FocusOutEvent() override;
+
+    static uint64_t GetStaticType();
 };
 
 class CloseEvent : public WidgetEvent {
 public:
     CloseEvent(Widget* widget);
     virtual ~CloseEvent() override;
+
+    static uint64_t GetStaticType();
 };
 
 class MoveEvent : public WidgetEvent {
 public:
     MoveEvent(Widget* widget, const Vector2i& position, const Vector2i& new_position);
     virtual ~MoveEvent() override;
+
+    static uint64_t GetStaticType();
 
     const Vector2i& GetPosition() const;
 
@@ -89,6 +101,8 @@ class ResizeEvent : public WidgetEvent {
 public:
     ResizeEvent(Widget* widget, const Vector2u& size, const Vector2u& new_size);
     virtual ~ResizeEvent() override;
+
+    static uint64_t GetStaticType();
 
     const Vector2u& GetSize() const;
 

@@ -23,7 +23,7 @@ Input::~Input() {}
 bool Input::PumpEvents() {
     assert(window_ != nullptr);
 
-    EventManager* event_manager = EventManager::GetEventManager();
+    EventManager* event_manager = EventManager::GetInstance();
     assert(event_manager != nullptr);
 
     sf::Event event{};

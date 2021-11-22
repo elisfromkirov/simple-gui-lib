@@ -1,5 +1,5 @@
 #include "Core/Platform/Renderer.hpp"
-#include "GUI/Style/FilledStyle.hpp"
+#include "GUI/Styles/FilledStyle.hpp"
 #include "GUI/Widgets/Widget.hpp"
 
 FilledStyle::FilledStyle(const Color& color)

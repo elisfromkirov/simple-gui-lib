@@ -4,12 +4,16 @@ const char* LogManager::kLogFileName{"log.txt"};
 
 LogManager* LogManager::singleton{nullptr};
 
-LogManager* LogManager::GetLogManager() {
+LogManager* LogManager::GetInstance() {
     if (singleton == nullptr) {
         singleton = new LogManager();
     }
 
     return singleton;
+}
+
+void LogManager::Release() {
+    delete this;
 }
 
 LogManager::LogManager()
@@ -20,7 +24,7 @@ LogManager::LogManager()
 
 LogManager::~LogManager() {
     assert(log_file_ != nullptr);
-    
+
     fclose(log_file_);
 }
 

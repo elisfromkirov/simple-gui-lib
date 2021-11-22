@@ -6,7 +6,7 @@ target_include_directories(SGUI_GUI
     )
 
 add_subdirectory(Event)
-add_subdirectory(Style)
+add_subdirectory(Styles)
 add_subdirectory(WidgetManager)
 add_subdirectory(Widgets)
 
