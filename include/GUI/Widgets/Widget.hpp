@@ -15,7 +15,7 @@
 
 class CompositeWidget;
 
-class Widget : public IEventListener {
+class Widget {
 public:
     enum State : uint32_t {
         kNone     = 0x0000,
@@ -30,29 +30,33 @@ public:
 
     virtual void OnRender(Renderer* renderer);
 
+    virtual Rect2 GetFillArea() const;
+
     virtual void Resize(const Vector2u& size);
 
     virtual void Move(const Vector2i& position);
 
     virtual bool HitTest(const Vector2i& point) const;
 
-    virtual void OnEvent(const Event* event) override;
-
     virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event);
 
     virtual bool OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event);
-
+    
     virtual bool OnMouseMoveEvent(const MouseMoveEvent* event);
-
+    
     virtual bool OnFocusInEvent(const FocusInEvent* event);
-
+    
     virtual bool OnFocusOutEvent(const FocusOutEvent* event);
-
+    
     virtual bool OnCloseEvent(const CloseEvent* event);
-
+    
     virtual bool OnMoveEvent(const MoveEvent* event);
-
+    
     virtual bool OnResizeEvent(const ResizeEvent* event);
+    
+    virtual bool OnShowEvent(const ShowEvent* event);
+    
+    virtual bool OnHideEvent(const HideEvent* event);
 
     const Vector2u& GetSize() const;
     
@@ -66,6 +70,8 @@ public:
     void ApplyStyle(IStyle* style);
 
 protected:
+    Vector2i MapPositionToParent() const; 
+    
     void ApplyStyles(Renderer* renderer);
 
 protected:

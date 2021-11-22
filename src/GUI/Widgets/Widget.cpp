@@ -22,8 +22,12 @@ void Widget::OnRender(Renderer* renderer) {
     ApplyStyles(renderer);
 }
 
+Rect2 Widget::GetFillArea() const {
+    return Rect2{size_, MapPositionToParent()};
+}
+
 void Widget::Resize(const Vector2u& size) {
-    size_ = size;    
+    size_ = size;
 }
 
 void Widget::Move(const Vector2i& position) {
@@ -35,10 +39,6 @@ bool Widget::HitTest(const Vector2i& point) const {
  
     return 0.f < relative_position.x && relative_position.x < static_cast<int32_t>(size_.x) &&
            0.f < relative_position.y && relative_position.y < static_cast<int32_t>(size_.y);
-}
-
-void Widget::OnEvent(const Event* event) {
-    assert(event != nullptr);
 }
 
 bool Widget::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
@@ -98,6 +98,18 @@ bool Widget::OnResizeEvent(const ResizeEvent* event) {
     return true;
 }
 
+bool Widget::OnShowEvent(const ShowEvent* event) {
+    assert(event != nullptr);
+
+    return false;
+}
+
+bool Widget::OnHideEvent(const HideEvent* event) {
+    assert(event != nullptr);
+
+    return false;
+}
+
 const Vector2u& Widget::GetSize() const {
     return size_;
 }
@@ -132,4 +144,11 @@ void Widget::ApplyStyles(Renderer* renderer) {
 
         style->Apply(this, renderer);
     }
+}
+
+Vector2i Widget::MapPositionToParent() const {
+    if (parent_ != nullptr) {
+        return position_ - parent_->GetPosition();
+    }
+    return position_;
 }

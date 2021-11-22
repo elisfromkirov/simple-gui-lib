@@ -21,4 +21,8 @@ const Color KTitleBarColor{ColorFromRGB888(0x383838)};
 
 const Color kTabBarColor{ColorFromRGB888(0x232323)};
 
+const Color kCanvasPanelColor{ColorFromRGB888(0x232323)};
+
+const Color kMainPanelColor{ColorFromRGB888(0x1f1f1f)};
+
 #endif // __COLOR_SHEME_HPP__

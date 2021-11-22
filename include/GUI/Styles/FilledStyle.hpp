@@ -1,6 +1,7 @@
 #ifndef __FILLED_STYLE_HPP__
 #define __FILLED_STYLE_HPP__
 
+#include "Core/Math/Rect2.hpp"
 #include "Core/Platform/Color.hpp"
 #include "GUI/Styles/IStyle.hpp"
 
@@ -13,7 +14,7 @@ public:
 
     virtual ~FilledStyle() override;
 
-    virtual void Apply(Widget* widget, Renderer* renderer) override; 
+    virtual void Apply(Widget* widget, Renderer* renderer) override;
 
 protected:
     Color color_on_release_;

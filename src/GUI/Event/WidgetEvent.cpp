@@ -93,3 +93,21 @@ const Vector2u& ResizeEvent::GetSize() const {
 const Vector2u& ResizeEvent::GetNewSize() const {
     return new_size_;
 }
+
+ShowEvent::ShowEvent(Widget* widget)
+    : WidgetEvent{kShowEvent, widget} {}
+
+ShowEvent::~ShowEvent() {}
+
+uint64_t ShowEvent::GetStaticType() {
+    return kShowEvent;
+}
+
+HideEvent::HideEvent(Widget* widget)
+    : WidgetEvent{kHideEvent, widget} {}
+
+HideEvent::~HideEvent() {}
+
+uint64_t HideEvent::GetStaticType() {
+    return kHideEvent;
+}

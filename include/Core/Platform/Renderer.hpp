@@ -6,6 +6,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Core/Math/Rect2.hpp"
 #include "Core/Math/Vector2.hpp"
 #include "Core/Platform/Color.hpp"
 
@@ -27,7 +28,7 @@ public:
 
     void RenderText     (const Text& text);
     void RenderImage    (const Image& image);
-    void RenderRectangle(const Vector2i& position, const Vector2u& size, const Color& color);
+    void RenderRectangle(const Rect2& rect, const Color& color);
 
     IRenderTarget* GetRenderTarget();
     void SetRenderTarget(IRenderTarget* render_target);

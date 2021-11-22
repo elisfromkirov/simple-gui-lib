@@ -123,3 +123,21 @@ void WidgetManager::OnResizeEvent(const ResizeEvent* event) {
 
     widget->OnResizeEvent(event);
 }
+
+void WidgetManager::OnShowEvent(const ShowEvent* event) {
+    assert(event != nullptr);
+
+    Widget* widget = event->GetWidget();
+    assert(widget != nullptr);
+
+    widget->OnShowEvent(event);
+}
+
+void WidgetManager::OnHideEvent(const HideEvent* event) {
+    assert(event != nullptr);
+
+    Widget* widget = event->GetWidget();
+    assert(widget != nullptr);
+
+    widget->OnHideEvent(event);
+}

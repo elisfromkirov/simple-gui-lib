@@ -57,11 +57,11 @@ void Renderer::RenderImage(const Image& image) {
     native_target->draw(image.GetNativeImage());
 }
 
-void Renderer::RenderRectangle(const Vector2i& position, const Vector2u& size, const Color& color) {
+void Renderer::RenderRectangle(const Rect2& rect, const Color& color) {
     assert(render_target_ != nullptr);
 
-    sf::RectangleShape shape(sf::Vector2f(size.x, size.y));
-    shape.setPosition(sf::Vector2f(position.x, position.y));
+    sf::RectangleShape shape(sf::Vector2f(rect.size.x, rect.size.y));
+    shape.setPosition(sf::Vector2f(rect.position.x, rect.position.y));
     shape.setFillColor(sf::Color(static_cast<uint8_t>(color.red   * 255.f),
                                  static_cast<uint8_t>(color.green * 255.f),
                                  static_cast<uint8_t>(color.blue  * 255.f),

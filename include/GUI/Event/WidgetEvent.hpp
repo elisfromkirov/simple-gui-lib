@@ -113,4 +113,18 @@ protected:
     Vector2u new_size_;
 };
 
+class ShowEvent : public WidgetEvent {
+    ShowEvent(Widget* widget);
+    virtual ~ShowEvent() override;
+
+    static uint64_t GetStaticType();
+};
+
+class HideEvent : public WidgetEvent {
+    HideEvent(Widget* widget);
+    virtual ~HideEvent() override;
+
+    static uint64_t GetStaticType();
+};
+
 #endif // __WIDGET_EVENT_HPP__

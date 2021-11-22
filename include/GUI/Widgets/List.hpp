@@ -4,7 +4,8 @@
 #include <cassert>
 #include <cstdint>
 
-#include "CompositeWidget.hpp"
+#include "GUI/Widgets/Button.hpp"
+#include "GUI/Widgets/CompositeWidget.hpp"
 
 class HorizontalList : public CompositeWidget {
 public:
@@ -24,4 +25,24 @@ public:
     bool RemoveItem(Widget* widget);
 };
 
-#endif // __LIST_HPP__ 
+class DropDownList : public CompositeWidget {
+public:
+    DropDownList(const Vector2u& size, const Vector2i position = Vector2i());
+    virtual ~DropDownList() override;
+
+    bool InsertItem(Widget* widget);
+    bool RemoveItem(Widget* widget);
+
+    void HideList();
+
+protected:
+    virtual void RenderChildren(Renderer* renderer) override;
+
+protected:
+    Button*       hide_button_;
+    bool          hide_;
+
+    VerticalList* list_;
+};
+
+#endif // __LIST_HPP__

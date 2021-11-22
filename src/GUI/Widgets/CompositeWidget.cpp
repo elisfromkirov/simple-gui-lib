@@ -28,7 +28,11 @@ void CompositeWidget::OnRender(Renderer* renderer) {
     renderer->Display();
 
     renderer->SetRenderTarget(surface);
-    renderer->CopyTexture(&surface_, position_);
+    renderer->CopyTexture(&surface_, MapPositionToParent());    
+}
+
+Rect2 CompositeWidget::GetFillArea() const {
+    return Rect2{Vector2u{size_.x, size_.y}, Vector2i{0, 0}};
 }
 
 bool CompositeWidget::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
@@ -62,9 +66,6 @@ void CompositeWidget::RenderChildren(Renderer* renderer) {
 bool CompositeWidget::DispatchMouseButtonPressEventToChildren(const MouseButtonPressEvent* event) {
     assert(event != nullptr);
 
-    Vector2i position = event->GetMousePosition();
-    event->SetMousePosition(position - position_);
-
     for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
         Widget* child = *iter;
 
@@ -74,16 +75,11 @@ bool CompositeWidget::DispatchMouseButtonPressEventToChildren(const MouseButtonP
         }
     }
 
-    event->SetMousePosition(position);
-
     return false;
 }
 
 bool CompositeWidget::DispatchMouseButtonReleaseEventToChildren(const MouseButtonReleaseEvent* event) {
     assert(event != nullptr);
-
-    Vector2i position = event->GetMousePosition();
-    event->SetMousePosition(position - position_);
 
     for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
         Widget* child = *iter;
@@ -94,16 +90,11 @@ bool CompositeWidget::DispatchMouseButtonReleaseEventToChildren(const MouseButto
         }
     }
 
-    event->SetMousePosition(position);
-
     return false;
 }
 
 bool CompositeWidget::DispatchMouseMoveEventToChildren(const MouseMoveEvent* event) {
     assert(event != nullptr);
-
-    Vector2i position = event->GetMousePosition();
-    event->SetMousePosition(position - position_);
 
     for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
         Widget* child = *iter;
@@ -113,8 +104,6 @@ bool CompositeWidget::DispatchMouseMoveEventToChildren(const MouseMoveEvent* eve
             return true;
         }
     }
-
-    event->SetMousePosition(position);
 
     return false;
 }

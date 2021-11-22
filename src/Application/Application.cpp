@@ -6,17 +6,18 @@
 #include "GUI/WidgetManager/WidgetManager.hpp"
 
 Application::Application(const std::string& name)
-    : event_manager_{nullptr},
-      log_manager_{nullptr},
+    : log_manager_{nullptr},
+      event_manager_{nullptr},
       resource_manager_{nullptr},
+      widget_manager_{nullptr},
       window_{name, Vector2u(1600, 1200)},
       renderer_{&window_},
       input_{&window_} {
-    event_manager_ = EventManager::GetInstance();
-    assert(event_manager_ != nullptr);
-
     log_manager_ = LogManager::GetInstance();
     assert(log_manager_ != nullptr);
+
+    event_manager_ = EventManager::GetInstance();
+    assert(event_manager_ != nullptr);
 
     resource_manager_ = ResourceManager::GetInstance();
     assert(resource_manager_ != nullptr);
@@ -29,10 +30,10 @@ Application::Application(const std::string& name)
 }
 
 Application::~Application() {
+    widget_manager_->Release();
+    resource_manager_->Release();
     event_manager_->Release();
     log_manager_->Release();
-    resource_manager_->Release();
-    widget_manager_->Release();
 }
 
 void Application::Run() {

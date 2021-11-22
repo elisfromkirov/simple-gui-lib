@@ -21,8 +21,8 @@ public:
     virtual void Run();
 
 protected:
-    EventManager*    event_manager_;
     LogManager*      log_manager_;
+    EventManager*    event_manager_;
     ResourceManager* resource_manager_;
     WidgetManager*   widget_manager_;
 

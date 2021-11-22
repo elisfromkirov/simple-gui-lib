@@ -3,7 +3,7 @@
 
 #include "Vector2.hpp"
 
-struct Rect2i {
+struct Rect2 {
     Vector2u size;
     Vector2i position;
 };

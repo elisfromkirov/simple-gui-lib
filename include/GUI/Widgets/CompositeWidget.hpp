@@ -15,6 +15,8 @@ public:
 
     virtual void OnRender(Renderer* renderer) override;
 
+    virtual Rect2 GetFillArea() const override;
+
     virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event) override;
 
     virtual bool OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) override;
@@ -25,7 +27,7 @@ public:
     bool Detach(Widget* widget);
 
 protected:
-    void RenderChildren(Renderer* renderer);
+    virtual void RenderChildren(Renderer* renderer);
 
     bool DispatchMouseButtonPressEventToChildren(const MouseButtonPressEvent* event);
 
@@ -35,7 +37,7 @@ protected:
 
 protected:
     RenderTexture      surface_;
-    
+
     std::list<Widget*> children_;
 };
 

@@ -15,18 +15,12 @@ void ClickResponse() {
 }
 
 MainPanel::MainPanel(const Vector2u& size)
-    : CompositeWidget{size} {
+    : CompositeWidget{size, Vector2i{0, 0}} {
     ResourceManager* resource_manager = ResourceManager::GetInstance();
     assert(resource_manager != nullptr);
 
-    Button* button = new Button(Vector2u{100, 100}, Vector2i{300, 300});
-    button->ApplyStyle(new FilledStyle(Color(0.f, 1.f, 0.f, 1.f), Color(1.f, 0.f, 0.f, 1.f), Color(1.f, 0.f, 0.f, 1.f)));
-    button->Clicked.Connect(ClickResponse);
-
-    Attach(button);
-
-    VerticalList* list = new VerticalList(Vector2u{200, 200});
-    list->ApplyStyle(new FilledStyle(Color(1.f, 0.f, 0.f, 1.f)));
+    VerticalList* list = new VerticalList(Vector2u{200, 200}, Vector2i{50, 50});
+    list->ApplyStyle(new FilledStyle(Color(0.f, 0.f, 1.f, 1.f)));
     
     list->InsertItem(new Label("string 1", resource_manager->LoadFont(kBoldFont)));
     list->InsertItem(new Label("string 2", resource_manager->LoadFont(kBoldFont)));
@@ -34,6 +28,13 @@ MainPanel::MainPanel(const Vector2u& size)
     list->InsertItem(new Label("string 4", resource_manager->LoadFont(kBoldFont)));
 
     Attach(list);
+
+    DropDownList* drop_down_list = new DropDownList(Vector2u{300, 300}, Vector2i{400, 400});
+    drop_down_list->InsertItem(new Label("string 1", resource_manager->LoadFont(kBoldFont)));
+    drop_down_list->InsertItem(new Label("string 2", resource_manager->LoadFont(kBoldFont)));
+    drop_down_list->InsertItem(new Label("string 3", resource_manager->LoadFont(kBoldFont)));
+
+    Attach(drop_down_list);
 }
 
 MainPanel::~MainPanel() {}
@@ -44,7 +45,7 @@ void MainPanel::OnRender(Renderer* renderer) {
     IRenderTarget* surface = renderer->GetRenderTarget();
     renderer->SetRenderTarget(&surface_);
 
-    renderer->Clear();
+    renderer->Clear(Color(0.2, 0.2, 0.2, 1.0));
 
     RenderChildren(renderer);
 

@@ -21,7 +21,7 @@ void Label::OnRender(Renderer* renderer) {
 
 void Label::Move(const Vector2i& position) {
     position_ = position;
-    text_.SetPosition(position);
+    text_.SetPosition(MapPositionToParent());
 }
 
 void Label::Resize(const Vector2u& size) {}
