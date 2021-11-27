@@ -15,11 +15,13 @@ class Signal<R(Args...)> {
 public:
     R operator()(Args... args);
 
-    void Connect(typename FunctionWrap<R(Args...)>::FunctionPointer function_pointer);
+    void Connect(IFunctor<R(Args...)>* functor);
+
+    void Connect(typename FunctionWrap<R(Args...)>::FunctionPointer function);
 
     template <class T>
-    void Connect(typename MethodWrap<T, R(Args...)>::ObjectPointer object_pointer,
-                 typename MethodWrap<T, R(Args...)>::MethodPointer method_pointer);
+    void Connect(typename MethodWrap<T, R(Args...)>::ObjectPointer object,
+                 typename MethodWrap<T, R(Args...)>::MethodPointer method);
 
 private:
     std::list<Slot<R(Args...)>> slots_;
@@ -33,17 +35,20 @@ R Signal<R(Args...)>::operator()(Args... args) {
 }
 
 template <class R, class ...Args>
-void  Signal<R(Args...)>::Connect(
-    typename FunctionWrap<R(Args...)>::FunctionPointer function_pointer) {
-    slots_.emplace_back(new FunctionWrap<R(Args...)>(function_pointer));
+void Signal<R(Args...)>::Connect(IFunctor<R(Args...)>* functor) {
+    slots_.emplace_back(functor);
+}
+
+template <class R, class ...Args>
+void  Signal<R(Args...)>::Connect(typename FunctionWrap<R(Args...)>::FunctionPointer function) {
+    slots_.emplace_back(new FunctionWrap<R(Args...)>(function));
 }
 
 template <class R, class ...Args>
 template <class T>
-void Signal<R(Args...)>::Connect(
-    typename MethodWrap<T, R(Args...)>::ObjectPointer object_pointer,
-    typename MethodWrap<T, R(Args...)>::MethodPointer method_pointer) {
-    slots_.emplace_back(new MethodWrap<T, R(Args...)>(object_pointer, method_pointer));
+void Signal<R(Args...)>::Connect(typename MethodWrap<T, R(Args...)>::ObjectPointer object,
+                                 typename MethodWrap<T, R(Args...)>::MethodPointer method) {
+    slots_.emplace_back(new MethodWrap<T, R(Args...)>(object, method));
 }
 
 #endif // __SIGNAL_HPP__

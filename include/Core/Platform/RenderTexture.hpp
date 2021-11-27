@@ -4,33 +4,32 @@
 #include <cassert>
 #include <cstdint>
 
-#include <SFML/Graphics.hpp>
-
 #include "Core/Math/Vector2.hpp"
-#include "Core/Platform/Image.hpp"
-#include "Core/Platform/IRenderTarget.hpp"
+#include "Core/Platform/NativePlatform.hpp"
 
-class RenderTexture : public IRenderTarget {
+class Color;
+class Image;
+class Text;
+class Rectangle;
+
+class RenderTexture {
 public:
     RenderTexture(const Vector2u& size);
-    virtual ~RenderTexture() override;
+    ~RenderTexture();
 
-    virtual void Clear(const Color& color) override;
+    void Clear(const Color& color);
+    void Display();
 
-    virtual void Display() override;
+    void RenderText(const Text& text);
+    void RenderImage(const Image& image);
+    void RenderRectangle(const Rectangle& rectangle);
 
-    virtual NativeRenderTarget* GetNativeRenderTarget() override;
-
-    void SetSize(const Vector2u& size); 
-    const Vector2u& GetSize() const;
-
-    const NativeImage& GetCapture();
+    const NativeImage& GetImage();
+    const Vector2u&    GetSize();
 
 private:
     sf::RenderTexture texture_;
-    sf::Sprite        capture_;
-
-    Vector2u          size_;
+    sf::Sprite        sprite_;
 };
 
 #endif // __RENDER_TEXTURE_HPP__

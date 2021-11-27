@@ -20,28 +20,27 @@ void EventManager::Release() {
     delete this;
 }
 
-void EventManager::DispatchEvents() {
+void EventManager::PollEvents() {
     while (!queue_.empty()) {
         Event* event = queue_.front();
         queue_.pop_front();
 
-        for (auto iter = listeners_.begin(); iter != listeners_.end(); ++iter) {
-            IEventListener* listener = *iter;
-            listener->OnEvent(event);
+        for (auto iter = event_listeners_.begin(); iter != event_listeners_.end(); ++iter) {
+            (*iter)->OnEvent(event);
         }
 
         delete event;
     }
 }
 
-void EventManager::RegisterListener(IEventListener* listener) {
+void EventManager::RegisterListener(IEventListener* event_listener) {
     assert(listener != nullptr);
 
-    listeners_.push_back(listener);
+    event_listeners_.push_back(listener);
 }
 
-void EventManager::UnregisterListener(IEventListener* listener) {
+void EventManager::UnregisterListener(IEventListener* event_listener) {
     assert(listener != nullptr);
 
-    listeners_.remove(listener);
+    event_listeners_.remove(event_listener);
 }

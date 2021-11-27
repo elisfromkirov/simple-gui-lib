@@ -70,7 +70,7 @@ DropDownList::DropDownList(const Vector2u& size, const Vector2i position)
       hide_button_{nullptr},
       hide_{false},
       list_{nullptr} {
-    ApplyStyle(new FilledStyle(Color(0.f, 0.f, 1.f, 1.f)));
+    // ApplyStyle(new FilledStyle(Color(0.f, 0.f, 1.f, 1.f)));
 
     hide_button_ = new Button(Vector2u{24, 24}, position + Vector2i{12, 12});
     hide_button_->ApplyStyle(new FilledStyle(Color(0.f, 1.f, 0.f, 1.f), Color(1.f, 0.f, 0.f, 1.f), Color(1.f, 0.f, 0.f, 1.f)));

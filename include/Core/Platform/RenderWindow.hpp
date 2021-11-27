@@ -4,35 +4,37 @@
 #include <cassert>
 #include <cstdint>
 
-#include <SFML/Graphics.hpp>
-
-typedef sf::RenderWindow NativeWindow;
-typedef sf::RenderWindow NativeRenderWindow;
-
 #include "Core/Math/Vector2.hpp"
+#include "Core/Platform/NativePlatform.hpp"
 #include "Core/Platform/Input.hpp"
-#include "Core/Platform/IRenderTarget.hpp"
 
-class RenderWindow : public IRenderTarget {
+class Color;
+class Image;
+class Text;
+class Rectangle;
+
+class RenderWindow {
 public:
     RenderWindow(const std::string& title, const Vector2u& size);
-    virtual ~RenderWindow() override;
+    ~RenderWindow();
 
-    virtual void Clear(const Color& color) override;
+    void Clear(const Color& color);
+    void Display();
 
-    virtual void Display() override;
+    void RenderText(const Text& text);
+    void RenderImage(const Image& image);
+    void RenderRectangle(const Rectangle& rectangle);
 
-    virtual NativeRenderTarget* GetNativeRenderTarget() override;
+    void PumpEvents();
 
     bool IsOpen() const;
     void Close();
 
-    NativeWindow* GetNativeWindow();
-
 public:
     sf::RenderWindow window_;
 
-    Vector2u         size_;
+    Mouse            mouse_;
+    Keyboard         keyboard_;
 };
 
 #endif // __RENDER_WINDOW_HPP__

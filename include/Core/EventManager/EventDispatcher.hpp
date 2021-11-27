@@ -1,72 +1,37 @@
 #ifndef __EVENT_DISPATCHER_HPP__
 #define __EVENT_DISPATCHER_HPP__
 
+#include "Core/EventManager/Event.hpp"
+#include "Core/EventManager/EventCallback.hpp"
 #include "Core/EventManager/IEventListener.hpp"
-#include "Core/EventManager/EventHandler.hpp"
-#include "Core/EventManager/EventManager.hpp"
-#include "Core/Functor/MethodWrap.hpp"
 
-template <class TargetT>
 class EventDispatcher : IEventListener {
 public:
-    EventDispatcher(TargetT* target);
+    EventDispatcher();
     virtual ~EventDispatcher() override;
 
-    virtual void OnEvent(const Event* event) override;
+    virtual bool OnEvent(const Event* event) override;
 
-    template <class EventT>
-    void SetEventHandler(typename MethodWrap<TargetT, void(const EventT*)>::MethodPointer method_pointer);
+    template <class T, class EventT>
+    void SetEventCallback(typename EventCallback<T, EventT>::ObjectPointer object,
+                          typename EventCallback<T, EventT>::MethodPointer method);
 
 protected:
-    TargetT*                   target_;
+    bool CallEventCallback(const Event* event);
 
-    std::list<IEventListener*> handlers_;
+protected:
+    struct EventCallbackData {
+        IEventListener* event_callback;
+        uint64_t        event_type;
+    };
+    std::list<EventCallbackData> event_callbacks_;
 };
 
-template <class TargetT>
-EventDispatcher<TargetT>::EventDispatcher(TargetT* target) 
-    : target_{target} {
-    EventManager* event_manager = EventManager::GetInstance();
-    assert(event_manager != nullptr);
-
-    event_manager->RegisterListener(this);
-}
-
-template <class TargetT>
-EventDispatcher<TargetT>::~EventDispatcher() {
-    EventManager* event_manager = EventManager::GetInstance();
-    assert(event_manager != nullptr);
-
-    for (auto iter = handlers_.begin(); iter != handlers_.end(); ++iter) {
-        IEventListener* handler = *iter;
-
-        event_manager->UnregisterListener(handler);       
-
-        delete handler;
-    }
-}
-
-template <class TargetT>
-void EventDispatcher<TargetT>::OnEvent(const Event* event) {
-    assert(event != nullptr);
-
-    for (auto iter = handlers_.begin(); iter != handlers_.end(); ++iter) {
-        IEventListener* handler = *iter;
-
-        handler->OnEvent(event);
-    }
-}
-
-template <class TargetT>
-template <class EventT>
-void EventDispatcher<TargetT>::SetEventHandler(
-    typename MethodWrap<TargetT, void(const EventT*)>::MethodPointer method_pointer) { 
-    handlers_.push_back(new EventHandler<EventT, MethodWrap<TargetT, void(const EventT*)>>(target_, method_pointer));
-
-    EventManager* event_manager = EventManager::GetInstance();
-    assert(event_manager != nullptr);
-
-    event_manager->RegisterListener(handlers_.back());
+template <class T, class EventT>
+void EventDispatcher::SetEventCallback(typename EventCallback<T, EventT>::ObjectPointer object,
+                                       typename EventCallback<T, EventT>::MethodPointer method) {
+    event_callbacks_.push_back(EventCallbackData{new EventCallback<T, EventT>(object, method),
+                                                 EventT::GetStaticType()});
 }
 
 #endif // __EVENT_DISPATCHER_HPP__

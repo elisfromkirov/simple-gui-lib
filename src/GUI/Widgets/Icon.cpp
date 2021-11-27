@@ -6,7 +6,6 @@ Icon::Icon(const Texture& texture, const Vector2i& position)
     size_ = image_.GetSize();
 
     position_ = position;
-    image_.SetPosition(position_);
 }
 
 Icon::~Icon() {}
@@ -16,6 +15,7 @@ void Icon::OnRender(Renderer* renderer) {
 
     ApplyStyles(renderer);
 
+    image_.SetPosition(MapPositionToParent());
     renderer->RenderImage(image_);
 }
 
@@ -23,5 +23,4 @@ void Icon::Resize(const Vector2u& size) {}
 
 void Icon::Move(const Vector2i& position) {
     position_ = position;
-    image_.SetPosition(position);
 }

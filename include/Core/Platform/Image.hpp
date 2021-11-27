@@ -4,11 +4,8 @@
 #include <cassert>
 #include <cstdint>
 
-#include <SFML/Graphics.hpp>
-
-typedef sf::Sprite NativeImage;
-
 #include "Core/Math/Vector2.hpp"
+#include "Core/Platform/NativePlatform.hpp"
 #include "Core/Platform/Texture.hpp"
 
 class Image {
@@ -18,14 +15,14 @@ public:
 
     void SetPosition(const Vector2i& position);
 
-    const Vector2u& GetSize() const;
+    Vector2u GetSize() const;
 
     const NativeImage& GetNativeImage() const;
 
 private:
     sf::Sprite sprite_;
 
-    Vector2u size_;
+    Vector2u   size_;
 };
 
 #endif // __IMAGE_HPP__

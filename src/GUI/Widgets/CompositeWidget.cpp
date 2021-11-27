@@ -35,6 +35,20 @@ Rect2 CompositeWidget::GetFillArea() const {
     return Rect2{Vector2u{size_.x, size_.y}, Vector2i{0, 0}};
 }
 
+void CompositeWidget::Resize(const Vector2u& size) {
+    surface_.SetSize(size);
+}
+
+void CompositeWidget::Move(const Vector2i& position) {
+    for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
+        Widget* child = *iter;
+
+        child->Move(child->GetPosition() - position_ + position);
+    }
+
+    position_ = position;
+}
+
 bool CompositeWidget::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
     assert(event != nullptr);
 

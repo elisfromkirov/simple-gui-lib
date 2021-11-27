@@ -11,7 +11,6 @@
 class EventManager;
 class LogManager;
 class ResourceManager;
-class WidgetManager;
 
 class Application {
 public:
@@ -24,11 +23,8 @@ protected:
     LogManager*      log_manager_;
     EventManager*    event_manager_;
     ResourceManager* resource_manager_;
-    WidgetManager*   widget_manager_;
 
     RenderWindow     window_;
-    Renderer         renderer_;
-    Input            input_;
 };
 
 #endif // __APPLICATION_HPP__

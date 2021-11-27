@@ -9,6 +9,7 @@ target_sources(SGUI_GUI
         ${INCROOT}/Label.hpp
         ${INCROOT}/List.hpp
         # ${INCROOT}/Slider.hpp
+        ${INCROOT}/TitleBar.hpp
         ${INCROOT}/Widget.hpp
     PRIVATE
         ${SRCROOT}/Button.cpp
@@ -17,5 +18,6 @@ target_sources(SGUI_GUI
         ${SRCROOT}/Label.cpp
         ${SRCROOT}/List.cpp
         # ${SRCROOT}/Slider.cpp
+        ${SRCROOT}/TitleBar.cpp
         ${SRCROOT}/Widget.cpp
     )

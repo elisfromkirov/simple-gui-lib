@@ -14,13 +14,13 @@ public:
 
     void Release();
 
-    void DispatchEvents();
+    void PollEvents();
 
     template <class EventT, class... Args>
     void PostEvent(Args&&... args);
 
-    void RegisterListener  (IEventListener* listener);
-    void UnregisterListener(IEventListener* listener);
+    void RegisterListener  (IEventListener* event_listener);
+    void UnregisterListener(IEventListener* event_listener);
 
 private:
     EventManager();
@@ -34,7 +34,7 @@ private:
 private:
     std::list<Event*>          queue_;
 
-    std::list<IEventListener*> listeners_;
+    std::list<IEventListener*> event_listeners_;
 };
 
 template <class EventT, class... Args>

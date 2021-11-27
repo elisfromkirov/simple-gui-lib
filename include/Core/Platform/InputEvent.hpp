@@ -29,28 +29,29 @@ enum MouseButton : uint32_t {
 
 class MouseEvent : public Event {
 public:
-    MouseEvent(uint64_t type, const Vector2i& position, MouseButton button, bool pressed);
-    
+    MouseEvent(uint64_t type, const Vector2i& position, const Vector2i& old_position,
+               MouseButton button, bool pressed);
     virtual ~MouseEvent() override;
-
-    void SetMousePosition(const Vector2i& position) const;
     
     const Vector2i& GetMousePosition() const;
+
+    const Vector2i& GetOldMousePosition() const;
 
     MouseButton GetPressedButton() const;
 
     bool IsButtonPressed()  const;
 
 private:
-    mutable Vector2i position_;
-    MouseButton      button_;
-    bool             pressed_;
+    Vector2i    position_;
+    Vector2i    old_position_;
+    MouseButton button_;
+    bool        pressed_;
 };
 
 class MouseButtonPressEvent : public MouseEvent {
 public:
-    MouseButtonPressEvent(const Vector2i& position, MouseButton button);
-
+    MouseButtonPressEvent(const Vector2i& position, const Vector2i& old_position,
+                          MouseButton button);
     virtual ~MouseButtonPressEvent() override;
 
     static uint64_t GetStaticType();
@@ -58,8 +59,8 @@ public:
 
 class MouseButtonReleaseEvent : public MouseEvent {
 public:
-    MouseButtonReleaseEvent(const Vector2i& position, MouseButton button);
-
+    MouseButtonReleaseEvent(const Vector2i& position, const Vector2i& old_position, 
+                            MouseButton button);
     virtual ~MouseButtonReleaseEvent() override;
 
     static uint64_t GetStaticType();
@@ -67,8 +68,8 @@ public:
 
 class MouseMoveEvent : public MouseEvent {
 public:
-    MouseMoveEvent(const Vector2i& position, MouseButton button, bool pressed);
-
+    MouseMoveEvent(const Vector2i& position, const Vector2i& old_position,
+                   MouseButton button, bool pressed);
     virtual ~MouseMoveEvent() override;
 
     static uint64_t GetStaticType();

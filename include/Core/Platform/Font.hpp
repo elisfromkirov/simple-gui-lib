@@ -5,9 +5,7 @@
 #include <cstdint>
 #include <string>
 
-#include <SFML/Graphics.hpp>
-
-typedef sf::Font NativeFont;
+#include "Core/Platform/NativePlatform.hpp"
 
 class Font {
 public:

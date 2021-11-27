@@ -2,7 +2,7 @@
 #include "GUI/Widgets/Button.hpp"
 
 Button::Button(const Vector2u& size, const Vector2i& position)
-    : Widget{size, position} {}
+    : CompositeWidget{size, position} {}
 
 Button::~Button() {}
 

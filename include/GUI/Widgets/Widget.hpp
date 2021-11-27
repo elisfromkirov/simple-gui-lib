@@ -5,38 +5,35 @@
 #include <cstdint>
 #include <list>
 
-#include "Core/EventManager/IEventListener.hpp"
-#include "Core/Math/Rect2.hpp"
+class MouseButtonPressEvent;
+class MouseButtonReleaseEvent;
+class MouseMoveEvent;
+class FocusInEvent;
+class FocusOutEvent;
+class CloseEvent;
+class MoveEvent;
+class ResizeEvent;
+class ShowEvent;
+class HideEvent;
+class Style;
+class ContainerWidget;
+
+#include "Core/EventManager/EventDispatcher.hpp"
 #include "Core/Math/Vector2.hpp"
-#include "Core/Platform/InputEvent.hpp"
-#include "Core/Platform/Renderer.hpp"
-#include "GUI/Event/WidgetEvent.hpp"
-#include "GUI/Styles/IStyle.hpp"
+#include "Core/Platform/RenderTexture.hpp"
 
-class CompositeWidget;
-
-class Widget {
+class Widget : public EventDispatcher {
 public:
-    enum State : uint32_t {
-        kNone     = 0x0000,
-        kReleased = 0x0001,
-        kPressed  = 0x0002,
-        kHovered  = 0x0004        
-    };
-
-public:
-    Widget(const Vector2u& size = Vector2u(), const Vector2i& position = Vector2i());
+    Widget(const Vector2u& size, const Vector2i& position = Vector2i());
     virtual ~Widget();
 
-    virtual void OnRender(Renderer* renderer);
-
-    virtual Rect2 GetFillArea() const;
+    virtual bool HitTest(const Vector2i& point) const;
 
     virtual void Resize(const Vector2u& size);
 
     virtual void Move(const Vector2i& position);
-
-    virtual bool HitTest(const Vector2i& point) const;
+    
+    virtual void OnRender();
 
     virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event);
 
@@ -59,30 +56,37 @@ public:
     virtual bool OnHideEvent(const HideEvent* event);
 
     const Vector2u& GetSize() const;
-    
+
     const Vector2i& GetPosition() const;
 
     const CompositeWidget* GetParent() const;
     void SetParent(CompositeWidget* parent);
-    
-    State GetState() const;
 
-    void ApplyStyle(IStyle* style);
+    bool IsPressed() const;
+
+    bool IsHovered() const;
+
+    bool IsHided() const;
+
+    void ApplyStyle(Style* style);
 
 protected:
     Vector2i MapPositionToParent() const; 
     
-    void ApplyStyles(Renderer* renderer);
+    void ApplyStyles();
 
 protected:
-    Vector2u           size_;
-    Vector2i           position_;
+    Vector2u          size_;
+    Vector2i          position_;
 
-    CompositeWidget*   parent_;
+    CompositeWidget*  parent_;
 
-    State              state_;
+    bool pressed_;
+    bool hovered_;
+    bool hided_;
 
-    std::list<IStyle*> styles_;
+    RenderTexture     texture_;
+    std::list<Style*> styles_;
 };
 
 #endif // __WIDGET_HPP__

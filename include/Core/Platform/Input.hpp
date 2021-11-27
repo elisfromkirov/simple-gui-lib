@@ -4,31 +4,36 @@
 #include <cassert>
 #include <cstdint>
 
-#include <SFML/Graphics.hpp>
+#include "Core/Math/Vector2.hpp"
+#include "Core/Platform/NativePlatform.hpp"
 
-#include "Core/Platform/InputEvent.hpp"
-
-class RenderWindow;
-
-class Input {
+class Mouse {
 public:
-    Input(RenderWindow* window);
-    ~Input();
+    Mouse();
+    ~Mouse();
 
-    bool PumpEvents();
-
-private:
-    static MouseButton GetButton(const sf::Event& event);
-
-    static Key         GetKey   (const sf::Event& event);
+    void Update(const NativeEvent& event);
 
 private:
-    sf::RenderWindow* window_;
+    static MouseButton MapButton(const NativeEvent& event);
 
+private:
     Vector2i          position_;
     MouseButton       pressed_button_;
     bool              pressed_;
+};
 
+class Keyboard {
+public:
+    Keyboard();
+    ~Keyboard();
+
+    void Update(const NativeEvent& event);
+
+private:
+    static Key MapKey(const NativeEvent& event);
+
+private:
     Key               key_;
     bool              alt_;
     bool              control_;

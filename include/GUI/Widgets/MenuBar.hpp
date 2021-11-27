@@ -4,23 +4,15 @@
 #include <cassert>
 #include <cstdint>
 
-class MenuItem : public CompositeWidget {
+class Menu : public CompositeWidget {
 public:
-    MenuItem(const std::string& string);
+    Menu(const std::string& name);
+    virtual ~Menu() override;
 
 
 
 protected:
-
-};
-
-class Menu : public MenuItem {
-public:
-
-
-protected:
-
-
+    
 };
 
 class MenuBar : public CompositeWidget {

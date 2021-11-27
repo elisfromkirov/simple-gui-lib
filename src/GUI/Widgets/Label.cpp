@@ -6,7 +6,6 @@ Label::Label(const std::string& string, const Font& font, const Vector2i& positi
     size_ = text_.GetSize();
 
     position_ = position;
-    text_.SetPosition(position_);
 }
 
 Label::~Label() {}
@@ -16,12 +15,12 @@ void Label::OnRender(Renderer* renderer) {
 
     ApplyStyles(renderer);
 
+    text_.SetPosition(MapPositionToParent());
     renderer->RenderText(text_);    
 }
 
 void Label::Move(const Vector2i& position) {
-    position_ = position;
-    text_.SetPosition(MapPositionToParent());
+    position_ = position;    
 }
 
 void Label::Resize(const Vector2u& size) {}

@@ -4,11 +4,12 @@ set(SRCROOT ${SGUI_SOURCE_DIR}/src/Core/EventManager)
 target_sources(SGUI_CORE
     PUBLIC
         ${INCROOT}/Event.hpp
+        ${INCROOT}/EventCallback.hpp
         ${INCROOT}/EventDispatcher.hpp
-        ${INCROOT}/EventHandler.hpp
         ${INCROOT}/EventManager.hpp
         ${INCROOT}/IEventListener.hpp
     PRIVATE
         ${SRCROOT}/EventManager.cpp
+        ${INCROOT}/EventDispatcher.cpp
         ${SRCROOT}/Event.cpp
     )

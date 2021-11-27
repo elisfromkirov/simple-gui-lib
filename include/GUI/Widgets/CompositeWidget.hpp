@@ -17,6 +17,10 @@ public:
 
     virtual Rect2 GetFillArea() const override;
 
+    virtual void Resize(const Vector2u& size) override;
+
+    virtual void Move(const Vector2i& position) override;
+
     virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event) override;
 
     virtual bool OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) override;

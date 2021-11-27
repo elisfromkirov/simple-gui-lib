@@ -1,29 +1,35 @@
+#include "Core/Platform/InputEvent.hpp"
+#include "GUI/Events/WidgetEvent.hpp"
 #include "GUI/Widgets/Widget.hpp"
-#include "GUI/Widgets/CompositeWidget.hpp"
+#include "GUI/Widgets/ContainerWidget.hpp"
 
 Widget::Widget(const Vector2u& size, const Vector2i& position)
     : size_{size},
       position_{position},
       parent_{nullptr},
-      state_{kReleased},
-      styles_{} {}
+      pressed_{false},
+      hovered_{false},
+      hided_{false},
+      texture_{size},
+      styles_{} {
+    SetEventCallback<Widget, MouseButtonPressEvent>  (this, &Widget::OnMouseButtonPressEvent);
+    SetEventCallback<Widget, MouseButtonReleaseEvent>(this, &Widget::OnMouseButtonReleaseEvent);
+    SetEventCallback<Widget, MouseMoveEvent>         (this, &Widget::OnMouseMoveEvent);
+    SetEventCallback<Widget, KeyPressEvent>          (this, &Widget::OnKeyPressEvent);
+    SetEventCallback<Widget, KeyReleaseEvent>        (this, &Widget::OnKeyReleaseEvent);
+    SetEventCallback<Widget, MouseCaptureEvent>      (this, &Widget::OnMouseCaptureEvent);
+    SetEventCallback<Widget, MouseCaptureLostEvent>  (this, &Widget::OnMouseCaptureLostEvent);
+    SetEventCallback<Widget, FocusInEvent>           (this, &Widget::OnFocusInEvent);
+    SetEventCallback<Widget, FocusOutEvent>          (this, &Widget::OnFocusOutEvent);
+    SetEventCallback<Widget, CloseEvent>             (this, &Widget::OnCloseEvent);
+    SetEventCallback<Widget, MoveEvent>              (this, &Widget::OnMoveEvent);
+    SetEventCallback<Widget, ResizeEvent>            (this, &Widget::OnResizeEvent);
+}
 
 Widget::~Widget() {
     for (auto iter = styles_.begin(); iter != styles_.end(); ++iter) {
-        IStyle* style = (*iter);
-
-        delete style;
+        delete (*iter);
     }
-}
-
-void Widget::OnRender(Renderer* renderer) {
-    assert(renderer != nullptr);
-
-    ApplyStyles(renderer);
-}
-
-Rect2 Widget::GetFillArea() const {
-    return Rect2{size_, MapPositionToParent()};
 }
 
 void Widget::Resize(const Vector2u& size) {
@@ -39,6 +45,10 @@ bool Widget::HitTest(const Vector2i& point) const {
  
     return 0.f < relative_position.x && relative_position.x < static_cast<int32_t>(size_.x) &&
            0.f < relative_position.y && relative_position.y < static_cast<int32_t>(size_.y);
+}
+
+void Widget::OnRender() {
+    RenderStyles();   
 }
 
 bool Widget::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
@@ -79,13 +89,13 @@ bool Widget::OnCloseEvent(const CloseEvent* event) {
     }
     delete this;
 
-    return false;
+    return true;
 }
 
 bool Widget::OnMoveEvent(const MoveEvent* event) {
     assert(event != nullptr);
 
-    Move(event->GetNewPosition());    
+    Move(event->GetPosition());    
 
     return true;
 }
@@ -93,21 +103,9 @@ bool Widget::OnMoveEvent(const MoveEvent* event) {
 bool Widget::OnResizeEvent(const ResizeEvent* event) {
     assert(event != nullptr);
 
-    Resize(event->GetNewSize());
+    Resize(event->GetSize());
 
     return true;
-}
-
-bool Widget::OnShowEvent(const ShowEvent* event) {
-    assert(event != nullptr);
-
-    return false;
-}
-
-bool Widget::OnHideEvent(const HideEvent* event) {
-    assert(event != nullptr);
-
-    return false;
 }
 
 const Vector2u& Widget::GetSize() const {
@@ -126,11 +124,19 @@ void Widget::SetParent(CompositeWidget* parent) {
     parent_ = parent;
 }
 
-Widget::State Widget::GetState() const {
-    return state_;
+bool Widget::IsPressed() const {
+    return pressed_;
 }
 
-void Widget::ApplyStyle(IStyle* style) {
+bool Widget::IsHovered() const {
+    return hovered_;
+}
+
+bool IsHided() const {
+    return hovered_;
+}
+
+void Widget::ApplyStyle(Style* style) {
     assert(style != nullptr);
 
     styles_.push_back(style);
@@ -140,9 +146,7 @@ void Widget::ApplyStyles(Renderer* renderer) {
     assert(renderer != nullptr);
 
     for (auto iter = styles_.begin(); iter != styles_.end(); ++iter) {
-        IStyle* style = (*iter);
-
-        style->Apply(this, renderer);
+        (*iter)->Apply(this, &texture_);
     }
 }
 
