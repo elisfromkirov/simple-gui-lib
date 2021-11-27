@@ -20,8 +20,8 @@ struct Color {
     float alpha;
 };
 
+Color ColorFromARGB(uint32_t color);
 Color ColorFromRGBA(uint32_t color);
-Color ColorFromRGBA(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha);
 
 NativeColor NativeColorFromColor(const Color& color);
 Color       ColorFromNativeColor(const NativeColor& color);

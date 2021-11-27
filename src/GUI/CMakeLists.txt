@@ -5,9 +5,8 @@ target_include_directories(SGUI_GUI
         ${SGUI_SOURCE_DIR}/include
     )
 
-add_subdirectory(Event)
+add_subdirectory(Events)
 add_subdirectory(Styles)
-add_subdirectory(WidgetManager)
 add_subdirectory(Widgets)
 
 target_link_libraries(SGUI_GUI

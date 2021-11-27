@@ -4,12 +4,12 @@
 #include <cassert>
 #include <cstdint>
 
-#include "Core/Functor/IFunctor.hpp"
 #include "GUI/Widgets/Button.hpp"
+#include "GUI/Widgets/ContainerWidget.hpp"
+#include "GUI/Widgets/Icon.hpp"
 #include "GUI/Widgets/Label.hpp"
-#include "GUI/Widgets/CompositeWidget.hpp"
 
-class TitleBar : public CompositeWidget {
+class TitleBar : public ContainerWidget {
 public:
     static const uint32_t kDefaultHeight{48};
     static const uint32_t kDefaultCharSize{24};

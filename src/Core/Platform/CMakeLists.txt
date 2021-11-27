@@ -9,6 +9,7 @@ target_sources(SGUI_CORE
         ${INCROOT}/Input.hpp
         ${INCROOT}/InputEvent.hpp
         ${INCROOT}/NativePlatform.hpp
+        ${INCROOT}/Rectangle.hpp
         ${INCROOT}/RenderTexture.hpp
         ${INCROOT}/RenderWindow.hpp
         ${INCROOT}/Text.hpp
@@ -19,6 +20,7 @@ target_sources(SGUI_CORE
         ${SRCROOT}/Image.cpp
         ${SRCROOT}/Input.cpp
         ${SRCROOT}/InputEvent.cpp
+        ${SRCROOT}/Rectangle.cpp
         ${SRCROOT}/RenderTexture.cpp
         ${SRCROOT}/RenderWindow.cpp
         ${SRCROOT}/Text.cpp

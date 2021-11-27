@@ -1,7 +1,7 @@
 #ifndef __METHOD_WRAP_HPP__
 #define __METHOD_WRAP_HPP__
 
-#include "Core/Functor/IFunctor.hpp"
+#include "Core/Signal/IFunctor.hpp"
 
 template <class T, class R, class ...Args>
 class MethodWrap {};

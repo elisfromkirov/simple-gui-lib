@@ -10,13 +10,13 @@ Icon::Icon(const Texture& texture, const Vector2i& position)
 
 Icon::~Icon() {}
 
-void Icon::OnRender(Renderer* renderer) {
-    assert(renderer != nullptr);
+void Icon::OnRender(RenderTexture* texture) {
+    assert(texture != nullptr);
 
-    ApplyStyles(renderer);
+    RenderStyles(texture);
 
     image_.SetPosition(MapPositionToParent());
-    renderer->RenderImage(image_);
+    texture->RenderImage(image_);
 }
 
 void Icon::Resize(const Vector2u& size) {}

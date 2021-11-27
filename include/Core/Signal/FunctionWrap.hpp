@@ -1,7 +1,7 @@
 #ifndef __FUNCTION_WRAP_HPP__
 #define __FUNCTION_WRAP_HPP__
 
-#include "Core/Functor/IFunctor.hpp"
+#include "Core/Signal/IFunctor.hpp"
 
 template <class R, class ...Args>
 class FunctionWrap {};

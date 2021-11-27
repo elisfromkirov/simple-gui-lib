@@ -5,9 +5,17 @@
 #include <cstdint>
 #include <list>
 
+#include "Core/EventManager/EventDispatcher.hpp"
+#include "Core/Math/Vector2.hpp"
+#include "Core/Platform/RenderTexture.hpp"
+
 class MouseButtonPressEvent;
 class MouseButtonReleaseEvent;
 class MouseMoveEvent;
+class KeyPressEvent;
+class KeyReleaseEvent;
+class MouseCaptureEvent;
+class MouseCaptureLostEvent;
 class FocusInEvent;
 class FocusOutEvent;
 class CloseEvent;
@@ -15,16 +23,12 @@ class MoveEvent;
 class ResizeEvent;
 class ShowEvent;
 class HideEvent;
-class Style;
 class ContainerWidget;
-
-#include "Core/EventManager/EventDispatcher.hpp"
-#include "Core/Math/Vector2.hpp"
-#include "Core/Platform/RenderTexture.hpp"
+class Style;
 
 class Widget : public EventDispatcher {
 public:
-    Widget(const Vector2u& size, const Vector2i& position = Vector2i());
+    Widget(const Vector2u& size = Vector2u(), const Vector2i& position = Vector2i());
     virtual ~Widget();
 
     virtual bool HitTest(const Vector2i& point) const;
@@ -33,13 +37,21 @@ public:
 
     virtual void Move(const Vector2i& position);
     
-    virtual void OnRender();
+    virtual void OnRender(RenderTexture* texture);
 
     virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event);
 
     virtual bool OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event);
     
     virtual bool OnMouseMoveEvent(const MouseMoveEvent* event);
+
+    virtual bool OnKeyPressEvent(const KeyPressEvent* event);
+
+    virtual bool OnKeyReleaseEvent(const KeyReleaseEvent* event);
+
+    virtual bool OnMouseCaptureEvent(const MouseCaptureEvent* event);
+
+    virtual bool OnMouseCaptureLostEvent(const MouseCaptureLostEvent* event);
     
     virtual bool OnFocusInEvent(const FocusInEvent* event);
     
@@ -59,8 +71,8 @@ public:
 
     const Vector2i& GetPosition() const;
 
-    const CompositeWidget* GetParent() const;
-    void SetParent(CompositeWidget* parent);
+    const ContainerWidget* GetParent() const;
+    void SetParent(ContainerWidget* parent);
 
     bool IsPressed() const;
 
@@ -72,20 +84,19 @@ public:
 
 protected:
     Vector2i MapPositionToParent() const; 
-    
-    void ApplyStyles();
+
+    void RenderStyles(RenderTexture* texture);
 
 protected:
     Vector2u          size_;
     Vector2i          position_;
 
-    CompositeWidget*  parent_;
+    ContainerWidget*  parent_;
 
-    bool pressed_;
-    bool hovered_;
-    bool hided_;
+    bool              pressed_;
+    bool              hovered_;
+    bool              hided_;
 
-    RenderTexture     texture_;
     std::list<Style*> styles_;
 };
 

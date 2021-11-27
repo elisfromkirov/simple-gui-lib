@@ -12,22 +12,24 @@ public:
     ContainerWidget(const Vector2u& size, const Vector2i& position = Vector2i());
     virtual ~ContainerWidget();
 
-    virtual bool OnEvent(const Event* event) override;
-
     virtual void Resize(const Vector2u& size) override;
 
     virtual void Move(const Vector2i& position) override;
 
-    virtual void OnRender() override;
+    virtual void OnRender(RenderTexture* texture) override;
+
+    virtual bool OnEvent(const Event* event) override;
 
     bool Attach(Widget* widget);
-    bool Detach(Widget* widget);
+    bool Detach(Widget* widget);    
 
 protected:
+    void RenderChildren(RenderTexture* texture);
+
     bool DispatchToChildren(const Event* event);
 
 protected:
-    void RenderChildren();
+    RenderTexture      texture_;
 
     std::list<Widget*> children_;
 };

@@ -9,24 +9,20 @@
 #include "Core/Platform/NativePlatform.hpp"
 #include "Core/Platform/Font.hpp"
 
+struct Color;
+
 class Text {
 public:
-    Text(const std::string& string, const Font& font);
     Text(const std::string& string, const Font& font, uint32_t char_size = 24);
     ~Text();
 
     void SetString(const std::string& string);
-
     void SetFont(const Font& font);
-
     void SetCharSize(uint32_t char_size);
-
     void SetFillColor(const Color& color);
-
     void SetPosition(const Vector2i& position);
 
     Vector2u GetSize() const;
-
     const NativeText& GetNativeText() const;
 
 private:

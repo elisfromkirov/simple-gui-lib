@@ -3,9 +3,9 @@
 
 #include "Core/Math/Rect2.hpp"
 #include "Core/Platform/Color.hpp"
-#include "GUI/Styles/IStyle.hpp"
+#include "GUI/Styles/Style.hpp"
 
-class FilledStyle : public IStyle {
+class FilledStyle : public Style {
 public:
     FilledStyle(const Color& color);
 
@@ -14,7 +14,7 @@ public:
 
     virtual ~FilledStyle() override;
 
-    virtual void Apply(Widget* widget, Renderer* renderer) override;
+    virtual void Apply(Widget* widget, RenderTexture* texture) override;
 
 protected:
     Color color_on_release_;

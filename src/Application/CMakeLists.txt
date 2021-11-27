@@ -11,10 +11,8 @@ target_include_directories(SGUI_APPLICATION
 target_sources(SGUI_APPLICATION
     PUBLIC
         ${INCROOT}/Application.hpp
-        ${INCROOT}/MainPanel.hpp
     PRIVATE
         ${SRCROOT}/Application.cpp
-        ${SRCROOT}/MainPanel.cpp
 )
 
 target_link_libraries(SGUI_APPLICATION

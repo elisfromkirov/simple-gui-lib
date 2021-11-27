@@ -1,5 +1,6 @@
 #include "Core/Platform/InputEvent.hpp"
 #include "GUI/Events/WidgetEvent.hpp"
+#include "GUI/Styles/Style.hpp"
 #include "GUI/Widgets/Widget.hpp"
 #include "GUI/Widgets/ContainerWidget.hpp"
 
@@ -10,7 +11,6 @@ Widget::Widget(const Vector2u& size, const Vector2i& position)
       pressed_{false},
       hovered_{false},
       hided_{false},
-      texture_{size},
       styles_{} {
     SetEventCallback<Widget, MouseButtonPressEvent>  (this, &Widget::OnMouseButtonPressEvent);
     SetEventCallback<Widget, MouseButtonReleaseEvent>(this, &Widget::OnMouseButtonReleaseEvent);
@@ -47,8 +47,8 @@ bool Widget::HitTest(const Vector2i& point) const {
            0.f < relative_position.y && relative_position.y < static_cast<int32_t>(size_.y);
 }
 
-void Widget::OnRender() {
-    RenderStyles();   
+void Widget::OnRender(RenderTexture* texture) {
+    RenderStyles(texture);
 }
 
 bool Widget::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
@@ -64,6 +64,30 @@ bool Widget::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
 }
 
 bool Widget::OnMouseMoveEvent(const MouseMoveEvent* event) {
+    assert(event != nullptr);
+
+    return false;
+}
+
+bool OnKeyPressEvent(const KeyPressEvent* event) {
+    assert(event != nullptr);
+
+    return false;
+}
+
+bool OnKeyReleaseEvent(const KeyReleaseEvent* event) {
+    assert(event != nullptr);
+
+    return false;
+}
+
+bool OnMouseCaptureEvent(const MouseCaptureEvent* event) {
+    assert(event != nullptr);
+
+    return false;
+}
+
+bool OnMouseCaptureLostEvent(const MouseCaptureLostEvent* event) {
     assert(event != nullptr);
 
     return false;
@@ -116,11 +140,11 @@ const Vector2i& Widget::GetPosition() const {
     return position_;
 }
 
-const CompositeWidget* Widget::GetParent() const {
+const ContainerWidget* Widget::GetParent() const {
     return parent_;
 }
 
-void Widget::SetParent(CompositeWidget* parent) {
+void Widget::SetParent(ContainerWidget* parent) {
     parent_ = parent;
 }
 
@@ -132,7 +156,7 @@ bool Widget::IsHovered() const {
     return hovered_;
 }
 
-bool IsHided() const {
+bool Widget::IsHided() const {
     return hovered_;
 }
 
@@ -142,17 +166,17 @@ void Widget::ApplyStyle(Style* style) {
     styles_.push_back(style);
 }
 
-void Widget::ApplyStyles(Renderer* renderer) {
-    assert(renderer != nullptr);
-
-    for (auto iter = styles_.begin(); iter != styles_.end(); ++iter) {
-        (*iter)->Apply(this, &texture_);
-    }
-}
-
 Vector2i Widget::MapPositionToParent() const {
     if (parent_ != nullptr) {
         return position_ - parent_->GetPosition();
     }
     return position_;
+}
+
+void Widget::RenderStyles(RenderTexture* texture) {
+    assert(texture != nullptr);
+
+    for (auto iter = styles_.begin(); iter != styles_.end(); ++iter) {
+        (*iter)->Apply(this, texture);
+    }
 }

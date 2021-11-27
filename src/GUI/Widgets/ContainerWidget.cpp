@@ -4,6 +4,7 @@
 
 ContainerWidget::ContainerWidget(const Vector2u& size, const Vector2i& position)
     : Widget{size, position},
+      texture_{size},
       children_{} {}
 
 ContainerWidget::~ContainerWidget() {
@@ -23,9 +24,7 @@ bool ContainerWidget::OnEvent(const Event* event) {
     return CallEventCallback(event);
 }
 
-void ContainerWidget::Resize(const Vector2u& size) {
-    surface_.SetSize(size);
-}
+void ContainerWidget::Resize(const Vector2u& size) {}
 
 void ContainerWidget::Move(const Vector2i& position) {
     for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
@@ -37,19 +36,12 @@ void ContainerWidget::Move(const Vector2i& position) {
     position_ = position;
 }
 
-void ContainerWidget::OnRender() {
-    texture_.Clear();
+void ContainerWidget::OnRender(RenderTexture* texture) {
+    assert(texture != nullptr);
+    
+    RenderStyles  (texture);
 
-    ApplyStyles();
-    RenderChildren();
-
-    texture_.Display();
-}
-
-void ContainerWidget::RenderChildren() {
-    for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
-        (*iter)->OnRender(renderer);
-    }
+    RenderChildren(&texture_);
 }
 
 bool ContainerWidget::Attach(Widget* widget) {
@@ -78,11 +70,19 @@ bool ContainerWidget::Detach(Widget* widget) {
     return true;
 }
 
+void ContainerWidget::RenderChildren(RenderTexture* texture) {
+    assert(texture != nullptr);
+
+    for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
+        (*iter)->OnRender(texture);
+    }
+}
+
 bool ContainerWidget::DispatchToChildren(const Event* event) {
     assert(event != nullptr);
 
     for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
-        bool handled = (*iter)->OnMouseMoveEvent(event);
+        bool handled = (*iter)->OnEvent(event);
         if (handled) {
             return true;
         }

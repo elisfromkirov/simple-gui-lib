@@ -4,8 +4,6 @@
 #include <cassert>
 #include <cstdint>
 
-#include "Core/Platform/Input.hpp"
-#include "Core/Platform/Renderer.hpp"
 #include "Core/Platform/RenderWindow.hpp"
 
 class EventManager;
@@ -20,8 +18,8 @@ public:
     virtual void Run();
 
 protected:
-    LogManager*      log_manager_;
     EventManager*    event_manager_;
+    LogManager*      log_manager_;
     ResourceManager* resource_manager_;
 
     RenderWindow     window_;

@@ -14,18 +14,18 @@ Color::Color(float red, float green, float blue, float alpha)
       blue {blue },
       alpha{alpha} {}
 
+Color ColorFromARGB(uint32_t color) {
+    return Color(static_cast<float>((color >> 16) & 255) / 255.f,
+                 static_cast<float>((color >>  8) & 255) / 255.f,
+                 static_cast<float>((color      ) & 255) / 255.f,
+                 static_cast<float>((color >> 24) & 255) / 255.f);    
+}
+
 Color ColorFromRGBA(uint32_t color) {
     return Color(static_cast<float>((color >> 24) & 255) / 255.f,
                  static_cast<float>((color >> 16) & 255) / 255.f,
                  static_cast<float>((color >>  8) & 255) / 255.f,
                  static_cast<float>((color      ) & 255) / 255.f);
-}
-
-Color ColorFromRGBA(uint8_t red, uint8_t green, uint8_t blue) {
-    return Color(static_cast<float>(red  ) / 255.f,
-                 static_cast<float>(green) / 255.f,
-                 static_cast<float>(blue ) / 255.f,
-                 static_cast<float>(alpha) / 255.f);
 }
 
 NativeColor NativeColorFromColor(const Color& color) {

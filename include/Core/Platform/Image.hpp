@@ -16,7 +16,6 @@ public:
     void SetPosition(const Vector2i& position);
 
     Vector2u GetSize() const;
-
     const NativeImage& GetNativeImage() const;
 
 private:

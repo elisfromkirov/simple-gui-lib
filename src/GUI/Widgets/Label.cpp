@@ -10,13 +10,13 @@ Label::Label(const std::string& string, const Font& font, const Vector2i& positi
 
 Label::~Label() {}
 
-void Label::OnRender(Renderer* renderer) {
-    assert(renderer != nullptr);
+void Label::OnRender(RenderTexture* texture) {
+    assert(texture != nullptr);
 
-    ApplyStyles(renderer);
+    RenderStyles(texture);
 
     text_.SetPosition(MapPositionToParent());
-    renderer->RenderText(text_);    
+    texture->RenderText(text_);    
 }
 
 void Label::Move(const Vector2i& position) {
@@ -25,8 +25,8 @@ void Label::Move(const Vector2i& position) {
 
 void Label::Resize(const Vector2u& size) {}
 
-void Label::SetCharacterSize(uint32_t char_size) {
-    text_.SetCharacterSize(char_size);
+void Label::SetCharSize(uint32_t char_size) {
+    text_.SetCharSize(char_size);
     size_ = text_.GetSize();
 }
 

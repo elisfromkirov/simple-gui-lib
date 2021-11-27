@@ -8,7 +8,7 @@
 #include "Core/Platform/NativePlatform.hpp"
 #include "Core/Platform/Input.hpp"
 
-class Color;
+struct Color;
 class Image;
 class Text;
 class Rectangle;

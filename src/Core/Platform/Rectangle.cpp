@@ -2,8 +2,8 @@
 #include "Core/Platform/Rectangle.hpp"
 
 Rectangle::Rectangle(const Rect2& rect)
-    : rectangle_{sf::Vector2f{rect.size.x, rect.size.y}} {
-    rectangle_.setPosition(sf::Vector2f{rect.position.x, rect.position.y});
+    : rectangle_{sf::Vector2f(rect.size.x, rect.size.y)} {
+    rectangle_.setPosition(sf::Vector2f(rect.position.x, rect.position.y));
 }
 
 Rectangle::~Rectangle() {}
@@ -13,7 +13,7 @@ void Rectangle::SetFillColor(const Color& color) {
 }
 
 void Rectangle::SetPosition(const Vector2i& position) {
-    rectangle_.setPosition(sf::Vector2f{position.x, position.y});
+    rectangle_.setPosition(sf::Vector2f(position.x, position.y));
 }
 
 void Rectangle::SetRotation(int32_t degrees) {
@@ -21,7 +21,7 @@ void Rectangle::SetRotation(int32_t degrees) {
 }
 
 void Rectangle::SetSize(const Vector2u& size) {
-    rectangle_.setSize(sf::Vector2f{size.x, size.y});
+    rectangle_.setSize(sf::Vector2f(size.x, size.y));
 }
 
 Vector2u Rectangle::GetSize() const {

@@ -3,8 +3,10 @@ set(SRCROOT ${SGUI_SOURCE_DIR}/src/GUI/Styles)
 
 target_sources(SGUI_GUI
     PUBLIC
-        ${INCROOT}/IStyle.hpp
+        ${INCROOT}/DefaultStyle.hpp
         ${INCROOT}/FilledStyle.hpp
+        ${INCROOT}/Style.hpp
     PRIVATE
+        ${SRCROOT}/DefaultStyle.cpp
         ${SRCROOT}/FilledStyle.cpp
     )

@@ -1,4 +1,4 @@
-#include "GUI/Event/WidgetEvent.hpp"
+#include "GUI/Events/WidgetEvent.hpp"
 #include "GUI/Widgets/Widget.hpp"
 
 WidgetEvent::WidgetEvent(uint64_t type, Widget* widget)

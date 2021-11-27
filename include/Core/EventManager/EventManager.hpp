@@ -5,8 +5,8 @@
 #include <cstdint>
 #include <list>
 
-class Event;
-class IEventListener;
+#include "Core/EventManager/Event.hpp"
+#include "Core/EventManager/IEventListener.hpp"
 
 class EventManager {
 public:
@@ -14,7 +14,7 @@ public:
 
     void Release();
 
-    void PollEvents();
+    void DispatchEvents();
 
     template <class EventT, class... Args>
     void PostEvent(Args&&... args);

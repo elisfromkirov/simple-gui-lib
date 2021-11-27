@@ -7,7 +7,7 @@
 #include "Core/Math/Vector2.hpp"
 #include "Core/Platform/NativePlatform.hpp"
 
-class Color;
+struct Color;
 class Image;
 class Text;
 class Rectangle;
@@ -24,8 +24,8 @@ public:
     void RenderImage(const Image& image);
     void RenderRectangle(const Rectangle& rectangle);
 
+    Vector2u GetSize();
     const NativeImage& GetImage();
-    const Vector2u&    GetSize();
 
 private:
     sf::RenderTexture texture_;

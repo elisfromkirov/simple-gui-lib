@@ -1,14 +1,13 @@
 #include "Core/EventManager/EventManager.hpp"
 #include "Core/ResourceManager/Resources.hpp"
 #include "Core/ResourceManager/ResourceManager.hpp"
-#include "GUI/Styles/DefaultFilledStyleColors.hpp"
-#include "GUI/Styles/FilledStyle.hpp"
-#include "GUI/Widgets/Icon.hpp"
-#include "GUI/Widgets/Label.hpp"
+#include "Core/Platform/InputEvent.hpp"
+#include "GUI/Events/WidgetEvent.hpp"
+#include "GUI/Styles/DefaultStyle.hpp"
 #include "GUI/Widgets/TitleBar.hpp"
 
 TitleBar::TitleBar(Widget* titled_widget, const std::string& title) 
-    : CompositeWidget{Vector2u{titled_widget->GetSize().x, kDefaultHeight}, titled_widget->GetPosition()},
+    : ContainerWidget{Vector2u{titled_widget->GetSize().x, kDefaultHeight}, titled_widget->GetPosition()},
       titled_widget_{titled_widget},
       title_{nullptr},
       close_button_{nullptr} {
@@ -21,20 +20,21 @@ TitleBar::TitleBar(Widget* titled_widget, const std::string& title)
 
     close_button_ = new Button(icon->GetSize());
     close_button_->Move(icon->GetPosition());
-    close_button_->ApplyStyle(new FilledStyle(kButtonColorOnRelease, kButtonColorOnHover,
-                                              kButtonColorOnPress));
+    close_button_->ApplyStyle(new SystemButtonStyle());
+
     close_button_->Attach(icon);
     close_button_->Clicked.Connect<TitleBar>(this, &TitleBar::CloseTitledWidget);
 
     title_ = new Label(title, resource_manager->LoadFont(kMediumFont));
-    title_->SetCharacterSize(kDefaultCharSize);
+    title_->SetCharSize(kDefaultCharSize);
     title_->SetTextColor(Color(1.f, 1.f, 1.f, 1.f));
     title_->Move(position_ + Vector2i{static_cast<int32_t>(kDefaultHeight), 
                                      static_cast<int32_t>(kDefaultHeight - kDefaultCharSize) / 3});
 
     Attach(close_button_);
     Attach(title_);
-    ApplyStyle(new FilledStyle(KTitleBarColor));
+
+    ApplyStyle(new TitleBarStyle());
 }
 
 TitleBar::~TitleBar() {}
@@ -42,16 +42,11 @@ TitleBar::~TitleBar() {}
 bool TitleBar::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
     assert(event != nullptr);
 
-    bool handled = DispatchMouseButtonPressEventToChildren(event);
-    if (handled) {
-        return true;
-    }
-
     if (!HitTest(event->GetMousePosition())) {
         return false;
     }
 
-    state_ = kPressed;
+    pressed_ = true;
 
     EventManager* event_manager = EventManager::GetInstance();
     assert(event_manager != nullptr);
@@ -64,16 +59,11 @@ bool TitleBar::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
 bool TitleBar::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
     assert(event != nullptr);
 
-    bool handled = DispatchMouseButtonReleaseEventToChildren(event);
-    if (handled) {
-        return true;
-    }
-
-    if (state_ != kPressed) {
+    if (!pressed_) {
         return false;
     }
 
-    state_ = kReleased;
+    pressed_ = false;
 
     EventManager* event_manager = EventManager::GetInstance();
     assert(event_manager != nullptr);
@@ -90,12 +80,7 @@ bool TitleBar::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
 bool TitleBar::OnMouseMoveEvent(const MouseMoveEvent* event) {
     assert(event != nullptr);
 
-    bool handled = DispatchMouseMoveEventToChildren(event);
-    if (handled) {
-        return true;
-    }
-
-    if (state_ == kPressed) {
+    if (pressed_) {
         EventManager* event_manager = EventManager::GetInstance();
         assert(event_manager != nullptr);
 

@@ -1,8 +1,11 @@
+#include "Core/Platform/Color.hpp"
+#include "Core/Platform/Image.hpp"
+#include "Core/Platform/Rectangle.hpp"
 #include "Core/Platform/RenderWindow.hpp"
+#include "Core/Platform/Text.hpp"
 
 RenderWindow::RenderWindow(const std::string& title, const Vector2u& size)
-    : window_{sf::VideoMode(size.x, size.y), title},
-      size_{size} {}
+    : window_{sf::VideoMode(size.x, size.y), title} {}
 
 RenderWindow::~RenderWindow() {}
 
@@ -19,16 +22,16 @@ void RenderWindow::RenderText(const Text& text) {
 }
 
 void RenderWindow::RenderImage(const Image& image) {
-    window_.draw(text.GetNativeImage());
+    window_.draw(image.GetNativeImage());
 }
     
 void RenderWindow::RenderRectangle(const Rectangle& rectangle) {
-    window_.draw(text.GetNativeRectangle());
+    window_.draw(rectangle.GetNativeRectangle());
 }
 
-void PumpEvents() {
+void RenderWindow::PumpEvents() {
     sf::Event event{};
-    while (window_->pollEvent(event)) {
+    while (window_.pollEvent(event)) {
         switch (event.type) {
             case sf::Event::Closed: {
                 window_.close();
@@ -40,7 +43,7 @@ void PumpEvents() {
             } break;
             case sf::Event::KeyPressed:
             case sf::Event::KeyReleased: {
-                keyboard_.Update();
+                keyboard_.Update(event);
             } break;
             default: {}
         }

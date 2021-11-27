@@ -2,7 +2,7 @@
 #define __STYLE_HPP__
 
 class Widget;
-class RendereTexture;
+class RenderTexture;
 
 class Style {
 public:

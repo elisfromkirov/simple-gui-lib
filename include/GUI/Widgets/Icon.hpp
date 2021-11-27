@@ -12,7 +12,7 @@ public:
     Icon(const Texture& texture, const Vector2i& position = Vector2i());
     virtual ~Icon() override;
 
-    virtual void OnRender(Renderer* renderer) override;
+    virtual void OnRender(RenderTexture* texture) override;
 
     virtual void Resize(const Vector2u& size) override;
 

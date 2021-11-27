@@ -9,7 +9,7 @@ target_sources(SGUI_CORE
         ${INCROOT}/EventManager.hpp
         ${INCROOT}/IEventListener.hpp
     PRIVATE
-        ${SRCROOT}/EventManager.cpp
-        ${INCROOT}/EventDispatcher.cpp
         ${SRCROOT}/Event.cpp
+        ${SRCROOT}/EventDispatcher.cpp
+        ${SRCROOT}/EventManager.cpp
     )

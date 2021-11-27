@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 typedef sf::Color          NativeColor;
+typedef sf::Event          NativeEvent;
 typedef sf::Font           NativeFont;
 typedef sf::Sprite         NativeImage;
 typedef sf::RectangleShape NativeRectangle;

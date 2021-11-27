@@ -19,7 +19,7 @@ void Text::SetFont(const Font& font) {
     text_.setFont(font.GetNativeFont());
 }
 
-void Text::SetCharacterSize(uint32_t char_size) {
+void Text::SetCharSize(uint32_t char_size) {
     text_.setCharacterSize(char_size);
 
     size_.y = char_size;

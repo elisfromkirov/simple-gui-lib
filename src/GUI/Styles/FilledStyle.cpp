@@ -1,4 +1,5 @@
-#include "Core/Platform/Renderer.hpp"
+#include "Core/Platform/Rectangle.hpp"
+#include "Core/Platform/RenderTexture.hpp"
 #include "GUI/Styles/FilledStyle.hpp"
 #include "GUI/Widgets/Widget.hpp"
 
@@ -16,22 +17,12 @@ FilledStyle::FilledStyle(const Color& color_on_release,
 
 FilledStyle::~FilledStyle() {}
 
-void FilledStyle::Apply(Widget* widget, Renderer* renderer) {
-    assert(widget   != nullptr);
-    assert(renderer != nullptr);
+void FilledStyle::Apply(Widget* widget, RenderTexture* texture) {
+    assert(widget  != nullptr);
+    assert(texture != nullptr);
 
-    Rect2 filled_area{widget->GetFillArea()};
+    Rectangle rectangle(Rect2{widget->GetSize(), widget->GetPosition()});
+    rectangle.SetFillColor(color_on_release_);
 
-    switch (widget->GetState()) {
-        case Widget::State::kReleased: {
-            renderer->RenderRectangle(filled_area, color_on_release_);
-        } break;
-        case Widget::State::kHovered: {
-            renderer->RenderRectangle(filled_area, color_on_hover_);
-        } break;
-        case Widget::State::kPressed: {
-            renderer->RenderRectangle(filled_area, color_on_press_);
-        } break;
-        default: {}
-    }   
+    texture->RenderRectangle(rectangle);
 }

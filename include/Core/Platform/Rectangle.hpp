@@ -7,6 +7,8 @@
 #include "Core/Math/Rect2.hpp"
 #include "Core/Platform/NativePlatform.hpp"
 
+struct Color;
+
 class Rectangle {
 public:
     Rectangle(const Rect2& rect);

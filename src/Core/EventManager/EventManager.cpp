@@ -20,7 +20,7 @@ void EventManager::Release() {
     delete this;
 }
 
-void EventManager::PollEvents() {
+void EventManager::DispatchEvents() {
     while (!queue_.empty()) {
         Event* event = queue_.front();
         queue_.pop_front();
@@ -34,13 +34,13 @@ void EventManager::PollEvents() {
 }
 
 void EventManager::RegisterListener(IEventListener* event_listener) {
-    assert(listener != nullptr);
+    assert(event_listener != nullptr);
 
-    event_listeners_.push_back(listener);
+    event_listeners_.push_back(event_listener);
 }
 
 void EventManager::UnregisterListener(IEventListener* event_listener) {
-    assert(listener != nullptr);
+    assert(event_listener != nullptr);
 
     event_listeners_.remove(event_listener);
 }

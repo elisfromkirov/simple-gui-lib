@@ -1,36 +1,25 @@
 #include "Application/Application.hpp"
-#include "Application/MainPanel.hpp"
 #include "Core/EventManager/EventManager.hpp"
 #include "Core/LogManager/LogManager.hpp"
 #include "Core/ResourceManager/ResourceManager.hpp"
-#include "GUI/WidgetManager/WidgetManager.hpp"
+#include "Core/Platform/Color.hpp"
 
 Application::Application(const std::string& name)
-    : log_manager_{nullptr},
-      event_manager_{nullptr},
+    : event_manager_{nullptr},
+      log_manager_{nullptr},
       resource_manager_{nullptr},
-      widget_manager_{nullptr},
-      window_{name, Vector2u(1600, 1200)},
-      renderer_{&window_},
-      input_{&window_} {
-    log_manager_ = LogManager::GetInstance();
-    assert(log_manager_ != nullptr);
-
-    event_manager_ = EventManager::GetInstance();
+      window_{name, Vector2u(1600, 1200)} {
+    EventManager* event_manager_ = EventManager::GetInstance();
     assert(event_manager_ != nullptr);
 
-    resource_manager_ = ResourceManager::GetInstance();
+    LogManager* log_manager_ = LogManager::GetInstance();
+    assert(log_manager_ != nullptr);
+
+    ResourceManager* resource_manager_ = ResourceManager::GetInstance();
     assert(resource_manager_ != nullptr);
-
-    widget_manager_ = WidgetManager::GetInstance();
-    assert(widget_manager_ != nullptr);
-
-    MainPanel* main_panel = new MainPanel(Vector2u(1600, 1200));
-    widget_manager_->SetRootWidget(main_panel);
 }
 
 Application::~Application() {
-    widget_manager_->Release();
     resource_manager_->Release();
     event_manager_->Release();
     log_manager_->Release();
@@ -38,17 +27,12 @@ Application::~Application() {
 
 void Application::Run() {
     while (window_.IsOpen()) {
-        input_.PumpEvents();
+        window_.PumpEvents();
 
         event_manager_->DispatchEvents();
 
-        renderer_.Clear();
+        window_.Clear(Color(1.f, 1.f, 1.f, 1.f));
 
-        Widget* root_widget = widget_manager_->GetRootWidget();
-        assert(root_widget != nullptr);
-
-        root_widget->OnRender(&renderer_);
-
-        renderer_.Display();
+        window_.Display();
     }
 }

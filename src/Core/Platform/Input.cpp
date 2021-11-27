@@ -5,7 +5,7 @@
 Mouse::Mouse() 
     : position_{0, 0},
       pressed_button_{kNoneButton},
-      pressed_{false},
+      pressed_{false} {}
 
 Mouse::~Mouse() {}
 
@@ -32,7 +32,7 @@ void Mouse::Update(const NativeEvent& event) {
             position_.x = event.mouseButton.x;
             position_.y = event.mouseButton.y;
 
-            pressed_button_ = Input::GetButton(event);
+            pressed_button_ = Mouse::MapButton(event);
             pressed_        = false;
             
             event_manager->PostEvent<MouseButtonReleaseEvent>(position_, old_position,
@@ -89,7 +89,7 @@ void Keyboard::Update(const NativeEvent& event) {
 
     switch (event.type) {
         case sf::Event::KeyPressed: {
-            key_     = Input::GetKey(event);
+            key_     = Keyboard::MapKey(event);
             alt_     = event.key.alt; 
             control_ = event.key.control;
             shift_   = event.key.shift;
@@ -98,7 +98,7 @@ void Keyboard::Update(const NativeEvent& event) {
             event_manager->PostEvent<KeyPressEvent>(key_, alt_, control_, shift_, system_);
         } break;
         case sf::Event::KeyReleased: {
-            key_     = Input::GetKey(event);
+            key_     = Keyboard::MapKey(event);
             alt_     = event.key.alt; 
             control_ = event.key.control;
             shift_   = event.key.shift;

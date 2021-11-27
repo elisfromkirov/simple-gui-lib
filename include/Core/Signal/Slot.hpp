@@ -1,8 +1,8 @@
 #ifndef __SLOT_HPP__
 #define __SLOT_HPP__
 
-#include "Core/Functor/FunctionWrap.hpp"
-#include "Core/Functor/MethodWrap.hpp"
+#include "Core/Signal/FunctionWrap.hpp"
+#include "Core/Signal/MethodWrap.hpp"
 
 template <class R, class ...Args>
 class Slot {};

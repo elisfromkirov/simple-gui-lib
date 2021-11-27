@@ -4,10 +4,9 @@
 #include <cassert>
 #include <cstdint>
 
-#include "GUI/Widgets/Button.hpp"
-#include "GUI/Widgets/CompositeWidget.hpp"
+#include "GUI/Widgets/ContainerWidget.hpp"
 
-class HorizontalList : public CompositeWidget {
+class HorizontalList : public ContainerWidget {
 public:
     HorizontalList(const Vector2u& size, const Vector2i& position = Vector2i());
     virtual ~HorizontalList() override;
@@ -16,33 +15,13 @@ public:
     bool RemoveItem(Widget* widget);
 };
 
-class VerticalList : public CompositeWidget {
+class VerticalList : public ContainerWidget {
 public:
     VerticalList(const Vector2u& size, const Vector2i& position = Vector2i());
     virtual ~VerticalList() override;
 
     bool InsertItem(Widget* widget);
     bool RemoveItem(Widget* widget);
-};
-
-class DropDownList : public CompositeWidget {
-public:
-    DropDownList(const Vector2u& size, const Vector2i position = Vector2i());
-    virtual ~DropDownList() override;
-
-    bool InsertItem(Widget* widget);
-    bool RemoveItem(Widget* widget);
-
-    void HideList();
-
-protected:
-    virtual void RenderChildren(Renderer* renderer) override;
-
-protected:
-    Button*       hide_button_;
-    bool          hide_;
-
-    VerticalList* list_;
 };
 
 #endif // __LIST_HPP__

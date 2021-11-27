@@ -5,9 +5,9 @@
 #include <cstdint>
 
 #include "Core/Signal/Signal.hpp"
-#include "GUI/Widgets/CompositeWidget.hpp"
+#include "GUI/Widgets/ContainerWidget.hpp"
 
-class Button : public CompositeWidget {
+class Button : public ContainerWidget {
 public:
     Button(const Vector2u& size, const Vector2i& position = Vector2i());
     virtual ~Button() override;

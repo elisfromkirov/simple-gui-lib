@@ -12,13 +12,13 @@ public:
     Label(const std::string& string, const Font& font, const Vector2i& position = Vector2i());
     virtual ~Label() override;
 
-    virtual void OnRender(Renderer* renderer) override;
+    virtual void OnRender(RenderTexture* texture) override;
 
     virtual void Resize(const Vector2u& size) override;
 
     virtual void Move(const Vector2i& position) override;
 
-    void SetCharacterSize(uint32_t char_size);
+    void SetCharSize(uint32_t char_size);
 
     void SetString(const std::string& string);
 

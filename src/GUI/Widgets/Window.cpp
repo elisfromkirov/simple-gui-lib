@@ -12,7 +12,7 @@ Window::~Window() {}
 void Window::OnEvent(const Event* event) {
     assert(event != nullptr);
 
-    bool handled = CallCallback(event);
+    bool handled = CallEventCallback(event);
     if (handled) {
         return true;
     }

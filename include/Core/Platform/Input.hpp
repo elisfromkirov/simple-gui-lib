@@ -6,6 +6,7 @@
 
 #include "Core/Math/Vector2.hpp"
 #include "Core/Platform/NativePlatform.hpp"
+#include "Core/Platform/InputEvent.hpp"
 
 class Mouse {
 public:
