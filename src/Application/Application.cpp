@@ -9,13 +9,13 @@ Application::Application(const std::string& name)
       log_manager_{nullptr},
       resource_manager_{nullptr},
       window_{name, Vector2u(1600, 1200)} {
-    EventManager* event_manager_ = EventManager::GetInstance();
+    event_manager_ = EventManager::GetInstance();
     assert(event_manager_ != nullptr);
 
-    LogManager* log_manager_ = LogManager::GetInstance();
+    log_manager_ = LogManager::GetInstance();
     assert(log_manager_ != nullptr);
 
-    ResourceManager* resource_manager_ = ResourceManager::GetInstance();
+    resource_manager_ = ResourceManager::GetInstance();
     assert(resource_manager_ != nullptr);
 }
 

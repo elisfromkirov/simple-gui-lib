@@ -15,7 +15,7 @@ public:
     Application(const std::string& name);
     ~Application();
 
-    virtual void Run();
+    void Run();
 
 protected:
     EventManager*    event_manager_;

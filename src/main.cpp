@@ -1,7 +1,7 @@
 #include "Application/Application.hpp"
 
 int main() {
-    Application application{"fun"};
+    Application application{"paint"};
     application.Run();
     return 0;
 }
