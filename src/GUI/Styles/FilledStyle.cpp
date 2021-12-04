@@ -3,17 +3,29 @@
 #include "GUI/Styles/FilledStyle.hpp"
 #include "GUI/Widgets/Widget.hpp"
 
-FilledStyle::FilledStyle(const Color& color)
-    : color_on_release_{color},
-      color_on_hover_{color},
-      color_on_press_{color} {}
+FilledStyle::FilledStyle(WidgetType widget_type)
+    : color_{} {
+    switch (widget_type) {
+        case kList: {
+            color_ = ColorFromRGBA(0xa9a9a9ff);
+        } break;
+        case kMenuBar: {
+            color_ = ColorFromRGBA(0xa9a9a9ff);
+        } break;
+        case kTitleBar: {
+            color_ = ColorFromRGBA(0xa9a9a9ff);
+        } break;
+        case kTabBar: {
+            color_ = ColorFromRGBA(0x656565ff);
+        } break;
+        case kMainWindow: {
+            color_ = ColorFromRGBA(0x1f1f1fff);
+        } break;
+    }
+}
 
-FilledStyle::FilledStyle(const Color& color_on_release,
-                         const Color& color_on_hover,
-                         const Color& color_on_press)
-    : color_on_release_{color_on_release},
-      color_on_hover_{color_on_hover},
-      color_on_press_{color_on_press} {}
+FilledStyle::FilledStyle(const Color& color)
+    : color_{color} {}
 
 FilledStyle::~FilledStyle() {}
 
@@ -21,8 +33,5 @@ void FilledStyle::Apply(Widget* widget, RenderTexture* texture) {
     assert(widget  != nullptr);
     assert(texture != nullptr);
 
-    Rectangle rectangle(Rect2{widget->GetSize(), widget->GetPosition()});
-    rectangle.SetFillColor(color_on_release_);
-
-    texture->RenderRectangle(rectangle);
+    texture->RenderRectangle(Rectangle(Rect2(widget->GetSize()), color_));
 }

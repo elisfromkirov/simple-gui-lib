@@ -6,8 +6,9 @@
 #include <list>
 
 #include "Core/EventManager/EventDispatcher.hpp"
+#include "Core/Math/Rect2.hpp"
 #include "Core/Math/Vector2.hpp"
-#include "Core/Platform/RenderTexture.hpp"
+#include "Core/Platform/IRenderTarget.hpp"
 
 class MouseButtonPressEvent;
 class MouseButtonReleaseEvent;
@@ -21,14 +22,16 @@ class FocusOutEvent;
 class CloseEvent;
 class MoveEvent;
 class ResizeEvent;
-class ShowEvent;
-class HideEvent;
+class HorizontalScrollEvent;
+class VerticalScrollEvent;
+class ShowContextMenuEvent;
+class HideContextMenuEvent;
 class ContainerWidget;
-class Style;
+class RenderTexture;
 
 class Widget : public EventDispatcher {
 public:
-    Widget(const Vector2u& size = Vector2u(), const Vector2i& position = Vector2i());
+    Widget(const Rect2& rect = Rect2());
     virtual ~Widget();
 
     virtual bool HitTest(const Vector2i& point) const;
@@ -62,10 +65,14 @@ public:
     virtual bool OnMoveEvent(const MoveEvent* event);
     
     virtual bool OnResizeEvent(const ResizeEvent* event);
-    
-    virtual bool OnShowEvent(const ShowEvent* event);
-    
-    virtual bool OnHideEvent(const HideEvent* event);
+
+    virtual bool OnHorizontalScrollEvent(const HorizontalScrollEvent* event);
+
+    virtual bool OnVerticalScrollEvent(const VerticalScrollEvent* event);
+
+    virtual bool OnShowContextMenuEvent(const ShowContextMenuEvent* event);
+
+    virtual bool OnHideContextMenuEvent(const HideContextMenuEvent* event);
 
     const Vector2u& GetSize() const;
 
@@ -80,24 +87,17 @@ public:
 
     bool IsHided() const;
 
-    void ApplyStyle(Style* style);
+protected:
+    Vector2i MapPositionToParent() const;
 
 protected:
-    Vector2i MapPositionToParent() const; 
-
-    void RenderStyles(RenderTexture* texture);
-
-protected:
-    Vector2u          size_;
-    Vector2i          position_;
+    Rect2             rect_;
 
     ContainerWidget*  parent_;
 
     bool              pressed_;
     bool              hovered_;
     bool              hided_;
-
-    std::list<Style*> styles_;
 };
 
 #endif // __WIDGET_HPP__

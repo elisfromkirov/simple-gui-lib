@@ -1,7 +1,11 @@
+#include "Core/EventManager/EventManager.hpp"
+#include "GUI/Events/WidgetEvent.hpp"
+#include "GUI/Styles/FilledStyle.hpp"
 #include "GUI/Widgets/List.hpp"
 
-HorizontalList::HorizontalList(const Vector2u& size, const Vector2i& position) 
-    : ContainerWidget{size, position} {}
+HorizontalList::HorizontalList(const Rect2& rect) 
+    : ContainerWidget{rect},
+      width_{0} {}
 
 HorizontalList::~HorizontalList() {}
 
@@ -12,16 +16,32 @@ bool HorizontalList::InsertItem(Widget* widget) {
         return false;
     }
 
-    Vector2i position{position_};
-    if (!children_.empty()) {
-        position.x = children_.back()->GetPosition().x +
-                     static_cast<int32_t>(children_.back()->GetSize().x);
-    }
+    Vector2i position(rect_.position.x + width_, rect_.position.y);
+    width_ += widget->GetSize().x;
 
     widget->SetParent(this);
     widget->Move(position);
 
     children_.push_back(widget);
+
+    return true;
+}
+
+bool HorizontalList::OnHorizontalScrollEvent(const HorizontalScrollEvent* event) {
+    assert(event != nullptr);
+
+    if (width_ < rect_.size.x) {
+        return true;
+    }
+
+    Vector2i old_position(children_.front()->GetPosition());
+    Vector2i     position(rect_.position.x - (static_cast<float>(width_ - rect_.size.x) * event->GetValue()), 
+                          rect_.position.y);
+
+    Vector2i offset = position - old_position;
+    for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
+        (*iter)->Move((*iter)->GetPosition() + offset);
+    }
 
     return true;
 }
@@ -32,10 +52,35 @@ bool HorizontalList::RemoveItem(Widget* widget) {
     return false;
 }
 
-VerticalList::VerticalList(const Vector2u& size, const Vector2i& position)
-    : ContainerWidget{size, position} {}
+uint32_t HorizontalList::GetWidth() const {
+    return width_;
+}
+
+
+VerticalList::VerticalList(const Rect2& rect)
+    : ContainerWidget{rect},
+      height_{0} {}
 
 VerticalList::~VerticalList() {}
+
+bool VerticalList::OnVerticalScrollEvent(const VerticalScrollEvent* event) {
+    assert(event != nullptr);
+
+    if (height_ < rect_.size.y) {
+        return true;
+    }
+
+    Vector2i old_position(children_.front()->GetPosition());
+    Vector2i     position(rect_.position.x,
+                          rect_.position.y - (static_cast<float>(height_ - rect_.size.y) * event->GetValue()));
+
+    Vector2i offset = position - old_position;
+    for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
+        (*iter)->Move((*iter)->GetPosition() + offset);
+    }
+
+    return true;
+}
 
 bool VerticalList::InsertItem(Widget* widget) {
     assert(widget != nullptr);
@@ -44,11 +89,8 @@ bool VerticalList::InsertItem(Widget* widget) {
         return false;
     }
 
-    Vector2i position{position_};
-    if (!children_.empty()) {
-        position.y = children_.back()->GetPosition().y + 
-                     static_cast<int32_t>(children_.back()->GetSize().y);
-    }
+    Vector2i position(rect_.position.x, rect_.position.y + height_);
+    height_ += widget->GetSize().y;
 
     widget->SetParent(this);
     widget->Move(position);
@@ -62,4 +104,92 @@ bool VerticalList::RemoveItem(Widget* widget) {
     assert(widget != nullptr);
 
     return false;
+}
+
+uint32_t VerticalList::GetHeight() const {
+    return height_;
+}
+
+ScrollingHorizontalList::ScrollingHorizontalList(const Rect2& rect)
+    : ContainerWidget{rect},
+      scroll_value_{0.f},
+      list_{nullptr},
+      scroll_bar_{nullptr} {
+    scroll_bar_ = new HorizontalScrollBar(rect_.size.x, 0.05);
+    AttachInBottom(scroll_bar_);
+
+    list_ = new HorizontalList(Rect2{rect_.size.x, rect_.size.y - scroll_bar_->GetSize().y});
+    AttachInTop(list_);
+
+    scroll_bar_->ValueChanged.Connect<ScrollingHorizontalList>(this, &ScrollingHorizontalList::SliderValueChangeResponse);
+
+    ApplyStyle(new FilledStyle(FilledStyle::kList));
+}
+
+ScrollingHorizontalList::~ScrollingHorizontalList() {}
+
+bool ScrollingHorizontalList::InsertItem(Widget* widget) {
+    assert(scroll_bar_ != nullptr);
+    assert(list_       != nullptr);
+    assert(widget      != nullptr);
+
+    return list_->InsertItem(widget);
+}
+
+bool ScrollingHorizontalList::RemoveItem(Widget* widget) {
+    assert(widget != nullptr);
+
+    return list_->RemoveItem(widget);
+}
+
+void ScrollingHorizontalList::SliderValueChangeResponse(float value) {
+    assert(scroll_bar_ != nullptr);
+    assert(list_       != nullptr);
+
+    EventManager::GetInstance()->PostEvent<HorizontalScrollEvent>(list_, value, scroll_value_);
+
+    scroll_value_ = value;
+}
+
+ScrollingVerticalList::ScrollingVerticalList(const Rect2& rect)
+    : ContainerWidget{rect},
+      scroll_value_{0.f},
+      list_{nullptr},
+      scroll_bar_{nullptr} {
+    scroll_bar_ = new VerticalScrollBar(rect_.size.y, 0.05);
+    AttachInRight(scroll_bar_);
+
+    list_ = new VerticalList(Rect2{rect_.size.x - scroll_bar_->GetSize().x, rect_.size.y});
+    AttachInLeft(list_);
+
+    scroll_bar_->ValueChanged.Connect<ScrollingVerticalList>(this, &ScrollingVerticalList::SliderValueChangeResponse);
+
+    ApplyStyle(new FilledStyle(FilledStyle::kList));
+}
+
+ScrollingVerticalList::~ScrollingVerticalList() {}
+
+bool ScrollingVerticalList::InsertItem(Widget* widget) {
+    assert(scroll_bar_ != nullptr);
+    assert(list_       != nullptr);
+    assert(widget      != nullptr);
+
+    return list_->InsertItem(widget);
+}
+
+bool ScrollingVerticalList::RemoveItem(Widget* widget) {
+    assert(widget != nullptr);
+
+    return list_->RemoveItem(widget);
+}
+
+#include <cstdio>
+
+void ScrollingVerticalList::SliderValueChangeResponse(float value) {
+    assert(scroll_bar_ != nullptr);
+    assert(list_       != nullptr);
+
+    EventManager::GetInstance()->PostEvent<VerticalScrollEvent>(list_, value, scroll_value_);
+
+    scroll_value_ = value;
 }

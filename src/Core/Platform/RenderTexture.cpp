@@ -32,13 +32,13 @@ void RenderTexture::RenderRectangle(const Rectangle& rectangle) {
     texture_.draw(rectangle.GetNativeRectangle());
 }
 
-const NativeImage& RenderTexture::GetImage() {
+const NativeImage& RenderTexture::GetImage() const {
     sprite_.setTexture(texture_.getTexture());
 
     return sprite_;
 }
 
-Vector2u RenderTexture::GetSize() {
+Vector2u RenderTexture::GetSize() const {
     sf::Vector2u size{texture_.getSize()};
 
     return Vector2u{size.x, size.y};

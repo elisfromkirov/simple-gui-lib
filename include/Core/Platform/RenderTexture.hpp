@@ -6,30 +6,26 @@
 
 #include "Core/Math/Vector2.hpp"
 #include "Core/Platform/NativePlatform.hpp"
+#include "Core/Platform/IRenderTarget.hpp"
 
-struct Color;
-class Image;
-class Text;
-class Rectangle;
-
-class RenderTexture {
+class RenderTexture : public IRenderTarget {
 public:
     RenderTexture(const Vector2u& size);
-    ~RenderTexture();
+    virtual ~RenderTexture() override;
 
-    void Clear(const Color& color);
-    void Display();
+    virtual void Clear(const Color& color) override;
+    virtual void Display() override;
 
-    void RenderText(const Text& text);
-    void RenderImage(const Image& image);
-    void RenderRectangle(const Rectangle& rectangle);
+    virtual void RenderText(const Text& text) override;
+    virtual void RenderImage(const Image& image) override;
+    virtual void RenderRectangle(const Rectangle& rectangle) override;
 
-    Vector2u GetSize();
-    const NativeImage& GetImage();
+    Vector2u GetSize() const;
+    const NativeImage& GetImage() const;
 
 private:
-    sf::RenderTexture texture_;
-    sf::Sprite        sprite_;
+    sf::RenderTexture  texture_;
+    mutable sf::Sprite sprite_;
 };
 
 #endif // __RENDER_TEXTURE_HPP__

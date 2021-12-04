@@ -4,47 +4,90 @@
 #include <cassert>
 #include <cstdint>
 
-#include "GUI/Signal/Signal.hpp"
-#include "GUI/Widgets/CompositeWidget.hpp"
+#include "Core/Signal/Signal.hpp"
+#include "GUI/Widgets/ContainerWidget.hpp"
 
 class Thumb : public Widget {
 public:
-    Thumb(const Vector2u& size, const Vector2i& position = Vector2i());
+    Thumb(const Vector2u& size, const Rect2& bounds);
     virtual ~Thumb() override;
 
+    virtual void Resize(const Vector2u& size) override;
+
+    virtual void Move(const Vector2i& position) override;
+
     virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event) override;
 
     virtual bool OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) override;
 
     virtual bool OnMouseMoveEvent(const MouseMoveEvent* event) override;
 
-    const Rect2i& GetBounds() const;
-    void SetBounds(const Rect2i& bounds);
+    void SetBounds(const Rect2& bounds);
+    const Rect2& GetBounds() const;
+
+    void SetValue(const Vector2f& value);
+    const Vector2f& GetValue() const;
+    
+public:
+    Signal<void (const Vector2f&)> ValueChanged;
 
 protected:
-    bool   pressed_;
+    void UpdateValue();
 
-    Rect2i bounds_;
+protected:
+    Rect2    bounds_;
+
+    Vector2f value_;
 };
 
-class VerticalSlider : public CompositeWidget {
+class HorizontalSlider : public ContainerWidget {
 public:
-    VerticalSlider(const Vector2u& size, const Vector2i& position = Vector2i());
+    HorizontalSlider(const Rect2& rect, uint32_t thumb_width);
+    virtual ~HorizontalSlider() override;
+
+    virtual void Move(const Vector2i& position) override;
+    
+    virtual void Resize(const Vector2u& size) override;
+
+    uint32_t GetThumbWidth() const;
+    void SetThumbWidth(uint32_t width);
+
+    float GetValue();
+    void SetValue(float value);
+
+public:
+    Signal<void (float)> ValueChanged;
+
+public:
+    void ValueChangeResponse(const Vector2f& value);
+
+protected:    
+    Thumb* thumb_;
+};
+
+class VerticalSlider : public ContainerWidget {
+public:
+    VerticalSlider(const Rect2& rect, uint32_t thumb_height);
     virtual ~VerticalSlider() override;
 
-    virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event) override;
+    virtual void Move(const Vector2i& position) override;
 
-    virtual bool OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) override;
+    virtual void Resize(const Vector2u& size) override;
 
-    virtual bool OnMouseMoveEvent(const MouseMoveEvent* event) override;
+    uint32_t GetThumbHeight() const;
+    void SetThumbHeight(uint32_t height);
+
+    float GetValue();
+    void SetValue(float value);
 
 public:
-    Signal<void, float> SliderMoved;
+    Signal<void (float)> ValueChanged;
+
+public:
+    void ValueChangeResponse(const Vector2f& value);
 
 protected:
     Thumb* thumb_;
-
-    float factor_;
 };
 
 #endif // __SLIDER_HPP__

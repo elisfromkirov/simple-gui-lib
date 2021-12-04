@@ -9,7 +9,7 @@ static const char* kMediumFont       = "SourceCodeProMedium.ttf";
 static const char* kRegularFont      = "SourceCodeProRegular.ttf";
 static const char* kSemiBoldFont     = "SourceCodeProSemiBold.ttf";
 
-static const char* kImagesDirectory  = "../assets/Images/";
+static const char* kImagesDirectory  = "../assets/Images/24/";
 
 static const char* kBrushImage       = "Brush.bmp";
 static const char* kCloseImage       = "Close.bmp";

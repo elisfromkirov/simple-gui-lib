@@ -3,10 +3,12 @@ set(SRCROOT ${SGUI_SOURCE_DIR}/src/GUI/Styles)
 
 target_sources(SGUI_GUI
     PUBLIC
-        ${INCROOT}/DefaultStyle.hpp
+        ${INCROOT}/ButtonStyle.hpp
         ${INCROOT}/FilledStyle.hpp
-        ${INCROOT}/Style.hpp
+        ${INCROOT}/IStyle.hpp
+        ${INCROOT}/SliderStyle.hpp
     PRIVATE
-        ${SRCROOT}/DefaultStyle.cpp
+        ${SRCROOT}/ButtonStyle.cpp
         ${SRCROOT}/FilledStyle.cpp
+        ${SRCROOT}/SliderStyle.cpp
     )

@@ -6,11 +6,14 @@
 
 #include "Core/Math/Vector2.hpp"
 #include "Core/Platform/NativePlatform.hpp"
+#include "Core/Platform/RenderTexture.hpp"
 #include "Core/Platform/Texture.hpp"
 
 class Image {
 public:
-    Image(const Texture& texture);
+    Image(const Texture& texture, const Vector2i& position = Vector2i());
+    Image(const RenderTexture* texture, const Vector2i& position = Vector2i());
+    Image(const RenderTexture& texture, const Vector2i& position = Vector2i());
     ~Image();
 
     void SetPosition(const Vector2i& position);

@@ -1,7 +1,7 @@
 #ifndef __RECT_HPP__
 #define __RECT_HPP__
 
-#include "Vector2.hpp"
+#include "Core/Math/Vector2.hpp"
 
 struct Rect2 {
     Rect2();

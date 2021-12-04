@@ -7,9 +7,12 @@
 
 #include "GUI/Widgets/Widget.hpp"
 
+class IStyle;
+class RenderTexture;
+
 class ContainerWidget : public Widget {
 public:
-    ContainerWidget(const Vector2u& size, const Vector2i& position = Vector2i());
+    ContainerWidget(const Rect2& rect);
     virtual ~ContainerWidget();
 
     virtual void Resize(const Vector2u& size) override;
@@ -23,15 +26,33 @@ public:
     bool Attach(Widget* widget);
     bool Detach(Widget* widget);    
 
+    bool AttachInMiddle(Widget* widget);
+    bool AttachInTop(Widget* widget);
+    bool AttachInBottom(Widget* widget);
+    bool AttachInLeft(Widget* widget);
+    bool AttachInRight(Widget* widget);
+
+    void ApplyStyle(IStyle* style);
+
 protected:
+    ContainerWidget();
+
+    void ResizeTexture(const Vector2u& size);
+
+    void MoveChildren(const Vector2i& position);
+
+    void RenderStyles(RenderTexture* texture);
+
     void RenderChildren(RenderTexture* texture);
 
-    bool DispatchToChildren(const Event* event);
+    bool DispatchEventToChildren(const Event* event);
 
 protected:
-    RenderTexture      texture_;
+    RenderTexture*     texture_;
 
     std::list<Widget*> children_;
+
+    std::list<IStyle*> styles_;
 };
 
 #endif // __CONTAINER_WIDGET_HPP__

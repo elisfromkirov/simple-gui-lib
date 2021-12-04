@@ -9,14 +9,10 @@
 
 class Icon : public Widget {
 public:
-    Icon(const Texture& texture, const Vector2i& position = Vector2i());
+    Icon(const Texture& texture);
     virtual ~Icon() override;
 
     virtual void OnRender(RenderTexture* texture) override;
-
-    virtual void Resize(const Vector2u& size) override;
-
-    virtual void Move(const Vector2i& position) override;
 
 protected:
     Image image_;

@@ -7,23 +7,19 @@
 #include "Core/Math/Vector2.hpp"
 #include "Core/Platform/NativePlatform.hpp"
 #include "Core/Platform/Input.hpp"
+#include "Core/Platform/IRenderTarget.hpp"
 
-struct Color;
-class Image;
-class Text;
-class Rectangle;
-
-class RenderWindow {
+class RenderWindow : public IRenderTarget {
 public:
     RenderWindow(const std::string& title, const Vector2u& size);
     ~RenderWindow();
 
-    void Clear(const Color& color);
-    void Display();
+    virtual void Clear(const Color& color) override;
+    virtual void Display() override;
 
-    void RenderText(const Text& text);
-    void RenderImage(const Image& image);
-    void RenderRectangle(const Rectangle& rectangle);
+    virtual void RenderText(const Text& text) override;
+    virtual void RenderImage(const Image& image) override;
+    virtual void RenderRectangle(const Rectangle& rectangle) override;
 
     void PumpEvents();
 

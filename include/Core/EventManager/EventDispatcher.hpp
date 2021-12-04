@@ -5,7 +5,7 @@
 #include "Core/EventManager/EventCallback.hpp"
 #include "Core/EventManager/IEventListener.hpp"
 
-class EventDispatcher : IEventListener {
+class EventDispatcher : public IEventListener {
 public:
     EventDispatcher();
     virtual ~EventDispatcher() override;

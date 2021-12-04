@@ -8,6 +8,7 @@ target_sources(SGUI_CORE
         ${INCROOT}/Image.hpp
         ${INCROOT}/Input.hpp
         ${INCROOT}/InputEvent.hpp
+        ${INCROOT}/IRenderTarget.hpp
         ${INCROOT}/NativePlatform.hpp
         ${INCROOT}/Rectangle.hpp
         ${INCROOT}/RenderTexture.hpp

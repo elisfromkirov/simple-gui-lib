@@ -1,9 +1,10 @@
 #include "Core/Platform/Color.hpp"
 #include "Core/Platform/Rectangle.hpp"
 
-Rectangle::Rectangle(const Rect2& rect)
+Rectangle::Rectangle(const Rect2& rect, const Color& color)
     : rectangle_{sf::Vector2f(rect.size.x, rect.size.y)} {
     rectangle_.setPosition(sf::Vector2f(rect.position.x, rect.position.y));
+    rectangle_.setFillColor(NativeColorFromColor(color));
 }
 
 Rectangle::~Rectangle() {}

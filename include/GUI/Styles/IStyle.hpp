@@ -1,14 +1,14 @@
-#ifndef __STYLE_HPP__
-#define __STYLE_HPP__
+#ifndef __I_STYLE_HPP__
+#define __I_STYLE_HPP__
 
 class Widget;
 class RenderTexture;
 
-class Style {
+class IStyle {
 public:
-    virtual ~Style() {}
+    virtual ~IStyle() {}
 
     virtual void Apply(Widget* widget, RenderTexture* texture) = 0;
 };
 
-#endif // __STYLE_HPP__
+#endif // __I_STYLE_HPP__

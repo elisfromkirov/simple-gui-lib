@@ -3,23 +3,27 @@
 
 #include "Core/Math/Rect2.hpp"
 #include "Core/Platform/Color.hpp"
-#include "GUI/Styles/Style.hpp"
+#include "GUI/Styles/IStyle.hpp"
 
-class FilledStyle : public Style {
+class FilledStyle : public IStyle {
 public:
+    enum WidgetType {
+        kList,
+        kMenuBar,
+        kTitleBar,
+        kTabBar,
+        kMainWindow
+    };
+
+public:
+    FilledStyle(WidgetType widget_type);
     FilledStyle(const Color& color);
-
-    FilledStyle(const Color& color_on_release, const Color& color_on_hover, 
-                const Color& color_on_press);
-
     virtual ~FilledStyle() override;
 
     virtual void Apply(Widget* widget, RenderTexture* texture) override;
 
 protected:
-    Color color_on_release_;
-    Color color_on_hover_;
-    Color color_on_press_;
+    Color color_;
 };
 
 #endif // __FILLED_STYLE_HPP__

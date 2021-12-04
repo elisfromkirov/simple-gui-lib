@@ -9,14 +9,10 @@
 
 class Label : public Widget {
 public:
-    Label(const std::string& string, const Font& font, const Vector2i& position = Vector2i());
+    Label(const std::string& string, const Font& font);
     virtual ~Label() override;
 
     virtual void OnRender(RenderTexture* texture) override;
-
-    virtual void Resize(const Vector2u& size) override;
-
-    virtual void Move(const Vector2i& position) override;
 
     void SetCharSize(uint32_t char_size);
 

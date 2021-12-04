@@ -1,4 +1,5 @@
 #include "GUI/Events/WidgetEvent.hpp"
+#include "GUI/Widgets/MenuBar.hpp"
 #include "GUI/Widgets/Widget.hpp"
 
 WidgetEvent::WidgetEvent(uint64_t type, Widget* widget)
@@ -94,20 +95,68 @@ const Vector2u& ResizeEvent::GetOldSize() const {
     return old_size_;
 }
 
-ShowEvent::ShowEvent(Widget* widget)
-    : WidgetEvent{kShowEvent, widget} {}
+HorizontalScrollEvent::HorizontalScrollEvent(Widget* widget, float value, float old_value)
+    : WidgetEvent{kHorizontalScrollEvent, widget},
+      value_{value},
+      old_value_{old_value} {}
 
-ShowEvent::~ShowEvent() {}
+HorizontalScrollEvent::~HorizontalScrollEvent() {}
 
-uint64_t ShowEvent::GetStaticType() {
-    return kShowEvent;
+uint64_t HorizontalScrollEvent::GetStaticType() {
+    return kHorizontalScrollEvent;
 }
 
-HideEvent::HideEvent(Widget* widget)
-    : WidgetEvent{kHideEvent, widget} {}
+float HorizontalScrollEvent::GetValue() const {
+    return value_;
+}
 
-HideEvent::~HideEvent() {}
+float HorizontalScrollEvent::GetOldValue() const {
+    return old_value_;
+}
 
-uint64_t HideEvent::GetStaticType() {
-    return kHideEvent;
+VerticalScrollEvent::VerticalScrollEvent(Widget* widget, float value, float old_value)
+    : WidgetEvent{kVerticalScrollEvent, widget},
+      value_{value},
+      old_value_{old_value} {}
+
+VerticalScrollEvent::~VerticalScrollEvent() {}
+
+uint64_t VerticalScrollEvent::GetStaticType() {
+    return kVerticalScrollEvent;
+}
+
+float VerticalScrollEvent::GetValue() const {
+    return value_;
+}
+
+float VerticalScrollEvent::GetOldValue() const {
+    return old_value_;
+}
+
+ShowContextMenuEvent::ShowContextMenuEvent(Widget* widget, Menu* menu)
+    : WidgetEvent{kShowContextMenuEvent, widget},
+      menu_{menu} {}
+
+ShowContextMenuEvent::~ShowContextMenuEvent() {}
+
+uint64_t ShowContextMenuEvent::GetStaticType() {
+    return kShowContextMenuEvent;
+}
+
+Menu* ShowContextMenuEvent::GetContextMenu() const {
+    return menu_;
+}
+
+HideContextMenuEvent::HideContextMenuEvent(Widget* widget, Menu* menu)
+    : WidgetEvent{kHideContextMenuEvent, widget},
+      menu_{menu} {}
+
+HideContextMenuEvent::~HideContextMenuEvent() {}
+
+uint64_t HideContextMenuEvent::GetStaticType() {
+    return kHideContextMenuEvent;
+}
+
+Menu* HideContextMenuEvent::GetContextMenu() const {
+    return menu_;
 }

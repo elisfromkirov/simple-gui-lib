@@ -11,10 +11,6 @@
 
 class TitleBar : public ContainerWidget {
 public:
-    static const uint32_t kDefaultHeight{48};
-    static const uint32_t kDefaultCharSize{24};
-
-public:
     TitleBar(Widget* titled_widget, const std::string& title);
     virtual ~TitleBar() override;
 

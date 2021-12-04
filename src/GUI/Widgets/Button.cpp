@@ -3,8 +3,8 @@
 #include "GUI/Events/WidgetEvent.hpp"
 #include "GUI/Widgets/Button.hpp"
 
-Button::Button(const Vector2u& size, const Vector2i& position)
-    : ContainerWidget{size, position} {}
+Button::Button(const Rect2& rect)
+    : ContainerWidget{rect} {}
 
 Button::~Button() {}
 
@@ -14,13 +14,9 @@ bool Button::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
     if (!HitTest(event->GetMousePosition())) {
         return false;
     }
-
     pressed_ = true;
 
-    EventManager* event_manager = EventManager::GetInstance();
-    assert(event_manager != nullptr);
-
-    event_manager->PostEvent<MouseCaptureEvent>(this);
+    EventManager::GetInstance()->PostEvent<MouseCaptureEvent>(this);
 
     return true;
 }
@@ -31,13 +27,9 @@ bool Button::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
     if (!pressed_) {
         return false;
     }
-
     pressed_ = false;
 
-    EventManager* event_manager = EventManager::GetInstance();
-    assert(event_manager != nullptr);
-
-    event_manager->PostEvent<MouseCaptureLostEvent>(this);
+    EventManager::GetInstance()->PostEvent<MouseCaptureLostEvent>(this);
 
     if (HitTest(event->GetMousePosition())) {
         Clicked();

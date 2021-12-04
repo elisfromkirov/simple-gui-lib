@@ -7,6 +7,7 @@
 #include "Core/EventManager/Event.hpp"
 #include "Core/Math/Vector2.hpp"
 
+class Menu;
 class Widget;
 
 enum WidgetEventType : uint64_t {
@@ -22,11 +23,15 @@ enum WidgetEventType : uint64_t {
     kFocusOutEvent         = kWidgetEventCategory | 0x00000020,
 
     kCloseEvent            = kWidgetEventCategory | 0x00000040,
+
     kMoveEvent             = kWidgetEventCategory | 0x00000080,
     kResizeEvent           = kWidgetEventCategory | 0x00000100,
-    
-    kShowEvent             = kWidgetEventCategory | 0x00000200,
-    kHideEvent             = kWidgetEventCategory | 0x00000400
+
+    kHorizontalScrollEvent = kWidgetEventCategory | 0x00000200,
+    kVerticalScrollEvent   = kWidgetEventCategory | 0x00000400,
+
+    kShowContextMenuEvent  = kWidgetEventCategory | 0x00000800,
+    kHideContextMenuEvent  = kWidgetEventCategory | 0x00001000,
 };
 
 class WidgetEvent : public Event {
@@ -113,18 +118,62 @@ protected:
     Vector2u old_size_;
 };
 
-class ShowEvent : public WidgetEvent {
-    ShowEvent(Widget* widget);
-    virtual ~ShowEvent() override;
+class HorizontalScrollEvent : public WidgetEvent {
+public:
+    HorizontalScrollEvent(Widget* widget, float value, float old_value);
+    virtual ~HorizontalScrollEvent() override;
 
     static uint64_t GetStaticType();
+
+    float GetValue() const;
+
+    float GetOldValue() const;
+
+protected:
+    float value_;
+    float old_value_;
 };
 
-class HideEvent : public WidgetEvent {
-    HideEvent(Widget* widget);
-    virtual ~HideEvent() override;
+class VerticalScrollEvent : public WidgetEvent {
+public:
+    VerticalScrollEvent(Widget* widget, float value, float old_value);
+    virtual ~VerticalScrollEvent() override;
 
     static uint64_t GetStaticType();
+
+    float GetValue() const;
+
+    float GetOldValue() const;
+
+protected:
+    float value_;
+    float old_value_;
+};
+
+class ShowContextMenuEvent : public WidgetEvent {
+public:
+    ShowContextMenuEvent(Widget* widget, Menu* menu);
+    virtual ~ShowContextMenuEvent() override;
+
+    static uint64_t GetStaticType();
+    
+    Menu* GetContextMenu() const;
+
+protected:
+    Menu* menu_;
+};
+
+class HideContextMenuEvent : public WidgetEvent {
+public:
+    HideContextMenuEvent(Widget* widget, Menu* menu);
+    virtual ~HideContextMenuEvent() override;
+    
+    static uint64_t GetStaticType();
+
+    Menu* GetContextMenu() const;
+
+protected:
+    Menu* menu_;
 };
 
 #endif // __WIDGET_EVENT_HPP__

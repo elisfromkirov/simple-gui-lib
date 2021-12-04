@@ -9,7 +9,7 @@
 
 class Button : public ContainerWidget {
 public:
-    Button(const Vector2u& size, const Vector2i& position = Vector2i());
+    Button(const Rect2& rect);
     virtual ~Button() override;
 
     virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event) override;

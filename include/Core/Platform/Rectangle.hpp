@@ -11,7 +11,7 @@ struct Color;
 
 class Rectangle {
 public:
-    Rectangle(const Rect2& rect);
+    Rectangle(const Rect2& rect, const Color& color);
     ~Rectangle();
 
     void SetFillColor(const Color& color);

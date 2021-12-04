@@ -1,17 +1,14 @@
 #include "Core/Platform/InputEvent.hpp"
 #include "GUI/Events/WidgetEvent.hpp"
-#include "GUI/Styles/Style.hpp"
 #include "GUI/Widgets/Widget.hpp"
 #include "GUI/Widgets/ContainerWidget.hpp"
 
-Widget::Widget(const Vector2u& size, const Vector2i& position)
-    : size_{size},
-      position_{position},
+Widget::Widget(const Rect2& rect)
+    : rect_{rect},
       parent_{nullptr},
       pressed_{false},
       hovered_{false},
-      hided_{false},
-      styles_{} {
+      hided_{false} {
     SetEventCallback<Widget, MouseButtonPressEvent>  (this, &Widget::OnMouseButtonPressEvent);
     SetEventCallback<Widget, MouseButtonReleaseEvent>(this, &Widget::OnMouseButtonReleaseEvent);
     SetEventCallback<Widget, MouseMoveEvent>         (this, &Widget::OnMouseMoveEvent);
@@ -24,31 +21,29 @@ Widget::Widget(const Vector2u& size, const Vector2i& position)
     SetEventCallback<Widget, CloseEvent>             (this, &Widget::OnCloseEvent);
     SetEventCallback<Widget, MoveEvent>              (this, &Widget::OnMoveEvent);
     SetEventCallback<Widget, ResizeEvent>            (this, &Widget::OnResizeEvent);
+    SetEventCallback<Widget, HorizontalScrollEvent>  (this, &Widget::OnHorizontalScrollEvent);
+    SetEventCallback<Widget, VerticalScrollEvent>    (this, &Widget::OnVerticalScrollEvent);
+    SetEventCallback<Widget, ShowContextMenuEvent>   (this, &Widget::OnShowContextMenuEvent);
+    SetEventCallback<Widget, HideContextMenuEvent>   (this, &Widget::OnHideContextMenuEvent);
 }
-
-Widget::~Widget() {
-    for (auto iter = styles_.begin(); iter != styles_.end(); ++iter) {
-        delete (*iter);
-    }
-}
+ 
+Widget::~Widget() {}
 
 void Widget::Resize(const Vector2u& size) {
-    size_ = size;
+    rect_.size = size;
 }
 
 void Widget::Move(const Vector2i& position) {
-    position_ = position;
+    rect_.position = position;
 }
 
 bool Widget::HitTest(const Vector2i& point) const {
-    Vector2i relative_position = point - position_;
- 
-    return 0.f < relative_position.x && relative_position.x < static_cast<int32_t>(size_.x) &&
-           0.f < relative_position.y && relative_position.y < static_cast<int32_t>(size_.y);
+    return rect_.position.x < point.x && point.x < rect_.position.x + static_cast<int32_t>(rect_.size.x) && 
+           rect_.position.y < point.y && point.y < rect_.position.y + static_cast<int32_t>(rect_.size.y); 
 }
 
 void Widget::OnRender(RenderTexture* texture) {
-    RenderStyles(texture);
+    assert(texture != nullptr);
 }
 
 bool Widget::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
@@ -69,25 +64,25 @@ bool Widget::OnMouseMoveEvent(const MouseMoveEvent* event) {
     return false;
 }
 
-bool OnKeyPressEvent(const KeyPressEvent* event) {
+bool Widget::OnKeyPressEvent(const KeyPressEvent* event) {
     assert(event != nullptr);
 
     return false;
 }
 
-bool OnKeyReleaseEvent(const KeyReleaseEvent* event) {
+bool Widget::OnKeyReleaseEvent(const KeyReleaseEvent* event) {
     assert(event != nullptr);
 
     return false;
 }
 
-bool OnMouseCaptureEvent(const MouseCaptureEvent* event) {
+bool Widget::OnMouseCaptureEvent(const MouseCaptureEvent* event) {
     assert(event != nullptr);
 
     return false;
 }
 
-bool OnMouseCaptureLostEvent(const MouseCaptureLostEvent* event) {
+bool Widget::OnMouseCaptureLostEvent(const MouseCaptureLostEvent* event) {
     assert(event != nullptr);
 
     return false;
@@ -132,12 +127,36 @@ bool Widget::OnResizeEvent(const ResizeEvent* event) {
     return true;
 }
 
+bool Widget::OnHorizontalScrollEvent(const HorizontalScrollEvent* event) {
+    assert(event != nullptr);
+
+    return true;
+}
+
+bool Widget::OnVerticalScrollEvent(const VerticalScrollEvent* event) {
+    assert(event != nullptr);
+
+    return true;
+}
+
+bool Widget::OnShowContextMenuEvent(const ShowContextMenuEvent* event) {
+    assert(event != nullptr);
+
+    return true;
+}
+
+bool Widget::OnHideContextMenuEvent(const HideContextMenuEvent* event) {
+    assert(event != nullptr);
+
+    return true;
+}
+
 const Vector2u& Widget::GetSize() const {
-    return size_;
+    return rect_.size;
 }
 
 const Vector2i& Widget::GetPosition() const {
-    return position_;
+    return rect_.position;
 }
 
 const ContainerWidget* Widget::GetParent() const {
@@ -160,23 +179,9 @@ bool Widget::IsHided() const {
     return hovered_;
 }
 
-void Widget::ApplyStyle(Style* style) {
-    assert(style != nullptr);
-
-    styles_.push_back(style);
-}
-
 Vector2i Widget::MapPositionToParent() const {
     if (parent_ != nullptr) {
-        return position_ - parent_->GetPosition();
+        return rect_.position - parent_->GetPosition();
     }
-    return position_;
-}
-
-void Widget::RenderStyles(RenderTexture* texture) {
-    assert(texture != nullptr);
-
-    for (auto iter = styles_.begin(); iter != styles_.end(); ++iter) {
-        (*iter)->Apply(this, texture);
-    }
+    return rect_.position;
 }
