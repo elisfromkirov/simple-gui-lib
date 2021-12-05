@@ -1,4 +1,8 @@
 #include "Application/Application.hpp"
+#include "Application/UI/Editor.hpp"
+#include "Application/UI/ToolBar.hpp"
+#include "Application/Tools/ToolManager.hpp"
+#include "Application/Tools/Tools.hpp"
 #include "Core/EventManager/EventManager.hpp"
 #include "Core/LogManager/LogManager.hpp"
 #include "Core/ResourceManager/ResourceManager.hpp"
@@ -16,26 +20,17 @@
 #include "GUI/Widgets/TitleBar.hpp"
 #include "GUI/Widgets/Window.hpp"
 
-#include <cstdio>
-
-void ScrollResponse(float value) {
-    printf("%lg\n", value);
-}
-
 Application::Application(const std::string& name)
-    : event_manager_{nullptr},
-      log_manager_{nullptr},
+    : log_manager_{nullptr},
+      event_manager_{nullptr},
       resource_manager_{nullptr},
+      tool_manager_{nullptr},
       render_window_{nullptr},
       window_{nullptr} {
-    event_manager_ = EventManager::GetInstance();
-    assert(event_manager_    != nullptr);
-
-    log_manager_ = LogManager::GetInstance();
-    assert(log_manager_      != nullptr);
-    
+    log_manager_      = LogManager::GetInstance();
+    event_manager_    = EventManager::GetInstance();    
     resource_manager_ = ResourceManager::GetInstance();
-    assert(resource_manager_ != nullptr);
+    tool_manager_     = ToolManager::GetInstance();
 
     render_window_ = new RenderWindow(name, Vector2u(1600, 1200));
     assert(render_window_    != nullptr);
@@ -85,42 +80,54 @@ Application::Application(const std::string& name)
 
     // window_->Attach(list2);
 
-    MenuBar* menu_bar = new MenuBar(window_);
-    window_->AttachInTop(menu_bar);
+    // MenuBar* menu_bar = new MenuBar(window_);
+    // window_->AttachInTop(menu_bar);
 
-    Menu* menu1 = new Menu(300, "menu1");
-    menu1->InsertItem("menu1: item1");
-    menu1->InsertItem("menu1: item2");
-    menu1->InsertItem("menu1: item3");
-    menu1->InsertItem("menu1: item4");
-    menu1->InsertItem("menu1: item5");
-    menu1->InsertItem("menu1: item6");
-    menu1->InsertItem("menu1: item7");
-    menu1->InsertItem("menu1: item8");
-    menu_bar->InsertMenu(menu1);
-    // window_->AttachInLeft(menu1);
+    // Menu* menu1 = new Menu(300, "menu1");
+    // menu1->InsertItem("menu1: item1");
+    // menu1->InsertItem("menu1: item2");
+    // menu1->InsertItem("menu1: item3");
+    // menu1->InsertItem("menu1: item4");
+    // menu1->InsertItem("menu1: item5");
+    // menu1->InsertItem("menu1: item6");
+    // menu1->InsertItem("menu1: item7");
+    // menu1->InsertItem("menu1: item8");
+    // menu_bar->InsertMenu(menu1);
+    // // window_->AttachInLeft(menu1);
 
-    Menu* menu2 = new Menu(300, "menu2");
-    menu2->InsertItem("menu2: item1");
-    menu2->InsertItem("menu2: item2");
-    menu2->InsertItem("menu2: item3");
-    menu2->InsertItem("menu2: item4");
-    menu2->InsertItem("menu2: item5");
-    menu2->InsertItem("menu2: item6");
-    menu2->InsertItem("menu2: item7");
-    menu2->InsertItem("menu2: item8");
-    menu_bar->InsertMenu(menu2);
-    // window_->AttachInRight(menu2);
+    // Menu* menu2 = new Menu(300, "menu2");
+    // menu2->InsertItem("menu2: item1");
+    // menu2->InsertItem("menu2: item2");
+    // menu2->InsertItem("menu2: item3");
+    // menu2->InsertItem("menu2: item4");
+    // menu2->InsertItem("menu2: item5");
+    // menu2->InsertItem("menu2: item6");
+    // menu2->InsertItem("menu2: item7");
+    // menu2->InsertItem("menu2: item8");
+    // menu_bar->InsertMenu(menu2);
+    // // window_->AttachInRight(menu2);
+
+    ToolBar* tool_bar = new ToolBar(Rect2(100, 100, 100, 100));
+    window_->Attach(tool_bar);
+
+    Pencil* pencil = new Pencil();
+    tool_manager_->AddTool(pencil);
+    tool_bar->InsertTool(pencil);
+
+    Editor* editor = new Editor(Rect2(600, 600, 200, 200), "hui");
+    window_->Attach(editor);
 }
 
 Application::~Application() {
+    assert(tool_manager_     != nullptr);
+    assert(resource_manager_ != nullptr);
     assert(event_manager_    != nullptr);
     assert(log_manager_      != nullptr);
-    assert(resource_manager_ != nullptr);
-    assert(render_window_    != nullptr);
- 
+
+    assert(render_window_    != nullptr); 
     delete render_window_;
 
+    tool_manager_->Release();
     resource_manager_->Release();
     event_manager_->Release();
     log_manager_->Release();
@@ -132,7 +139,7 @@ void Application::Run() {
 
         event_manager_->DispatchEvents();
 
-        render_window_->Clear(Color(1.f, 1.f, 1.f, 1.f));
+        render_window_->Clear(Color());
         window_->OnRenderToWindow(render_window_);
         render_window_->Display();
     }

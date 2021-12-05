@@ -5,9 +5,10 @@
 #include <cstdint>
 #include <string>
 
-class EventManager;
 class LogManager;
+class EventManager;
 class ResourceManager;
+class ToolManager;
 class RenderWindow;
 class Window;
 
@@ -19,9 +20,10 @@ public:
     void Run();
 
 protected:
-    EventManager*    event_manager_;
     LogManager*      log_manager_;
+    EventManager*    event_manager_;
     ResourceManager* resource_manager_;
+    ToolManager*     tool_manager_;
 
     RenderWindow*    render_window_;
 

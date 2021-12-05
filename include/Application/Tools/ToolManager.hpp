@@ -3,27 +3,28 @@
 
 #include <cassert>
 #include <cstdint>
+#include <list>
 
 #include "Application/Tools/IFilter.hpp"
 #include "Application/Tools/ITool.hpp"
 
 class ToolManager {
 public:
-    static EventManager* GetInstance();
+    static ToolManager* GetInstance();
 
     void Release();
 
     ITool* GetActiveTool();
-    SetActiveTool(ITool* tool);
+    void SetActiveTool(ITool* tool);
 
     void AddTool(ITool* tool);
     void RemoveTool(ITool* tool);
 
     IFilter* GetActiveFilter();
-    SetActiveFilter(IFilter* tool);
+    void SetActiveFilter(IFilter* filter);
 
-    void AddFilter(ITool* tool);
-    void RemoveFilter(ITool* tool);
+    void AddFilter(IFilter* filter);
+    void RemoveFilter(IFilter* filter);
 
 private:
     ToolManager();
@@ -39,7 +40,7 @@ private:
     ITool*              active_tool_;
 
     std::list<IFilter*> filters_;
-    Filter*             active_filter_;
+    IFilter*            active_filter_;
 };
 
 #endif // __TOOL_MANAGER_HPP__

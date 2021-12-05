@@ -1,6 +1,8 @@
 #ifndef __I_TOOL_HPP__
 #define __I_TOOL_HPP__
 
+#include "Core/Math/Vector2.hpp"
+
 class RenderTexture;
 
 class ITool {

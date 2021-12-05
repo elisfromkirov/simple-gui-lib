@@ -1,4 +1,5 @@
 #include "Core/EventManager/EventManager.hpp"
+#include "Core/Platform/RenderTexture.hpp"
 #include "GUI/Events/WidgetEvent.hpp"
 #include "GUI/Styles/FilledStyle.hpp"
 #include "GUI/Widgets/List.hpp"
@@ -111,17 +112,22 @@ uint32_t VerticalList::GetHeight() const {
 }
 
 ScrollingHorizontalList::ScrollingHorizontalList(const Rect2& rect)
-    : ContainerWidget{rect},
+    : ContainerWidget{},
       scroll_value_{0.f},
       list_{nullptr},
       scroll_bar_{nullptr} {
-    scroll_bar_ = new HorizontalScrollBar(rect_.size.x, 0.05);
-    AttachInBottom(scroll_bar_);
+    list_       = new HorizontalList(rect);
+    scroll_bar_ = new HorizontalScrollBar(rect.size.x, 0.05);
 
-    list_ = new HorizontalList(Rect2{rect_.size.x, rect_.size.y - scroll_bar_->GetSize().y});
+    rect_.size     = Vector2u(rect.size.x, rect.size.y + scroll_bar_->GetSize().y);
+    rect_.position = rect.position;
+
+    texture_ = new RenderTexture(rect_.size);
+
     AttachInTop(list_);
-
+    
     scroll_bar_->ValueChanged.Connect<ScrollingHorizontalList>(this, &ScrollingHorizontalList::SliderValueChangeResponse);
+    AttachInBottom(scroll_bar_);
 
     ApplyStyle(new FilledStyle(FilledStyle::kList));
 }
@@ -182,8 +188,6 @@ bool ScrollingVerticalList::RemoveItem(Widget* widget) {
 
     return list_->RemoveItem(widget);
 }
-
-#include <cstdio>
 
 void ScrollingVerticalList::SliderValueChangeResponse(float value) {
     assert(scroll_bar_ != nullptr);

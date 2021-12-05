@@ -15,6 +15,9 @@ target_sources(SGUI_APPLICATION
         ${SRCROOT}/Application.cpp
 )
 
+add_subdirectory(Tools)
+add_subdirectory(UI)
+
 target_link_libraries(SGUI_APPLICATION
     PUBLIC
         SGUI_CORE

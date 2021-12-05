@@ -18,7 +18,7 @@ Window::~Window() {}
 void Window::OnRenderToWindow(RenderWindow* window) {
     assert(window != nullptr);
 
-    texture_->Clear(Color(1.f, 1.f, 1.f, 1.f));
+    texture_->Clear(Color());
     RenderChildren(texture_);
     if (context_menu_ != nullptr) {
         context_menu_->OnRender(texture_);

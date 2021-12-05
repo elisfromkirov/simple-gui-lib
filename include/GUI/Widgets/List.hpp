@@ -1,4 +1,4 @@
-m#ifndef __LIST_HPP__
+#ifndef __LIST_HPP__
 #define __LIST_HPP__
 
 #include <cassert>
