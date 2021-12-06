@@ -18,6 +18,10 @@ public:
   
     virtual bool OnMouseMoveEvent(const MouseMoveEvent* event) override;
 
+    virtual bool OnMouseEnterEvent(const MouseEnterEvent* event) override;
+
+    virtual bool OnMouseLeaveEvent(const MouseLeaveEvent* event) override;
+
 public:
     Signal<void()> Clicked;
 };

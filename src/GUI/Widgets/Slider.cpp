@@ -32,7 +32,7 @@ bool Thumb::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
     }
     pressed_ = true;
 
-    EventManager::GetInstance()->PostEvent<MouseCaptureEvent>(this);
+    EventManager::GetInstance()->PostEvent<MouseCaptureInEvent>(this);
 
     return true;
 }
@@ -45,7 +45,7 @@ bool Thumb::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
     }
     pressed_ = false;
 
-    EventManager::GetInstance()->PostEvent<MouseCaptureLostEvent>(this);
+    EventManager::GetInstance()->PostEvent<MouseCaptureOutEvent>(this);
 
     return true;
 }

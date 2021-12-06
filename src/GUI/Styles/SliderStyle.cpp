@@ -13,9 +13,9 @@ HorizontalSliderStyle::HorizontalSliderStyle(const Color& color)
 
 HorizontalSliderStyle::~HorizontalSliderStyle() {}
 
-void HorizontalSliderStyle::Apply(Widget* widget, RenderTexture* texture) {
-    assert(widget  != nullptr);
-    assert(texture != nullptr);
+void HorizontalSliderStyle::Apply(Widget* widget, IRenderTarget* render_target) {
+    assert(widget        != nullptr);
+    assert(render_target != nullptr);
 
     HorizontalSlider* slider = static_cast<HorizontalSlider*>(widget);
 
@@ -26,7 +26,7 @@ void HorizontalSliderStyle::Apply(Widget* widget, RenderTexture* texture) {
     thumb.position.x = static_cast<int32_t>((slider->GetSize().x - thumb.size.x) * slider->GetValue());
     thumb.position.y = 0;
 
-    texture->RenderRectangle(Rectangle(thumb, color_));
+    render_target->RenderRectangle(Rectangle(thumb, color_));
 }
 
 const Color VerticalSliderStyle::kDefaultColor{ColorFromRGBA(0x434343ff)};
@@ -39,9 +39,9 @@ VerticalSliderStyle::VerticalSliderStyle(const Color& color)
 
 VerticalSliderStyle::~VerticalSliderStyle() {}
 
-void VerticalSliderStyle::Apply(Widget* widget, RenderTexture* texture) {
-    assert(widget  != nullptr);
-    assert(texture != nullptr);
+void VerticalSliderStyle::Apply(Widget* widget, IRenderTarget* render_target) {
+    assert(widget        != nullptr);
+    assert(render_target != nullptr);
 
     VerticalSlider* slider = static_cast<VerticalSlider*>(widget);
 
@@ -52,7 +52,7 @@ void VerticalSliderStyle::Apply(Widget* widget, RenderTexture* texture) {
     thumb.position.x = 0;
     thumb.position.y = static_cast<int32_t>((slider->GetSize().y - thumb.size.y) * slider->GetValue());
 
-    texture->RenderRectangle(Rectangle(thumb, color_));
+    render_target->RenderRectangle(Rectangle(thumb, color_));
 }
 
 const Color ProgressHorizontalSliderStyle::kDefaultProgressAreaColor{ColorFromRGBA(0xe2e2e2ff)};
@@ -69,9 +69,9 @@ ProgressHorizontalSliderStyle::ProgressHorizontalSliderStyle(const Color& progre
 
 ProgressHorizontalSliderStyle::~ProgressHorizontalSliderStyle() {}
 
-void ProgressHorizontalSliderStyle::Apply(Widget* widget, RenderTexture* texture) {
-    assert(widget  != nullptr);
-    assert(texture != nullptr);
+void ProgressHorizontalSliderStyle::Apply(Widget* widget, IRenderTarget* render_target) {
+    assert(widget        != nullptr);
+    assert(render_target != nullptr);
 
     HorizontalSlider* slider = static_cast<HorizontalSlider*>(widget);
 
@@ -82,7 +82,7 @@ void ProgressHorizontalSliderStyle::Apply(Widget* widget, RenderTexture* texture
     track.position.x = 0;
     track.position.y = slider->GetSize().y / 3;
 
-    texture->RenderRectangle(Rectangle(track, track_color_));
+    render_target->RenderRectangle(Rectangle(track, track_color_));
     
     Rect2 progress_area{};
 
@@ -91,7 +91,7 @@ void ProgressHorizontalSliderStyle::Apply(Widget* widget, RenderTexture* texture
     progress_area.position.x = 0;
     progress_area.position.y = slider->GetSize().y / 3;
 
-    texture->RenderRectangle(Rectangle(progress_area, progress_area_color_));
+    render_target->RenderRectangle(Rectangle(progress_area, progress_area_color_));
 
     Rect2 thumb{};
 
@@ -100,7 +100,7 @@ void ProgressHorizontalSliderStyle::Apply(Widget* widget, RenderTexture* texture
     thumb.position.x = static_cast<int32_t>((slider->GetSize().x - thumb.size.x) * slider->GetValue());
     thumb.position.y = 0;
     
-    texture->RenderRectangle(Rectangle(thumb, progress_area_color_));
+    render_target->RenderRectangle(Rectangle(thumb, progress_area_color_));
 }
 
 const Color ProgressVerticalSliderStyle::kDefaultProgressAreaColor{ColorFromRGBA(0xe2e2e2ff)};
@@ -117,9 +117,9 @@ ProgressVerticalSliderStyle::ProgressVerticalSliderStyle(const Color& progress_a
 
 ProgressVerticalSliderStyle::~ProgressVerticalSliderStyle() {}
 
-void ProgressVerticalSliderStyle::Apply(Widget* widget, RenderTexture* texture) {
-    assert(widget  != nullptr);
-    assert(texture != nullptr);
+void ProgressVerticalSliderStyle::Apply(Widget* widget, IRenderTarget* render_target) {
+    assert(widget        != nullptr);
+    assert(render_target != nullptr);
 
     VerticalSlider* slider = static_cast<VerticalSlider*>(widget);
 
@@ -130,7 +130,7 @@ void ProgressVerticalSliderStyle::Apply(Widget* widget, RenderTexture* texture) 
     track.position.x = slider->GetSize().x / 3;
     track.position.y = 0;
 
-    texture->RenderRectangle(Rectangle(track, track_color_));
+    render_target->RenderRectangle(Rectangle(track, track_color_));
 
     Rect2 progress_area{};
 
@@ -139,7 +139,7 @@ void ProgressVerticalSliderStyle::Apply(Widget* widget, RenderTexture* texture) 
     progress_area.position.x = slider->GetSize().x / 3;
     progress_area.position.y = 0;
 
-    texture->RenderRectangle(Rectangle(progress_area, progress_area_color_));
+    render_target->RenderRectangle(Rectangle(progress_area, progress_area_color_));
 
     Rect2 thumb{};
 
@@ -148,5 +148,5 @@ void ProgressVerticalSliderStyle::Apply(Widget* widget, RenderTexture* texture) 
     thumb.position.x = 0;
     thumb.position.y = static_cast<int32_t>((slider->GetSize().y - thumb.size.y) * slider->GetValue());
 
-    texture->RenderRectangle(Rectangle(thumb, progress_area_color_));
+    render_target->RenderRectangle(Rectangle(thumb, progress_area_color_));
 }

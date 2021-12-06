@@ -9,10 +9,14 @@ class LogManager;
 class EventManager;
 class ResourceManager;
 class ToolManager;
-class RenderWindow;
-class Window;
+
+#include "Core/Platform/RenderWindow.hpp"
+#include "GUI/Widgets/Window.hpp"
 
 class Application {
+private:
+    static const Vector2u kDefaultSize;
+
 public:
     Application(const std::string& name);
     ~Application();
@@ -25,9 +29,9 @@ protected:
     ResourceManager* resource_manager_;
     ToolManager*     tool_manager_;
 
-    RenderWindow*    render_window_;
+    RenderWindow     render_window_;
 
-    Window*          window_;    
+    Window           window_;
 };
 
 #endif // __APPLICATION_HPP__

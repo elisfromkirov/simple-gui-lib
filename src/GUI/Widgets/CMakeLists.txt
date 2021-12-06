@@ -7,6 +7,7 @@ target_sources(SGUI_GUI
         ${INCROOT}/ContainerWidget.hpp
         ${INCROOT}/Icon.hpp
         ${INCROOT}/Label.hpp
+        ${INCROOT}/LayeredWidget.hpp
         ${INCROOT}/List.hpp
         ${INCROOT}/MenuBar.hpp
         ${INCROOT}/ScrollBar.hpp
@@ -19,6 +20,7 @@ target_sources(SGUI_GUI
         ${SRCROOT}/ContainerWidget.cpp
         ${SRCROOT}/Icon.cpp
         ${SRCROOT}/Label.cpp
+        ${SRCROOT}/LayeredWidget.cpp
         ${SRCROOT}/List.cpp
         ${SRCROOT}/MenuBar.cpp
         ${SRCROOT}/ScrollBar.cpp

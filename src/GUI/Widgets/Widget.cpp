@@ -9,24 +9,26 @@ Widget::Widget(const Rect2& rect)
       pressed_{false},
       hovered_{false},
       hided_{false} {
-    SetEventCallback<Widget, MouseButtonPressEvent>  (this, &Widget::OnMouseButtonPressEvent);
-    SetEventCallback<Widget, MouseButtonReleaseEvent>(this, &Widget::OnMouseButtonReleaseEvent);
-    SetEventCallback<Widget, MouseMoveEvent>         (this, &Widget::OnMouseMoveEvent);
-    SetEventCallback<Widget, KeyPressEvent>          (this, &Widget::OnKeyPressEvent);
-    SetEventCallback<Widget, KeyReleaseEvent>        (this, &Widget::OnKeyReleaseEvent);
-    SetEventCallback<Widget, MouseCaptureEvent>      (this, &Widget::OnMouseCaptureEvent);
-    SetEventCallback<Widget, MouseCaptureLostEvent>  (this, &Widget::OnMouseCaptureLostEvent);
-    SetEventCallback<Widget, FocusInEvent>           (this, &Widget::OnFocusInEvent);
-    SetEventCallback<Widget, FocusOutEvent>          (this, &Widget::OnFocusOutEvent);
-    SetEventCallback<Widget, CloseEvent>             (this, &Widget::OnCloseEvent);
-    SetEventCallback<Widget, MoveEvent>              (this, &Widget::OnMoveEvent);
-    SetEventCallback<Widget, ResizeEvent>            (this, &Widget::OnResizeEvent);
-    SetEventCallback<Widget, HorizontalScrollEvent>  (this, &Widget::OnHorizontalScrollEvent);
-    SetEventCallback<Widget, VerticalScrollEvent>    (this, &Widget::OnVerticalScrollEvent);
-    SetEventCallback<Widget, ShowContextMenuEvent>   (this, &Widget::OnShowContextMenuEvent);
-    SetEventCallback<Widget, HideContextMenuEvent>   (this, &Widget::OnHideContextMenuEvent);
+    SetEventHandler<Widget, MouseButtonPressEvent>  (this, &Widget::OnMouseButtonPressEvent);
+    SetEventHandler<Widget, MouseButtonReleaseEvent>(this, &Widget::OnMouseButtonReleaseEvent);
+    SetEventHandler<Widget, MouseMoveEvent>         (this, &Widget::OnMouseMoveEvent);
+    SetEventHandler<Widget, MouseCaptureInEvent>    (this, &Widget::OnMouseCaptureInEvent);
+    SetEventHandler<Widget, MouseCaptureOutEvent>   (this, &Widget::OnMouseCaptureOutEvent);
+    SetEventHandler<Widget, MouseEnterEvent>        (this, &Widget::OnMouseEnterEvent);
+    SetEventHandler<Widget, MouseLeaveEvent>        (this, &Widget::OnMouseLeaveEvent);
+    SetEventHandler<Widget, KeyPressEvent>          (this, &Widget::OnKeyPressEvent);
+    SetEventHandler<Widget, KeyReleaseEvent>        (this, &Widget::OnKeyReleaseEvent);
+    SetEventHandler<Widget, FocusInEvent>           (this, &Widget::OnFocusInEvent);
+    SetEventHandler<Widget, FocusOutEvent>          (this, &Widget::OnFocusOutEvent);
+    SetEventHandler<Widget, CloseEvent>             (this, &Widget::OnCloseEvent);
+    SetEventHandler<Widget, MoveEvent>              (this, &Widget::OnMoveEvent);
+    SetEventHandler<Widget, ResizeEvent>            (this, &Widget::OnResizeEvent);
+    SetEventHandler<Widget, HorizontalScrollEvent>  (this, &Widget::OnHorizontalScrollEvent);
+    SetEventHandler<Widget, VerticalScrollEvent>    (this, &Widget::OnVerticalScrollEvent);
+    SetEventHandler<Widget, ShowPopUpWidgetEvent>   (this, &Widget::OnShowPopUpWidgetEvent);
+    SetEventHandler<Widget, HidePopUpWidgetEvent>   (this, &Widget::OnHidePopUpWidgetEvent);
 }
- 
+
 Widget::~Widget() {}
 
 void Widget::Resize(const Vector2u& size) {
@@ -42,9 +44,7 @@ bool Widget::HitTest(const Vector2i& point) const {
            rect_.position.y < point.y && point.y < rect_.position.y + static_cast<int32_t>(rect_.size.y); 
 }
 
-void Widget::OnRender(RenderTexture* texture) {
-    assert(texture != nullptr);
-}
+void Widget::OnRender(IRenderTarget* render_target) {}
 
 bool Widget::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
     assert(event != nullptr);
@@ -58,7 +58,31 @@ bool Widget::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
     return false;
 }
 
+bool Widget::OnMouseCaptureInEvent(const MouseCaptureInEvent* event) {
+    assert(event != nullptr);
+
+    return false;
+}
+
+bool Widget::OnMouseCaptureOutEvent(const MouseCaptureOutEvent* event) {
+    assert(event != nullptr);
+
+    return false;
+}
+
 bool Widget::OnMouseMoveEvent(const MouseMoveEvent* event) {
+    assert(event != nullptr);
+
+    return false;
+}
+
+bool Widget::OnMouseEnterEvent(const MouseEnterEvent* event) {
+    assert(event != nullptr);
+
+    return false;
+}
+
+bool Widget::OnMouseLeaveEvent(const MouseLeaveEvent* event) {
     assert(event != nullptr);
 
     return false;
@@ -71,18 +95,6 @@ bool Widget::OnKeyPressEvent(const KeyPressEvent* event) {
 }
 
 bool Widget::OnKeyReleaseEvent(const KeyReleaseEvent* event) {
-    assert(event != nullptr);
-
-    return false;
-}
-
-bool Widget::OnMouseCaptureEvent(const MouseCaptureEvent* event) {
-    assert(event != nullptr);
-
-    return false;
-}
-
-bool Widget::OnMouseCaptureLostEvent(const MouseCaptureLostEvent* event) {
     assert(event != nullptr);
 
     return false;
@@ -139,13 +151,13 @@ bool Widget::OnVerticalScrollEvent(const VerticalScrollEvent* event) {
     return true;
 }
 
-bool Widget::OnShowContextMenuEvent(const ShowContextMenuEvent* event) {
+bool Widget::OnShowPopUpWidgetEvent(const ShowPopUpWidgetEvent* event) {
     assert(event != nullptr);
 
     return true;
 }
 
-bool Widget::OnHideContextMenuEvent(const HideContextMenuEvent* event) {
+bool Widget::OnHidePopUpWidgetEvent(const HidePopUpWidgetEvent* event) {
     assert(event != nullptr);
 
     return true;

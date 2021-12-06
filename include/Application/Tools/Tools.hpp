@@ -18,6 +18,15 @@ public:
     virtual void EndDraw(RenderTexture* canvas, const Vector2i& position) override;
 
     virtual const char* GetIconFileName() const override;
+
+    virtual ContainerWidget* GetPreferencesPanel() override;
+
+    void SetThickness(uint32_t thickness);
+
+protected:
+    uint32_t thickness_;
+
+    ContainerWidget* preferences_panel_;
 };
 
 #endif // __TOOLS_HPP__

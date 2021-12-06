@@ -4,14 +4,14 @@
 Icon::Icon(const Texture& texture)
     : Widget{},
       image_{texture} {
-    rect_.size     = image_.GetSize();
+    rect_.size = image_.GetSize();
 }
 
 Icon::~Icon() {}
 
-void Icon::OnRender(RenderTexture* texture) {
-    assert(texture != nullptr);
-  
+void Icon::OnRender(IRenderTarget* render_target) {
+    assert(render_target != nullptr);
+
     image_.SetPosition(MapPositionToParent());
-    texture->RenderImage(image_);
+    render_target->RenderImage(image_);
 }

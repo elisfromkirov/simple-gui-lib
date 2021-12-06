@@ -114,20 +114,20 @@ uint32_t VerticalList::GetHeight() const {
 ScrollingHorizontalList::ScrollingHorizontalList(const Rect2& rect)
     : ContainerWidget{},
       scroll_value_{0.f},
-      list_{nullptr},
-      scroll_bar_{nullptr} {
-    list_       = new HorizontalList(rect);
+      scroll_bar_{nullptr},
+      list_{nullptr} {
     scroll_bar_ = new HorizontalScrollBar(rect.size.x, 0.05);
+    list_       = new HorizontalList(rect);
 
     rect_.size     = Vector2u(rect.size.x, rect.size.y + scroll_bar_->GetSize().y);
     rect_.position = rect.position;
 
     texture_ = new RenderTexture(rect_.size);
 
-    AttachInTop(list_);
-    
     scroll_bar_->ValueChanged.Connect<ScrollingHorizontalList>(this, &ScrollingHorizontalList::SliderValueChangeResponse);
+
     AttachInBottom(scroll_bar_);
+    AttachInTop(list_);
 
     ApplyStyle(new FilledStyle(FilledStyle::kList));
 }
@@ -158,17 +158,22 @@ void ScrollingHorizontalList::SliderValueChangeResponse(float value) {
 }
 
 ScrollingVerticalList::ScrollingVerticalList(const Rect2& rect)
-    : ContainerWidget{rect},
+    : ContainerWidget{},
       scroll_value_{0.f},
-      list_{nullptr},
-      scroll_bar_{nullptr} {
-    scroll_bar_ = new VerticalScrollBar(rect_.size.y, 0.05);
-    AttachInRight(scroll_bar_);
+      scroll_bar_{nullptr},
+      list_{nullptr} {
+    scroll_bar_ = new VerticalScrollBar(rect.size.y, 0.05);
+    list_       = new VerticalList(rect);
 
-    list_ = new VerticalList(Rect2{rect_.size.x - scroll_bar_->GetSize().x, rect_.size.y});
-    AttachInLeft(list_);
+    rect_.size     = Vector2u(rect.size.x + scroll_bar_->GetSize().x, rect.size.y);
+    rect_.position = rect.position;
+
+    texture_ = new RenderTexture(rect_.size);
 
     scroll_bar_->ValueChanged.Connect<ScrollingVerticalList>(this, &ScrollingVerticalList::SliderValueChangeResponse);
+
+    AttachInRight(scroll_bar_);
+    AttachInLeft(list_);
 
     ApplyStyle(new FilledStyle(FilledStyle::kList));
 }

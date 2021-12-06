@@ -1,3 +1,4 @@
+#include "Core/EventManager/EventManager.hpp"
 #include "Core/Platform/Color.hpp"
 #include "Core/Platform/Image.hpp"
 #include "Core/Platform/InputEvent.hpp"
@@ -8,35 +9,29 @@
 #include <cstdio>
 
 Window::Window(const Vector2u& size)
-    : ContainerWidget{Rect2{size}},
+    : ContainerWidget{size},
       mouse_grabbing_widget_{nullptr},
-      focus_widget_{nullptr},
-      context_menu_{nullptr} {}
+      focus_widget_{nullptr} {}
 
 Window::~Window() {}
-
-void Window::OnRenderToWindow(RenderWindow* window) {
-    assert(window != nullptr);
-
-    texture_->Clear(Color());
-    RenderChildren(texture_);
-    if (context_menu_ != nullptr) {
-        context_menu_->OnRender(texture_);
-    }
-    texture_->Display();
-
-    window->RenderImage(Image(texture_));
-}
 
 bool Window::OnEvent(const Event* event) {
     assert(event != nullptr);
 
-    bool handled = CallEventCallback(event);
+    FilterEvent(event);
+
+    bool handled = HandleEvent(event);
     if (handled) {
         return true;
     }
 
-    return DispatchEventToChildren(event);
+    for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
+        handled = (*iter)->OnEvent(event);
+        if (handled) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool Window::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
@@ -61,34 +56,62 @@ bool Window::OnMouseMoveEvent(const MouseMoveEvent* event) {
     assert(event != nullptr);
 
     if (mouse_grabbing_widget_ != nullptr) {
-        mouse_grabbing_widget_->OnMouseMoveEvent(event);
+        return mouse_grabbing_widget_->OnMouseMoveEvent(event);
     }
     return false;
 }
 
-bool Window::OnKeyPressEvent(const KeyPressEvent* event) {
-    assert(event != nullptr);
-
-    return false;
-}
-
-bool Window::OnKeyReleaseEvent(const KeyReleaseEvent* event) {
-    assert(event != nullptr);
-
-    return false;
-}
-
-bool Window::OnMouseCaptureEvent(const MouseCaptureEvent* event) {
+bool Window::OnMouseCaptureInEvent(const MouseCaptureInEvent* event) {
     assert(event != nullptr);
 
     mouse_grabbing_widget_ = event->GetWidget();
     return true;
 }
 
-bool Window::OnMouseCaptureLostEvent(const MouseCaptureLostEvent* event) {
+bool Window::OnMouseCaptureOutEvent(const MouseCaptureOutEvent* event) {
     assert(event != nullptr);
 
     mouse_grabbing_widget_ = nullptr;
+    return true;
+}
+
+bool Window::OnMouseEnterEvent(const MouseEnterEvent* event) {
+    assert(event != nullptr);
+
+    Widget* widget = event->GetWidget();
+    assert(widget != nullptr);
+
+    widget->OnMouseEnterEvent(event);
+
+    return true;
+}
+
+bool Window::OnMouseLeaveEvent(const MouseLeaveEvent* event) {
+    assert(event != nullptr);
+
+    Widget* widget = event->GetWidget();
+    assert(widget != nullptr);
+
+    widget->OnMouseLeaveEvent(event);
+ 
+    return true;
+}
+
+bool Window::OnKeyPressEvent(const KeyPressEvent* event) {
+    assert(event != nullptr);
+
+    if (focus_widget_ != nullptr) {
+        return focus_widget_->OnKeyPressEvent(event);
+    }
+    return true;
+}
+
+bool Window::OnKeyReleaseEvent(const KeyReleaseEvent* event) {
+    assert(event != nullptr);
+
+    if (focus_widget_ != nullptr) {
+        return focus_widget_->OnKeyReleaseEvent(event);
+    }
     return true;
 }
 
@@ -151,21 +174,21 @@ bool Window::OnVerticalScrollEvent(const VerticalScrollEvent* event) {
     return widget->OnVerticalScrollEvent(event);
 }
 
-bool Window::OnShowContextMenuEvent(const ShowContextMenuEvent* event) {
+bool Window::OnShowPopUpWidgetEvent(const ShowPopUpWidgetEvent* event) {
     assert(event != nullptr);
 
     mouse_grabbing_widget_ = nullptr;
     focus_widget_          = nullptr;
 
-    Menu* context_menu = event->GetContextMenu();
-    assert(context_menu != nullptr);
+    Widget* widget = event->GetWidget();
+    assert(widget != nullptr);
 
-    children_.push_front(context_menu);
+    children_.push_front(widget);
 
     return true;
 }
 
-bool Window::OnHideContextMenuEvent(const HideContextMenuEvent* event) {
+bool Window::OnHidePopUpWidgetEvent(const HidePopUpWidgetEvent* event) {
     assert(event != nullptr);
 
     children_.pop_front();

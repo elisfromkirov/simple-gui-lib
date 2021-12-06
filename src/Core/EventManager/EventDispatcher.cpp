@@ -4,28 +4,35 @@
 EventDispatcher::EventDispatcher() {}
 
 EventDispatcher::~EventDispatcher() {
-    for (auto iter = event_callbacks_.begin(); iter != event_callbacks_.end(); ++iter) {
-        delete iter->event_callback;
+    for (auto iter = event_filters_.begin(); iter != event_filters_.end(); ++iter) {
+        delete iter->second;
+    }
+
+    for (auto iter = event_handlers_.begin(); iter != event_handlers_.end(); ++iter) {
+        delete iter->second;
     }
 }
 
 bool EventDispatcher::OnEvent(const Event* event) {
     assert(event != nullptr);
 
-    return CallEventCallback(event);
+    return HandleEvent(event);
 }
 
-bool EventDispatcher::CallEventCallback(const Event* event) {
+bool EventDispatcher::FilterEvent(const Event* event) {
     assert(event != nullptr);
 
-    for (auto iter = event_callbacks_.begin(); iter != event_callbacks_.end(); ++iter) {
-        if (event->GetType() == iter->event_type) {
-            bool handled = iter->event_callback->OnEvent(event);
-            if (handled) {
-                return true;
-            }
-        }
+    if (event_filters_.count(event->GetType()) == 0) {
+        return false;
     }
+    return event_filters_[event->GetType()]->OnEvent(event);
+}
 
-    return false;
+bool EventDispatcher::HandleEvent(const Event* event) {
+    assert(event != nullptr);
+
+    if (event_handlers_.count(event->GetType()) == 0) {
+        return false;
+    }
+    return event_handlers_[event->GetType()]->OnEvent(event);
 }

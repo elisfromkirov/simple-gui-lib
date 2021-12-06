@@ -1,15 +1,25 @@
-#include "Application/UI/Canvas.hpp"
 #include "Application/Tools/ITool.hpp"
 #include "Application/Tools/ToolManager.hpp"
+#include "Application/Panels/Editor.hpp"
 #include "Core/Platform/Color.hpp"
 #include "Core/Platform/Image.hpp"
 #include "Core/Platform/InputEvent.hpp"
 #include "Core/Platform/RenderTexture.hpp"
+#include "GUI/Styles/FilledStyle.hpp"
 
 Canvas::Canvas(const Rect2& rect) 
-    : ContainerWidget{rect} {}
+    : ContainerWidget{rect} {
+    texture_->Clear(Color(1.f, 1.f, 1.f, 1.f));
+    texture_->Display();
+}
 
 Canvas::~Canvas() {}
+
+void Canvas::OnRender(IRenderTarget* render_target) {
+    assert(render_target != nullptr);
+
+    render_target->RenderImage(Image(texture_, MapPositionToParent()));
+}
 
 bool Canvas::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
     assert(event != nullptr);
@@ -66,3 +76,15 @@ bool Canvas::OnMouseMoveEvent(const MouseMoveEvent* event) {
 
     return true;
 }
+Editor::Editor(const Rect2& rect, const std::string& name)
+    : ContainerWidget{rect},
+      title_bar_{nullptr},
+      canvas_{nullptr} {
+    title_bar_ = new TitleBar(this, name);
+    AttachInTop(title_bar_);
+
+    canvas_ = new Canvas(Rect2(rect.size.x, rect.size.y - title_bar_->GetSize().y));
+    AttachInBottom(canvas_);
+}
+
+Editor::~Editor() {}

@@ -12,7 +12,7 @@ public:
     Icon(const Texture& texture);
     virtual ~Icon() override;
 
-    virtual void OnRender(RenderTexture* texture) override;
+    virtual void OnRender(IRenderTarget* render_target) override;
 
 protected:
     Image image_;

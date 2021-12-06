@@ -18,7 +18,13 @@ FilledStyle::FilledStyle(WidgetType widget_type)
         case kTabBar: {
             color_ = ColorFromRGBA(0x656565ff);
         } break;
-        case kMainWindow: {
+        case kLightPanel: {
+            color_ = ColorFromRGBA(0xa9a9a9ff);
+        } break;
+        case kDarkPanel: {
+            color_ = ColorFromRGBA(0x656565ff);
+        } break;
+        case kMainPanel: {
             color_ = ColorFromRGBA(0x1f1f1fff);
         } break;
     }
@@ -29,9 +35,9 @@ FilledStyle::FilledStyle(const Color& color)
 
 FilledStyle::~FilledStyle() {}
 
-void FilledStyle::Apply(Widget* widget, RenderTexture* texture) {
-    assert(widget  != nullptr);
-    assert(texture != nullptr);
+void FilledStyle::Apply(Widget* widget, IRenderTarget* render_target) {
+    assert(widget        != nullptr);
+    assert(render_target != nullptr);
 
-    texture->RenderRectangle(Rectangle(Rect2(widget->GetSize()), color_));
+    render_target->RenderRectangle(Rectangle(Rect2(widget->GetSize()), color_));
 }

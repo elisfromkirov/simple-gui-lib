@@ -12,22 +12,50 @@ Widget* WidgetEvent::GetWidget() const {
     return widget_;
 }
 
-MouseCaptureEvent::MouseCaptureEvent(Widget* widget)
-    : WidgetEvent{kMouseCaptureEvent, widget} {}
+MouseEnterEvent::MouseEnterEvent(Widget* widget, const Vector2i& position)
+    : WidgetEvent{kMouseEnterEvent, widget},
+      position_{position} {}
+    
+MouseEnterEvent::~MouseEnterEvent() {}
 
-MouseCaptureEvent::~MouseCaptureEvent() {}
-
-uint64_t MouseCaptureEvent::GetStaticType() {
-    return kMouseCaptureEvent;
+uint64_t MouseEnterEvent::GetStaticType() {
+    return kMouseEnterEvent;
 }
 
-MouseCaptureLostEvent::MouseCaptureLostEvent(Widget* widget)
-    : WidgetEvent{kMouseCaptureLostEvent, widget} {}
+const Vector2i& MouseEnterEvent::GetMousePosition() const {
+    return position_;
+}
 
-MouseCaptureLostEvent::~MouseCaptureLostEvent() {}
+MouseLeaveEvent::MouseLeaveEvent(Widget* widget, const Vector2i& position)
+    : WidgetEvent{kMouseLeaveEvent, widget},
+      position_{position} {}
 
-uint64_t MouseCaptureLostEvent::GetStaticType() {
-    return kMouseCaptureLostEvent;
+MouseLeaveEvent::~MouseLeaveEvent() {}
+
+uint64_t MouseLeaveEvent::GetStaticType() {
+    return kMouseLeaveEvent;
+}
+
+const Vector2i& MouseLeaveEvent::GetMousePosition() const {
+    return position_;
+}
+
+MouseCaptureInEvent::MouseCaptureInEvent(Widget* widget)
+    : WidgetEvent{kMouseCaptureInEvent, widget} {}
+
+MouseCaptureInEvent::~MouseCaptureInEvent() {}
+
+uint64_t MouseCaptureInEvent::GetStaticType() {
+    return kMouseCaptureInEvent;
+}
+
+MouseCaptureOutEvent::MouseCaptureOutEvent(Widget* widget)
+    : WidgetEvent{kMouseCaptureOutEvent, widget} {}
+
+MouseCaptureOutEvent::~MouseCaptureOutEvent() {}
+
+uint64_t MouseCaptureOutEvent::GetStaticType() {
+    return kMouseCaptureOutEvent;
 }
 
 FocusInEvent::FocusInEvent(Widget* widget)
@@ -133,30 +161,20 @@ float VerticalScrollEvent::GetOldValue() const {
     return old_value_;
 }
 
-ShowContextMenuEvent::ShowContextMenuEvent(Widget* widget, Menu* menu)
-    : WidgetEvent{kShowContextMenuEvent, widget},
-      menu_{menu} {}
+ShowPopUpWidgetEvent::ShowPopUpWidgetEvent(Widget* widget)
+    : WidgetEvent{kShowPopUpWidgetEvent, widget} {}
 
-ShowContextMenuEvent::~ShowContextMenuEvent() {}
+ShowPopUpWidgetEvent::~ShowPopUpWidgetEvent() {}
 
-uint64_t ShowContextMenuEvent::GetStaticType() {
-    return kShowContextMenuEvent;
+uint64_t ShowPopUpWidgetEvent::GetStaticType() {
+    return kShowPopUpWidgetEvent;
 }
 
-Menu* ShowContextMenuEvent::GetContextMenu() const {
-    return menu_;
-}
+HidePopUpWidgetEvent::HidePopUpWidgetEvent(Widget* widget)
+    : WidgetEvent{kHidePopUpWidgetEvent, widget} {}
 
-HideContextMenuEvent::HideContextMenuEvent(Widget* widget, Menu* menu)
-    : WidgetEvent{kHideContextMenuEvent, widget},
-      menu_{menu} {}
+HidePopUpWidgetEvent::~HidePopUpWidgetEvent() {}
 
-HideContextMenuEvent::~HideContextMenuEvent() {}
-
-uint64_t HideContextMenuEvent::GetStaticType() {
-    return kHideContextMenuEvent;
-}
-
-Menu* HideContextMenuEvent::GetContextMenu() const {
-    return menu_;
+uint64_t HidePopUpWidgetEvent::GetStaticType() {
+    return kHidePopUpWidgetEvent;
 }

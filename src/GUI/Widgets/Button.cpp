@@ -16,7 +16,7 @@ bool Button::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
     }
     pressed_ = true;
 
-    EventManager::GetInstance()->PostEvent<MouseCaptureEvent>(this);
+    EventManager::GetInstance()->PostEvent<MouseCaptureInEvent>(this);
 
     return true;
 }
@@ -29,7 +29,7 @@ bool Button::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
     }
     pressed_ = false;
 
-    EventManager::GetInstance()->PostEvent<MouseCaptureLostEvent>(this);
+    EventManager::GetInstance()->PostEvent<MouseCaptureOutEvent>(this);
 
     if (HitTest(event->GetMousePosition())) {
         Clicked();
@@ -47,4 +47,18 @@ bool Button::OnMouseMoveEvent(const MouseMoveEvent* event) {
     }
 
     return false;
+}
+
+bool Button::OnMouseEnterEvent(const MouseEnterEvent* event) {
+    assert(event != nullptr);
+
+    hovered_ = true;
+    return true;
+}
+
+bool Button::OnMouseLeaveEvent(const MouseLeaveEvent* event) {
+    assert(event != nullptr);
+
+    hovered_ = false;
+    return true;
 }

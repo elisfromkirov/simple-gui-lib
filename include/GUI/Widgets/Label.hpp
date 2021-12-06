@@ -12,7 +12,7 @@ public:
     Label(const std::string& string, const Font& font);
     virtual ~Label() override;
 
-    virtual void OnRender(RenderTexture* texture) override;
+    virtual void OnRender(IRenderTarget* render_target) override;
 
     void SetCharSize(uint32_t char_size);
 

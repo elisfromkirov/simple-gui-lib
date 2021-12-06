@@ -41,7 +41,7 @@ bool TitleBar::OnMouseButtonPressEvent(const MouseButtonPressEvent* event) {
     }
     pressed_ = true;
 
-    EventManager::GetInstance()->PostEvent<MouseCaptureEvent>(this);
+    EventManager::GetInstance()->PostEvent<MouseCaptureInEvent>(this);
 
     return true;
 }
@@ -54,7 +54,7 @@ bool TitleBar::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
     }
     pressed_ = false;
 
-    EventManager::GetInstance()->PostEvent<MouseCaptureLostEvent>(this);
+    EventManager::GetInstance()->PostEvent<MouseCaptureOutEvent>(this);
 
     if (HitTest(event->GetMousePosition())) {
         return true;

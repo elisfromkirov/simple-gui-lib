@@ -13,10 +13,12 @@
 class MouseButtonPressEvent;
 class MouseButtonReleaseEvent;
 class MouseMoveEvent;
+class MouseEnterEvent;
+class MouseLeaveEvent;
 class KeyPressEvent;
 class KeyReleaseEvent;
-class MouseCaptureEvent;
-class MouseCaptureLostEvent;
+class MouseCaptureInEvent;
+class MouseCaptureOutEvent;
 class FocusInEvent;
 class FocusOutEvent;
 class CloseEvent;
@@ -24,8 +26,8 @@ class MoveEvent;
 class ResizeEvent;
 class HorizontalScrollEvent;
 class VerticalScrollEvent;
-class ShowContextMenuEvent;
-class HideContextMenuEvent;
+class ShowPopUpWidgetEvent;
+class HidePopUpWidgetEvent;
 class ContainerWidget;
 class RenderTexture;
 
@@ -40,7 +42,7 @@ public:
 
     virtual void Move(const Vector2i& position);
     
-    virtual void OnRender(RenderTexture* texture);
+    virtual void OnRender(IRenderTarget* render_target);
 
     virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event);
 
@@ -48,14 +50,18 @@ public:
     
     virtual bool OnMouseMoveEvent(const MouseMoveEvent* event);
 
+    virtual bool OnMouseCaptureInEvent(const MouseCaptureInEvent* event);
+
+    virtual bool OnMouseCaptureOutEvent(const MouseCaptureOutEvent* event);
+
+    virtual bool OnMouseEnterEvent(const MouseEnterEvent* event);
+
+    virtual bool OnMouseLeaveEvent(const MouseLeaveEvent* event);
+
     virtual bool OnKeyPressEvent(const KeyPressEvent* event);
 
     virtual bool OnKeyReleaseEvent(const KeyReleaseEvent* event);
 
-    virtual bool OnMouseCaptureEvent(const MouseCaptureEvent* event);
-
-    virtual bool OnMouseCaptureLostEvent(const MouseCaptureLostEvent* event);
-    
     virtual bool OnFocusInEvent(const FocusInEvent* event);
     
     virtual bool OnFocusOutEvent(const FocusOutEvent* event);
@@ -70,9 +76,9 @@ public:
 
     virtual bool OnVerticalScrollEvent(const VerticalScrollEvent* event);
 
-    virtual bool OnShowContextMenuEvent(const ShowContextMenuEvent* event);
+    virtual bool OnShowPopUpWidgetEvent(const ShowPopUpWidgetEvent* event);
 
-    virtual bool OnHideContextMenuEvent(const HideContextMenuEvent* event);
+    virtual bool OnHidePopUpWidgetEvent(const HidePopUpWidgetEvent* event);
 
     const Vector2u& GetSize() const;
 

@@ -9,11 +9,11 @@ Label::Label(const std::string& string, const Font& font)
 
 Label::~Label() {}
 
-void Label::OnRender(RenderTexture* texture) {
-    assert(texture != nullptr);
+void Label::OnRender(IRenderTarget* render_target) {
+    assert(render_target != nullptr);
 
     text_.SetPosition(MapPositionToParent()); 
-    texture->RenderText(text_);    
+    render_target->RenderText(text_);    
 }
 
 void Label::SetCharSize(uint32_t char_size) {

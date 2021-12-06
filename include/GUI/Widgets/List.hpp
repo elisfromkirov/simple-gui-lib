@@ -53,8 +53,8 @@ public:
 protected:
     float                scroll_value_;
 
-    HorizontalList*      list_;
     HorizontalScrollBar* scroll_bar_;
+    HorizontalList*      list_;
 };
 
 class ScrollingVerticalList : public ContainerWidget {
@@ -71,8 +71,8 @@ public:
 protected:
     float              scroll_value_;
 
-    VerticalList*      list_;
     VerticalScrollBar* scroll_bar_;
+    VerticalList*      list_;
 };
 
 #endif // __LIST_HPP__

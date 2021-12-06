@@ -12,7 +12,9 @@ public:
         kMenuBar,
         kTitleBar,
         kTabBar,
-        kMainWindow
+        kLightPanel,
+        kDarkPanel,
+        kMainPanel,
     };
 
 public:
@@ -20,7 +22,7 @@ public:
     FilledStyle(const Color& color);
     virtual ~FilledStyle() override;
 
-    virtual void Apply(Widget* widget, RenderTexture* texture) override;
+    virtual void Apply(Widget* widget, IRenderTarget* render_target) override;
 
 protected:
     Color color_;

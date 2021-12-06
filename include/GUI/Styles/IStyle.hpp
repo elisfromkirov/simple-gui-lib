@@ -8,7 +8,7 @@ class IStyle {
 public:
     virtual ~IStyle() {}
 
-    virtual void Apply(Widget* widget, RenderTexture* texture) = 0;
+    virtual void Apply(Widget* widget, IRenderTarget* render_target) = 0;
 };
 
 #endif // __I_STYLE_HPP__

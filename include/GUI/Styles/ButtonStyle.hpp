@@ -18,7 +18,7 @@ public:
     ButtonStyle(const char* image);
     virtual ~ButtonStyle() override;
 
-    virtual void Apply(Widget* widget, RenderTexture* texture) override;
+    virtual void Apply(Widget* widget, IRenderTarget* render_target) override;
 
 protected:
     Image image_;
@@ -34,7 +34,7 @@ public:
     MenuButtonStyle();
     virtual ~MenuButtonStyle() override;
 
-    virtual void Apply(Widget* widget, RenderTexture* texture) override;
+    virtual void Apply(Widget* widget, IRenderTarget* render_target) override;
 };
 
 #endif // __BUTTON_STYLE_HPP__

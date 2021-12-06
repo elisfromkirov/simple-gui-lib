@@ -20,6 +20,8 @@ public:
     void AddTool(ITool* tool);
     void RemoveTool(ITool* tool);
 
+    std::list<ITool*>* GetTools();
+
     IFilter* GetActiveFilter();
     void SetActiveFilter(IFilter* filter);
 

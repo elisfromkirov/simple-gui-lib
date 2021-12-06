@@ -2,18 +2,19 @@
 #include "Core/ResourceManager/Resources.hpp"
 #include "Core/ResourceManager/ResourceManager.hpp"
 #include "Core/Platform/InputEvent.hpp"
+#include "Core/Platform/RenderTexture.hpp"
 #include "GUI/Events/WidgetEvent.hpp"
 #include "GUI/Styles/ButtonStyle.hpp"
 #include "GUI/Styles/FilledStyle.hpp"
 #include "GUI/Widgets/MenuBar.hpp"
 
-#include <cstdio>
-
 Menu::Menu(uint32_t width, const std::string& name) 
-    : ContainerWidget{Rect2{width, kDefaultHeight * kDefaultItemCount}},
+    : ContainerWidget{},
       name_{name} {
     list_ = new ScrollingVerticalList(Rect2(width, kDefaultHeight * kDefaultItemCount));
-    list_->ApplyStyle(new FilledStyle(FilledStyle::kList));
+    
+    rect_.size = list_->GetSize();
+    texture_   = new RenderTexture(rect_.size);
 
     Attach(list_);
 }
@@ -62,11 +63,11 @@ const std::string& Menu::GetName() const {
 }
 
 void Menu::Show() {
-    EventManager::GetInstance()->PostEvent<ShowContextMenuEvent>(parent_, this);
+    EventManager::GetInstance()->PostEvent<ShowPopUpWidgetEvent>(this);
 }
 
 void Menu::Hide() {
-    EventManager::GetInstance()->PostEvent<HideContextMenuEvent>(parent_, this);
+    EventManager::GetInstance()->PostEvent<HidePopUpWidgetEvent>(this);
 }
 
 MenuBar::MenuBar(Widget* widget)

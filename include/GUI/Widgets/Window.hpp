@@ -14,8 +14,6 @@ public:
     Window(const Vector2u& size);
     virtual ~Window() override;
 
-    void OnRenderToWindow(RenderWindow* window);
-
     virtual bool OnEvent(const Event* event) override;
 
     virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event) override;
@@ -23,14 +21,18 @@ public:
     virtual bool OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) override;
     
     virtual bool OnMouseMoveEvent(const MouseMoveEvent* event) override;
+
+    virtual bool OnMouseCaptureInEvent(const MouseCaptureInEvent* event) override;
     
+    virtual bool OnMouseCaptureOutEvent(const MouseCaptureOutEvent* event) override;
+
+    virtual bool OnMouseEnterEvent(const MouseEnterEvent* event) override;
+
+    virtual bool OnMouseLeaveEvent(const MouseLeaveEvent* event) override;
+
     virtual bool OnKeyPressEvent(const KeyPressEvent* event) override;
     
-    virtual bool OnKeyReleaseEvent(const KeyReleaseEvent* event) override;
-    
-    virtual bool OnMouseCaptureEvent(const MouseCaptureEvent* event) override;
-    
-    virtual bool OnMouseCaptureLostEvent(const MouseCaptureLostEvent* event) override;
+    virtual bool OnKeyReleaseEvent(const KeyReleaseEvent* event) override;    
     
     virtual bool OnFocusInEvent(const FocusInEvent* event) override;
     
@@ -46,16 +48,14 @@ public:
 
     virtual bool OnVerticalScrollEvent(const VerticalScrollEvent* event) override;
 
-    virtual bool OnShowContextMenuEvent(const ShowContextMenuEvent* event) override;
+    virtual bool OnShowPopUpWidgetEvent(const ShowPopUpWidgetEvent* event) override;
 
-    virtual bool OnHideContextMenuEvent(const HideContextMenuEvent* event) override;
+    virtual bool OnHidePopUpWidgetEvent(const HidePopUpWidgetEvent* event) override;
 
 protected:
     Widget* mouse_grabbing_widget_;
 
     Widget* focus_widget_;
-
-    Menu*   context_menu_;
 };
 
 #endif // __WINDOW_HPP__

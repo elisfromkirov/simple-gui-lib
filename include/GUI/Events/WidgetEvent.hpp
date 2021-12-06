@@ -7,17 +7,16 @@
 #include "Core/EventManager/Event.hpp"
 #include "Core/Math/Vector2.hpp"
 
-class Menu;
 class Widget;
 
 enum WidgetEventType : uint64_t {
     kNoneWidgetEvent       = kWidgetEventCategory | 0x00000000,
 
-    kMouseCaptureEvent     = kWidgetEventCategory | 0x00000001,
-    kMouseCaptureLostEvent = kWidgetEventCategory | 0x00000002,
+    kMouseEnterEvent       = kWidgetEventCategory | 0x00000001,
+    kMouseLeaveEvent       = kWidgetEventCategory | 0x00000002,
 
-    kMouseHoverEvent       = kWidgetEventCategory | 0x00000004,
-    kMouseLeaveEvent       = kWidgetEventCategory | 0x00000008,
+    kMouseCaptureInEvent   = kWidgetEventCategory | 0x00000004,
+    kMouseCaptureOutEvent  = kWidgetEventCategory | 0x00000008,
 
     kFocusInEvent          = kWidgetEventCategory | 0x00000010,
     kFocusOutEvent         = kWidgetEventCategory | 0x00000020,
@@ -30,8 +29,8 @@ enum WidgetEventType : uint64_t {
     kHorizontalScrollEvent = kWidgetEventCategory | 0x00000200,
     kVerticalScrollEvent   = kWidgetEventCategory | 0x00000400,
 
-    kShowContextMenuEvent  = kWidgetEventCategory | 0x00000800,
-    kHideContextMenuEvent  = kWidgetEventCategory | 0x00001000,
+    kShowPopUpWidgetEvent  = kWidgetEventCategory | 0x00000800,
+    kHidePopUpWidgetEvent  = kWidgetEventCategory | 0x00001000,
 };
 
 class WidgetEvent : public Event {
@@ -46,18 +45,44 @@ protected:
     Widget* widget_;
 };
 
-class MouseCaptureEvent : public WidgetEvent {
+class MouseEnterEvent : public WidgetEvent {
 public:
-    MouseCaptureEvent(Widget* widget);
-    virtual ~MouseCaptureEvent() override;
+    MouseEnterEvent(Widget* widget, const Vector2i& postion);
+    virtual ~MouseEnterEvent() override;
+
+    static uint64_t GetStaticType();
+
+    const Vector2i& GetMousePosition() const;
+
+protected:
+    Vector2i position_;
+};
+
+class MouseLeaveEvent : public WidgetEvent {
+public:
+    MouseLeaveEvent(Widget* widget, const Vector2i& position);
+    virtual ~MouseLeaveEvent() override;
+
+    static uint64_t GetStaticType();
+
+    const Vector2i& GetMousePosition() const;
+
+protected:
+    Vector2i position_;
+};
+
+class MouseCaptureInEvent : public WidgetEvent {
+public:
+    MouseCaptureInEvent(Widget* widget);
+    virtual ~MouseCaptureInEvent() override;
 
     static uint64_t GetStaticType();
 };
 
-class MouseCaptureLostEvent : public WidgetEvent {
+class MouseCaptureOutEvent : public WidgetEvent {
 public:
-    MouseCaptureLostEvent(Widget* widget);
-    virtual ~MouseCaptureLostEvent() override;
+    MouseCaptureOutEvent(Widget* widget);
+    virtual ~MouseCaptureOutEvent() override;
 
     static uint64_t GetStaticType();
 };
@@ -150,30 +175,20 @@ protected:
     float old_value_;
 };
 
-class ShowContextMenuEvent : public WidgetEvent {
+class ShowPopUpWidgetEvent : public WidgetEvent {
 public:
-    ShowContextMenuEvent(Widget* widget, Menu* menu);
-    virtual ~ShowContextMenuEvent() override;
+    ShowPopUpWidgetEvent(Widget* widget);
+    virtual ~ShowPopUpWidgetEvent() override;
 
     static uint64_t GetStaticType();
-    
-    Menu* GetContextMenu() const;
-
-protected:
-    Menu* menu_;
 };
 
-class HideContextMenuEvent : public WidgetEvent {
+class HidePopUpWidgetEvent : public WidgetEvent {
 public:
-    HideContextMenuEvent(Widget* widget, Menu* menu);
-    virtual ~HideContextMenuEvent() override;
+    HidePopUpWidgetEvent(Widget* widget);
+    virtual ~HidePopUpWidgetEvent() override;
     
     static uint64_t GetStaticType();
-
-    Menu* GetContextMenu() const;
-
-protected:
-    Menu* menu_;
 };
 
 #endif // __WIDGET_EVENT_HPP__

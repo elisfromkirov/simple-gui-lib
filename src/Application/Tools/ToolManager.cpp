@@ -1,4 +1,5 @@
 #include "Application/Tools/ToolManager.hpp"
+#include "Application/Tools/Tools.hpp"
 
 ToolManager* ToolManager::singleton{nullptr};
 
@@ -7,7 +8,8 @@ ToolManager::ToolManager()
       active_tool_{nullptr},
       filters_{},
       active_filter_{nullptr} {
-    
+    Pencil* pencil = new Pencil();
+    AddTool(pencil);
 }
 
 ToolManager::~ToolManager() {
@@ -49,6 +51,10 @@ void ToolManager::RemoveTool(ITool* tool) {
     assert(tool != nullptr);
 
     tools_.push_back(tool);
+}
+
+std::list<ITool*>* ToolManager::GetTools() {
+    return &tools_;
 }
 
 IFilter* ToolManager::GetActiveFilter() {

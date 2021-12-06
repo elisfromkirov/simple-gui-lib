@@ -3,6 +3,7 @@
 
 #include "Core/Math/Vector2.hpp"
 
+class ContainerWidget;
 class RenderTexture;
 
 class ITool {
@@ -16,6 +17,8 @@ public:
     virtual void EndDraw(RenderTexture* canvas, const Vector2i& position) = 0;
 
     virtual const char* GetIconFileName() const = 0;
+
+    virtual ContainerWidget* GetPreferencesPanel() = 0;
 };
 
 #endif // __I_TOOL_HPP__

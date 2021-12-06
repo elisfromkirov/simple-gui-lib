@@ -13,7 +13,7 @@ public:
     HorizontalSliderStyle(const Color& color);
     virtual ~HorizontalSliderStyle() override;
 
-    virtual void Apply(Widget* widget, RenderTexture* texture) override;
+    virtual void Apply(Widget* widget, IRenderTarget* render_target) override;
 
 private:
     Color color_;
@@ -28,7 +28,7 @@ public:
     VerticalSliderStyle(const Color& color);
     virtual ~VerticalSliderStyle() override;
 
-    virtual void Apply(Widget* widget, RenderTexture* texture) override;
+    virtual void Apply(Widget* widget, IRenderTarget* render_target) override;
 
 private:
     Color color_;
@@ -44,7 +44,7 @@ public:
     ProgressHorizontalSliderStyle(const Color& progress_area_color, const Color& track_color);
     virtual ~ProgressHorizontalSliderStyle() override;
 
-    virtual void Apply(Widget* widget, RenderTexture* texture) override;
+    virtual void Apply(Widget* widget, IRenderTarget* render_target) override;
 private:
 
     Color progress_area_color_;
@@ -61,7 +61,7 @@ public:
     ProgressVerticalSliderStyle(const Color& progress_area_color, const Color& track_color);
     virtual ~ProgressVerticalSliderStyle() override;
 
-    virtual void Apply(Widget* widget, RenderTexture* texture) override;
+    virtual void Apply(Widget* widget, IRenderTarget* render_target) override;
 
 private:
     Color progress_area_color_;
