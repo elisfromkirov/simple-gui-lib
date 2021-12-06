@@ -28,6 +28,8 @@ public:
     void AddFilter(IFilter* filter);
     void RemoveFilter(IFilter* filter);
 
+    std::list<IFilter*>* GetFilters();
+
 private:
     ToolManager();
     ~ToolManager();

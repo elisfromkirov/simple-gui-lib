@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <string>
 
+#include "Application/Events/ApplicationEvent.hpp"
 #include "GUI/Widgets/LayeredWidget.hpp"
 
 class EditorPanel : public LayeredWidget {
@@ -16,6 +17,8 @@ public:
     virtual ~EditorPanel() override;
 
     void InsertEditor(const std::string& name);
+
+    bool OnOpenEditorEvent(const OpenEditorEvent* event);
 };
 
 #endif // __EDITOR_PANEL_HPP__

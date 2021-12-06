@@ -14,7 +14,7 @@ ToolPanel::ToolPanel(const Rect2& rect)
     tool_list_ = new ScrollingHorizontalList(Rect2(rect.size.x, kToolButtonSize, rect.position.x, rect.position.y));
 
     Attach(tool_list_);
-    
+
     ApplyStyle(new FilledStyle(FilledStyle::kDarkPanel));
 
     SetEventHandler<ToolPanel, ChangeToolEvent>(this, &ToolPanel::OnChangeToolEvent);

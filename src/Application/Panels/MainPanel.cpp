@@ -1,3 +1,4 @@
+#include "Application/Commands/Commands.hpp"
 #include "Application/Panels/MainPanel.hpp"
 #include "Application/Panels/PreferencesPanels.hpp"
 #include "Application/Tools/ToolManager.hpp"
@@ -32,29 +33,25 @@ MainPanel::MainPanel(const Vector2u& size)
 MainPanel::~MainPanel() {}
 
 void MainPanel::InitializeMenuBar() {
+    Menu* file_menu = new Menu(240, "File");
+    file_menu->InsertItem("Open editor", new OpenEditorCommand());
+
+    Menu* tool_menu = new Menu(240, "Tool");
+    std::list<ITool*>* tools = ToolManager::GetInstance()->GetTools();
+    for (auto iter = tools->begin(); iter != tools->end(); ++iter) {
+        tool_menu->InsertItem((*iter)->GetName(), new SetToolCommand(*iter));
+    }
+
+    Menu* filter_menu = new Menu(240, "Filter");
+    std::list<IFilter*>* filters = ToolManager::GetInstance()->GetFilters();
+    for (auto iter = filters->begin(); iter != filters->end(); ++iter) {
+        tool_menu->InsertItem((*iter)->GetName(), new SetFilterCommand(*iter));
+    }
+
     menu_bar_ = new MenuBar(this);
-
-    Menu* menu1 = new Menu(300, "menu1");
-    menu1->InsertItem("menu1: item1");
-    menu1->InsertItem("menu1: item2");
-    menu1->InsertItem("menu1: item3");
-    menu1->InsertItem("menu1: item4");
-    menu1->InsertItem("menu1: item5");
-    menu1->InsertItem("menu1: item6");
-    menu1->InsertItem("menu1: item7");
-    menu1->InsertItem("menu1: item8");
-    menu_bar_->InsertMenu(menu1);
-
-    Menu* menu2 = new Menu(300, "menu2");
-    menu2->InsertItem("menu2: item1");
-    menu2->InsertItem("menu2: item2");
-    menu2->InsertItem("menu2: item3");
-    menu2->InsertItem("menu2: item4");
-    menu2->InsertItem("menu2: item5");
-    menu2->InsertItem("menu2: item6");
-    menu2->InsertItem("menu2: item7");
-    menu2->InsertItem("menu2: item8");
-    menu_bar_->InsertMenu(menu2);
+    menu_bar_->InsertMenu(file_menu);
+    menu_bar_->InsertMenu(tool_menu);
+    menu_bar_->InsertMenu(filter_menu);
 
     AttachInTop(menu_bar_);
 }
@@ -62,7 +59,7 @@ void MainPanel::InitializeMenuBar() {
 void MainPanel::InitializeEditorPanel(const Rect2& rect) {    
     editor_panel_ = new EditorPanel(rect);
 
-    editor_panel_->InsertEditor("Editor 1");
+    editor_panel_->InsertEditor("Editor");
 
     Attach(editor_panel_);
 }

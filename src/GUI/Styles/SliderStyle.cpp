@@ -150,3 +150,11 @@ void ProgressVerticalSliderStyle::Apply(Widget* widget, IRenderTarget* render_ta
 
     render_target->RenderRectangle(Rectangle(thumb, progress_area_color_));
 }
+
+// ColorChoseHorizontalSlider::ColorChoseHorizontalSlider() {}
+
+// ColorChoseHorizontalSlider::ColorChoseHorizontalSlider(const Color& color) {}
+
+// ColorChoseHorizontalSlider::~ColorChoseHorizontalSlider() {}
+
+// void ColorChoseHorizontalSlider::Apply(Widget* widget, IRenderTarget* render_target) {}

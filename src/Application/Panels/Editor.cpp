@@ -81,9 +81,9 @@ Editor::Editor(const Rect2& rect, const std::string& name)
       title_bar_{nullptr},
       canvas_{nullptr} {
     title_bar_ = new TitleBar(this, name);
-    AttachInTop(title_bar_);
+    canvas_    = new Canvas(Rect2(rect.size.x, rect.size.y - title_bar_->GetSize().y));
 
-    canvas_ = new Canvas(Rect2(rect.size.x, rect.size.y - title_bar_->GetSize().y));
+    AttachInTop(title_bar_);
     AttachInBottom(canvas_);
 }
 

@@ -45,7 +45,7 @@ bool Menu::OnMouseMoveEvent(const MouseMoveEvent* event) {
     return true;
 }
 
-bool Menu::InsertItem(const std::string& name) {
+bool Menu::InsertItem(const std::string& name, IFunctor<void ()>* functor) {
     assert(list_ != nullptr);
 
     Label* label = new Label(name, ResourceManager::GetInstance()->LoadFont(kMediumFont));
@@ -53,6 +53,7 @@ bool Menu::InsertItem(const std::string& name) {
 
     Button* button = new Button(Rect2(list_->GetSize().x, kDefaultHeight));
     button->ApplyStyle(new MenuButtonStyle());
+    button->Clicked.Connect(functor);
     button->AttachInLeft(label);
 
     return list_->InsertItem(button);

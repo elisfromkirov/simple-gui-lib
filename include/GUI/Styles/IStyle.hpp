@@ -2,7 +2,7 @@
 #define __I_STYLE_HPP__
 
 class Widget;
-class RenderTexture;
+class IRenderTarget;
 
 class IStyle {
 public:

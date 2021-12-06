@@ -76,3 +76,7 @@ void ToolManager::RemoveFilter(IFilter* filter) {
 
     filters_.remove(filter);
 }
+
+std::list<IFilter*>* ToolManager::GetFilters() {
+    return &filters_;
+}

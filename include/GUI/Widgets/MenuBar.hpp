@@ -6,6 +6,7 @@
 #include <string>
 
 #include "Core/Math/Vector2.hpp"
+#include "Core/Signal/IFunctor.hpp"
 #include "GUI/Widgets/Button.hpp"
 #include "GUI/Widgets/ContainerWidget.hpp"
 #include "GUI/Widgets/Label.hpp"
@@ -28,7 +29,7 @@ public:
 
     const std::string& GetName() const;
 
-    bool InsertItem(const std::string& name);
+    bool InsertItem(const std::string& name, IFunctor<void ()>* functor);
 
     void Show();
     void Hide();

@@ -6,6 +6,9 @@
 FilledStyle::FilledStyle(WidgetType widget_type)
     : color_{} {
     switch (widget_type) {
+        case kFrame: {
+            color_ = ColorFromRGBA(0xff);
+        } break;
         case kList: {
             color_ = ColorFromRGBA(0xa9a9a9ff);
         } break;

@@ -8,6 +8,7 @@
 class FilledStyle : public IStyle {
 public:
     enum WidgetType {
+        kFrame,
         kList,
         kMenuBar,
         kTitleBar,
