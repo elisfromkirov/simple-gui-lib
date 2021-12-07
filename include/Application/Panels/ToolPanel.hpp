@@ -6,12 +6,17 @@
 
 #include "Application/Events/ApplicationEvent.hpp"
 #include "Application/Tools/ITool.hpp"
-#include "GUI/Widgets/ContainerWidget.hpp"
-#include "GUI/Widgets/List.hpp"
+#include "GUI/Widgets/TabBar.hpp"
 
-class ToolPanel : public ContainerWidget {
-private:
-    static const uint32_t kToolButtonSize{56};
+class ToolPanel : public TabBar {
+public:
+    static const uint32_t kSliderWidth{240};
+    static const uint32_t kSliderHeight{30};
+
+    static const uint32_t kToolButtonWidth{56};
+    static const uint32_t kToolButtonHeight{56};
+
+    static const uint32_t kIndent{4};    
 
 public:
     ToolPanel(const Rect2& rect);
@@ -20,10 +25,6 @@ public:
     void InsertTool(ITool* tool);
 
     bool OnChangeToolEvent(const ChangeToolEvent* event);
-
-protected:
-    ScrollingHorizontalList* tool_list_;
-    ContainerWidget*         preferences_panel_;
 };
 
 #endif // __TOOL_PANEL_HPP__

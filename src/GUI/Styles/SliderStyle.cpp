@@ -151,10 +151,34 @@ void ProgressVerticalSliderStyle::Apply(Widget* widget, IRenderTarget* render_ta
     render_target->RenderRectangle(Rectangle(thumb, progress_area_color_));
 }
 
-// ColorChoseHorizontalSlider::ColorChoseHorizontalSlider() {}
+ChoseColorHorizontalSliderStyle::ChoseColorHorizontalSliderStyle(const Color& color) 
+    : color_{color} {}
 
-// ColorChoseHorizontalSlider::ColorChoseHorizontalSlider(const Color& color) {}
+ChoseColorHorizontalSliderStyle::~ChoseColorHorizontalSliderStyle() {}
 
-// ColorChoseHorizontalSlider::~ColorChoseHorizontalSlider() {}
+void ChoseColorHorizontalSliderStyle::Apply(Widget* widget, IRenderTarget* render_target) {
+    assert(widget        != nullptr);
+    assert(render_target != nullptr);
 
-// void ColorChoseHorizontalSlider::Apply(Widget* widget, IRenderTarget* render_target) {}
+    HorizontalSlider* slider = static_cast<HorizontalSlider*>(widget);
+
+    Rectangle rect(Rect2(2, slider->GetSize().y));
+
+    for (uint32_t x = 0; x < slider->GetSize().x; x += 2) {
+        float factor = static_cast<float>(x) / static_cast<float>(slider->GetSize().x);
+       
+        rect.SetPosition(Vector2i(x, 0));
+        rect.SetFillColor(Color(color_.red * factor, color_.green * factor, color_.blue * factor, 1.f));
+
+        render_target->RenderRectangle(rect);
+    }
+
+    Rect2 thumb{};
+
+    thumb.size.x     = slider->GetThumbWidth();
+    thumb.size.y     = slider->GetSize().y;
+    thumb.position.x = static_cast<int32_t>((slider->GetSize().x - thumb.size.x) * slider->GetValue());
+    thumb.position.y = 0;
+
+    render_target->RenderRectangle(Rectangle(thumb, Color(1.f, 1.f, 1.f, 1.f)));
+}

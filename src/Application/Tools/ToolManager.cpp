@@ -10,6 +10,12 @@ ToolManager::ToolManager()
       active_filter_{nullptr} {
     Pencil* pencil = new Pencil();
     AddTool(pencil);
+
+    Eraser* eraser = new Eraser();
+    AddTool(eraser);
+
+    Brush* brush = new Brush();
+    AddTool(brush);
 }
 
 ToolManager::~ToolManager() {

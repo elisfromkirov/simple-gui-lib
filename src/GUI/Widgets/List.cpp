@@ -57,7 +57,6 @@ uint32_t HorizontalList::GetWidth() const {
     return width_;
 }
 
-
 VerticalList::VerticalList(const Rect2& rect)
     : ContainerWidget{rect},
       height_{0} {}
@@ -129,7 +128,7 @@ ScrollingHorizontalList::ScrollingHorizontalList(const Rect2& rect)
     AttachInBottom(scroll_bar_);
     AttachInTop(list_);
 
-    ApplyStyle(new FilledStyle(FilledStyle::kList));
+    ApplyStyle(new FilledStyle(FilledStyle::kLightPanel));
 }
 
 ScrollingHorizontalList::~ScrollingHorizontalList() {}
@@ -175,7 +174,7 @@ ScrollingVerticalList::ScrollingVerticalList(const Rect2& rect)
     AttachInRight(scroll_bar_);
     AttachInLeft(list_);
 
-    ApplyStyle(new FilledStyle(FilledStyle::kList));
+    ApplyStyle(new FilledStyle(FilledStyle::kLightPanel));
 }
 
 ScrollingVerticalList::~ScrollingVerticalList() {}

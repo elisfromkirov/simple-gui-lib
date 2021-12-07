@@ -1,6 +1,10 @@
 #ifndef __BUTTON_STYLE_HPP__
 #define __BUTTON_STYLE_HPP__
 
+#include <cassert>
+#include <cstdint>
+#include <string>
+
 #include "Core/Platform/Color.hpp"
 #include "Core/Platform/Image.hpp"
 #include "GUI/Styles/IStyle.hpp"
@@ -15,7 +19,7 @@ private:
     static const Color kColorOnPress;
 
 public:
-    ButtonStyle(const char* image);
+    ButtonStyle(const std::string& image_file);
     virtual ~ButtonStyle() override;
 
     virtual void Apply(Widget* widget, IRenderTarget* render_target) override;

@@ -5,6 +5,7 @@
 #include <cstdint>
 
 #include "Core/Math/Vector2.hpp"
+#include "Core/Platform/Color.hpp"
 #include "Core/Platform/NativePlatform.hpp"
 #include "Core/Platform/IRenderTarget.hpp"
 
@@ -13,7 +14,7 @@ public:
     RenderTexture(const Vector2u& size);
     virtual ~RenderTexture() override;
 
-    virtual void Clear(const Color& color) override;
+    virtual void Clear(const Color& color = Color()) override;
     virtual void Display() override;
 
     virtual void RenderText(const Text& text) override;

@@ -13,6 +13,10 @@ void Rectangle::SetFillColor(const Color& color) {
     rectangle_.setFillColor(NativeColorFromColor(color));
 }
 
+Color Rectangle::GetFillColor() const {
+    return Color{ColorFromNativeColor(rectangle_.getFillColor())};
+}
+
 void Rectangle::SetPosition(const Vector2i& position) {
     rectangle_.setPosition(sf::Vector2f(position.x, position.y));
 }

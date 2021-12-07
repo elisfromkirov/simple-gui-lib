@@ -7,25 +7,25 @@
 MainPanel::MainPanel(const Vector2u& size)
     : ContainerWidget{Rect2(size)},
       menu_bar_{nullptr},
-      editor_panel_{nullptr},
-      tool_panel_{nullptr} {
+      tool_panel_{nullptr},
+      editor_panel_{nullptr} {
     Rect2 rect{};
 
     InitializeMenuBar();
 
-    rect.size.x     = size.x - kToolPanelWidth - 3 * kIndent;
+    rect.size.x     = ToolPanel::kToolButtonWidth + ToolPanel::kSliderWidth;
+    rect.size.y     = size.y - menu_bar_->GetSize().y - 2 * kIndent;
+    rect.position.x = size.x - ToolPanel::kToolButtonWidth - ToolPanel::kSliderWidth - kIndent;
+    rect.position.y = menu_bar_->GetSize().y + kIndent;
+
+    InitializeToolPanel(rect);
+
+    rect.size.x     = size.x - tool_panel_->GetSize().x - 3 * kIndent;
     rect.size.y     = size.y - menu_bar_->GetSize().y - 2 * kIndent;
     rect.position.x = kIndent;
     rect.position.y = menu_bar_->GetSize().y + kIndent;
 
     InitializeEditorPanel(rect);
-
-    rect.size.x     = kToolPanelWidth;
-    rect.size.y     = size.y - menu_bar_->GetSize().y - 2 * kIndent;
-    rect.position.x = size.x - kToolPanelWidth - kIndent;
-    rect.position.y = menu_bar_->GetSize().y + kIndent;
-
-    InitializeToolPanel(rect);
 
     ApplyStyle(new FilledStyle(FilledStyle::kMainPanel));
 }
@@ -56,14 +56,6 @@ void MainPanel::InitializeMenuBar() {
     AttachInTop(menu_bar_);
 }
 
-void MainPanel::InitializeEditorPanel(const Rect2& rect) {    
-    editor_panel_ = new EditorPanel(rect);
-
-    editor_panel_->InsertEditor("Editor");
-
-    Attach(editor_panel_);
-}
-
 void MainPanel::InitializeToolPanel(const Rect2& rect) {
     tool_panel_ = new ToolPanel(rect);
 
@@ -73,4 +65,12 @@ void MainPanel::InitializeToolPanel(const Rect2& rect) {
     }
 
     Attach(tool_panel_);
+}
+
+void MainPanel::InitializeEditorPanel(const Rect2& rect) {    
+    editor_panel_ = new EditorPanel(rect);
+
+    editor_panel_->InsertEditor("Editor");
+
+    Attach(editor_panel_);
 }

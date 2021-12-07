@@ -11,7 +11,6 @@
 class MainPanel : public ContainerWidget {
 public:
     static const uint32_t kIndent{4};
-    static const uint32_t kToolPanelWidth{240};
 
 public:
     MainPanel(const Vector2u& size);
@@ -20,14 +19,14 @@ public:
 protected:
     void InitializeMenuBar();
 
-    void InitializeEditorPanel(const Rect2& rect);
-
     void InitializeToolPanel(const Rect2& rect);
+
+    void InitializeEditorPanel(const Rect2& rect);
 
 protected:
     MenuBar*     menu_bar_;
-    EditorPanel* editor_panel_;
     ToolPanel*   tool_panel_;
+    EditorPanel* editor_panel_;
 };
 
 #endif // __MAIN_PANEL_HPP__

@@ -5,6 +5,7 @@
 #include <cstdint>
 
 #include "Core/Math/Vector2.hpp"
+#include "Core/Platform/Color.hpp"
 #include "Core/Platform/NativePlatform.hpp"
 #include "Core/Platform/Input.hpp"
 #include "Core/Platform/IRenderTarget.hpp"
@@ -14,7 +15,7 @@ public:
     RenderWindow(const std::string& title, const Vector2u& size);
     ~RenderWindow();
 
-    virtual void Clear(const Color& color) override;
+    virtual void Clear(const Color& color = Color()) override;
     virtual void Display() override;
 
     virtual void RenderText(const Text& text) override;

@@ -88,10 +88,13 @@ public:
     void SetParent(ContainerWidget* parent);
 
     bool IsPressed() const;
+    void SetPressed(bool pressed);
 
     bool IsHovered() const;
+    void SetHovered(bool hovered);
 
     bool IsHided() const;
+    void SetHided(bool hided);
 
 protected:
     Vector2i MapPositionToParent() const;

@@ -75,7 +75,7 @@ MenuBar::MenuBar(Widget* widget)
     : ContainerWidget{Rect2{Vector2u{widget->GetSize().x, kDefaultHeight}, widget->GetPosition()}},  
       list_{nullptr} {
     list_ = new HorizontalList(rect_);
-    list_->ApplyStyle(new FilledStyle(FilledStyle::kList));
+    list_->ApplyStyle(new FilledStyle(FilledStyle::kLightPanel));
 
     Attach(list_);
 }

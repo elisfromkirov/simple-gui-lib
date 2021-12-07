@@ -10,11 +10,11 @@ class ITool {
 public:
     virtual ~ITool() {}
 
-    virtual void BeginDraw(RenderTexture* canvas, Vector2i position) = 0;
+    virtual void BeginDraw(RenderTexture* canvas, const Vector2i& position) = 0;
 
-    virtual void Draw(RenderTexture* canvas, Vector2i position, Vector2i old_position) = 0;
+    virtual void Draw(RenderTexture* canvas, const Vector2i& position, const Vector2i& old_position) = 0;
 
-    virtual void EndDraw(RenderTexture* canvas, Vector2i position) = 0;
+    virtual void EndDraw(RenderTexture* canvas, const Vector2i& position) = 0;
 
     virtual const char* GetIconFileName() const = 0;
 

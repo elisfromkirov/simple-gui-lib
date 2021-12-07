@@ -6,12 +6,14 @@ target_sources(SGUI_APPLICATION
         ${INCROOT}/Editor.hpp
         ${INCROOT}/EditorPanel.hpp
         ${INCROOT}/MainPanel.hpp
+        ${INCROOT}/Palette.hpp
         ${INCROOT}/PreferencesPanels.hpp
         ${INCROOT}/ToolPanel.hpp
     PRIVATE
         ${SRCROOT}/Editor.cpp
         ${SRCROOT}/EditorPanel.cpp
         ${SRCROOT}/MainPanel.cpp
+        ${SRCROOT}/Palette.cpp
         ${SRCROOT}/PreferencesPanels.cpp
         ${SRCROOT}/ToolPanel.cpp
     )

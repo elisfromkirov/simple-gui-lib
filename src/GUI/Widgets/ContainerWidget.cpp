@@ -23,6 +23,8 @@ ContainerWidget::ContainerWidget(const Rect2& rect)
 }
 
 ContainerWidget::~ContainerWidget() {
+    delete texture_;
+    
     for (auto iter = children_.begin(); iter != children_.end(); ++iter) {
         delete (*iter);
     }
@@ -108,7 +110,7 @@ void ContainerWidget::OnRender(IRenderTarget* render_target) {
     assert(texture_      != nullptr);
     assert(render_target != nullptr);
 
-    texture_->Clear(Color());
+    texture_->Clear();
 
     for (auto iter = styles_.begin(); iter != styles_.end(); ++iter) {
         (*iter)->Apply(this, texture_);

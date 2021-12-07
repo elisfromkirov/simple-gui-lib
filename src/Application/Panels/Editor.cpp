@@ -45,13 +45,6 @@ bool Canvas::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
         return false;
     }
 
-    ITool* tool = ToolManager::GetInstance()->GetActiveTool();
-    if (tool != nullptr) {
-        Vector2i position = event->GetMousePosition() - rect_.position;
-
-        tool->EndDraw(texture_, position);
-    }
-
     return true;
 }
 

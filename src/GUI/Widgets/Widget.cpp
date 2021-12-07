@@ -183,12 +183,24 @@ bool Widget::IsPressed() const {
     return pressed_;
 }
 
+void Widget::SetPressed(bool pressed) {
+    pressed_ = pressed;
+}
+
 bool Widget::IsHovered() const {
     return hovered_;
 }
 
+void Widget::SetHovered(bool hovered) {
+    hovered_ = hovered;
+}
+
 bool Widget::IsHided() const {
     return hovered_;
+}
+
+void Widget::SetHided(bool hided) {
+    hided_ = hided;
 }
 
 Vector2i Widget::MapPositionToParent() const {

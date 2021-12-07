@@ -1,63 +1,56 @@
-#include <math.h>
-
 #include "Application/Panels/PreferencesPanels.hpp"
 #include "Application/Tools/Tools.hpp"
-#include "Core/Platform/Color.hpp"
-#include "Core/Platform/Rectangle.hpp"
-#include "Core/Platform/RenderTexture.hpp"
 #include "Core/ResourceManager/Resources.hpp"
 
+static void DrawLine(RenderTexture* canvas, Rectangle* rectangle, Vector2i begin, Vector2i end) {
+    Vector2i delta(abs(end.x - begin.x), abs(end.y - begin.y));
+    Vector2i sign((end.x > begin.x ? 1 : -1), (end.y > begin.y ? 1 : -1)); 
+
+    int32_t error = delta.x - delta.y;
+
+    rectangle->SetPosition(end);
+    canvas->RenderRectangle(*rectangle);
+    while(begin.x != end.x || begin.y != end.y) {    
+        rectangle->SetPosition(begin);
+        canvas->RenderRectangle(*rectangle);
+    
+        int32_t error2 = error * 2;
+        if(error2 > -delta.y) {
+            error   -= delta.y;
+            begin.x += sign.x;
+        }
+        if(error2 < delta.x) {
+            error   += delta.x;
+            begin.y += sign.y;
+        }
+    }
+}
+
 Pencil::Pencil()
-    : thickness_{0},
-      color_{0.f, 0.f, 0.f, 1.f},
+    : rectangle_{Rect2{1, 1}, Color{0.f, 0.f, 0.f, 1.f}},
       preferences_panel_{nullptr} {
     preferences_panel_ = new PencilPreferencesPanel(this);
 }
 
 Pencil::~Pencil() {}
 
-void Pencil::BeginDraw(RenderTexture* canvas, Vector2i position) {
+void Pencil::BeginDraw(RenderTexture* canvas, const Vector2i& position) {
     assert(canvas != nullptr);
 
-    Rectangle rect(Rect2(thickness_, thickness_), color_);
-
-    rect.SetPosition(position);
-    canvas->RenderRectangle(rect);
+    DrawLine(canvas, &rectangle_, position, position);
 
     canvas->Display();
 }
 
-void Pencil::Draw(RenderTexture* canvas, Vector2i position, Vector2i old_position) {
+void Pencil::Draw(RenderTexture* canvas, const Vector2i& position, const Vector2i& old_position) {
     assert(canvas != nullptr);
 
-    Rectangle rect(Rect2(thickness_, thickness_), color_);
-
-    Vector2i delta(abs(position.x - old_position.x), abs(position.y - old_position.y));
-    Vector2i sign((position.x > old_position.x ? 1 : -1), (position.y > old_position.y ? 1 : -1)); 
-
-    int32_t error = delta.x - delta.y;
-
-    rect.SetPosition(position);
-    canvas->RenderRectangle(rect);
-    while(old_position.x != position.x || old_position.y != position.y) {    
-        rect.SetPosition(old_position);
-        canvas->RenderRectangle(rect);
-    
-        int32_t error2 = error * 2;
-        if(error2 > -delta.y) {
-            error          -= delta.y;
-            old_position.x += sign.x;
-        }
-        if(error2 < delta.x) {
-            error          += delta.x;
-            old_position.y += sign.y;
-        }
-    }
+    DrawLine(canvas, &rectangle_, old_position, position);
 
     canvas->Display();
 }
 
-void Pencil::EndDraw(RenderTexture* canvas, Vector2i position) {
+void Pencil::EndDraw(RenderTexture* canvas, const Vector2i& position) {
     assert(canvas != nullptr);
 }
 
@@ -73,18 +66,98 @@ ContainerWidget* Pencil::GetPreferencesPanel() {
     return preferences_panel_;
 }
 
-void Pencil::SetThickness(uint32_t thickness) {
-    thickness_ = thickness;
-}
-
-uint32_t Pencil::GetMaxThickness() const {
-    return 20;
-}
-
 void Pencil::SetColor(const Color& color) {
-    color_ = color;
+    rectangle_.SetFillColor(color);
 }
 
-const Color& Pencil::GetColor() {
-    return color_;
+Eraser::Eraser()
+    : rectangle_{Rect2{1, 1}, Color{1.f, 1.f, 1.f, 1.f}},
+      preferences_panel_{nullptr} {
+    preferences_panel_ = new EraserPreferencesPanel(this, 10);
+}
+
+Eraser::~Eraser() {}
+
+void Eraser::BeginDraw(RenderTexture* canvas, const Vector2i& position) {
+    assert(canvas != nullptr);
+
+    DrawLine(canvas, &rectangle_, position, position);
+
+    canvas->Display();
+}
+
+void Eraser::Draw(RenderTexture* canvas, const Vector2i& position, const Vector2i& old_position) {
+    assert(canvas != nullptr);
+
+    DrawLine(canvas, &rectangle_, old_position, position);
+
+    canvas->Display();
+}
+
+void Eraser::EndDraw(RenderTexture* canvas, const Vector2i& position) {
+    assert(canvas != nullptr);
+}
+
+const char* Eraser::GetIconFileName() const {
+    return kEraserImage;
+}
+
+const char* Eraser::GetName() const {
+    return "Eraser";
+}
+
+ContainerWidget* Eraser::GetPreferencesPanel() {
+    return preferences_panel_;
+}
+
+void Eraser::SetThickness(uint32_t thickness) {
+    rectangle_.SetSize(Vector2u{thickness, thickness});
+}
+
+Brush::Brush()
+    : rectangle_{Rect2{1, 1}, Color{1.f, 1.f, 1.f, 1.f}},
+      preferences_panel_{nullptr} {
+    preferences_panel_ = new BrushPreferencesPanel(this, 10);
+}
+
+Brush::~Brush() {}
+
+void Brush::BeginDraw(RenderTexture* canvas, const Vector2i& position) {
+    assert(canvas != nullptr);
+
+    DrawLine(canvas, &rectangle_, position, position);
+
+    canvas->Display();
+}
+
+void Brush::Draw(RenderTexture* canvas, const Vector2i& position, const Vector2i& old_position) {
+    assert(canvas != nullptr);
+
+    DrawLine(canvas, &rectangle_, old_position, position);
+
+    canvas->Display();
+}
+
+void Brush::EndDraw(RenderTexture* canvas, const Vector2i& position) {
+    assert(canvas != nullptr);
+}
+
+const char* Brush::GetIconFileName() const {
+    return kBrushImage;
+}
+
+const char* Brush::GetName() const {
+    return "Brush";
+}
+
+ContainerWidget* Brush::GetPreferencesPanel() {
+    return preferences_panel_;
+}
+
+void Brush::SetColor(const Color& color) {
+    rectangle_.SetFillColor(color);
+}
+
+void Brush::SetThickness(uint32_t thickness) {
+    rectangle_.SetSize(Vector2u{thickness, thickness});
 }

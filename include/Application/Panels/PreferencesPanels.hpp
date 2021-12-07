@@ -5,32 +5,49 @@
 #include <cstdint>
 
 #include "Application/Tools/Tools.hpp"
+#include "Application/Panels/Palette.hpp"
 #include "GUI/Widgets/ContainerWidget.hpp"
 #include "GUI/Widgets/Slider.hpp"
 
 class PencilPreferencesPanel : public ContainerWidget {
-private:
-    static const uint32_t kWidth{240};
-    static const uint32_t kSliderWidth{30};
-    static const uint32_t kIndent{4};
-
 public:
     PencilPreferencesPanel(Pencil* pencil);
     virtual ~PencilPreferencesPanel() override;
 
-public:
-    void UpdateThickness (float value);
-    void UpdateRedColor  (float value);
-    void UpdateGreenColor(float value);
-    void UpdateBlueColor (float value);
+    void ChangeColorResponse(const Color& color);
 
 protected:
-    Pencil* pencil_;
+    Pencil*  pencil_;
 
-    HorizontalSlider* thickness_slider_;
-    HorizontalSlider* red_slider_;
-    HorizontalSlider* green_slider_;
-    HorizontalSlider* blue_slider_;
+    Palette* palette_;
+};
+
+class EraserPreferencesPanel : public ContainerWidget {
+public:
+    EraserPreferencesPanel(Eraser* eraser, uint32_t max_thickness);
+    virtual ~EraserPreferencesPanel() override;
+
+    void ChangeThicknessResponse(uint32_t thickness);
+
+protected:
+    Eraser* eraser_;
+
+    ThicknessSlider* thickness_slider_;
+};
+
+class BrushPreferencesPanel : public ContainerWidget {
+public:
+    BrushPreferencesPanel(Brush* brush, uint32_t max_thickness);
+    virtual ~BrushPreferencesPanel() override;
+
+    void ChangeColorResponse(const Color& color);
+    void ChangeThicknessResponse(uint32_t thickness);
+
+protected:
+    Brush* brush_;
+
+    Palette*         palette_;
+    ThicknessSlider* thickness_slider_;
 };
 
 #endif // __PREFERENCES_PANELS_HPP__

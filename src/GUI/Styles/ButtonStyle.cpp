@@ -8,8 +8,8 @@ const Color ButtonStyle::kColorOnRelease{ColorFromRGBA(0x434343ff)};
 const Color ButtonStyle::kColorOnHover  {ColorFromRGBA(0x505050ff)};
 const Color ButtonStyle::kColorOnPress  {ColorFromRGBA(0x5680c2ff)};
 
-ButtonStyle::ButtonStyle(const char* image)
-    : image_{ResourceManager::GetInstance()->LoadTexture(image)} {}
+ButtonStyle::ButtonStyle(const std::string& image_file)
+    : image_{ResourceManager::GetInstance()->LoadTexture(image_file)} {}
 
 ButtonStyle::~ButtonStyle() {}
 

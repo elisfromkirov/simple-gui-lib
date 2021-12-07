@@ -68,11 +68,10 @@ private:
     Color track_color_;
 };
 
-class ColorChoseHorizontalSlider : public IStyle {
+class ChoseColorHorizontalSliderStyle : public IStyle {
 public:
-    ColorChoseHorizontalSlider();
-    ColorChoseHorizontalSlider(const Color& color);
-    virtual ~ColorChoseHorizontalSlider() override;
+    ChoseColorHorizontalSliderStyle(const Color& color);
+    virtual ~ChoseColorHorizontalSliderStyle() override;
 
     virtual void Apply(Widget* widget, IRenderTarget* render_target) override;
 

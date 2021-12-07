@@ -23,7 +23,7 @@ public:
     virtual bool OnMouseLeaveEvent(const MouseLeaveEvent* event) override;
 
 public:
-    Signal<void()> Clicked;
+    Signal<void ()> Clicked;
 };
 
 #endif // __BUTTON_BASE_HPP__

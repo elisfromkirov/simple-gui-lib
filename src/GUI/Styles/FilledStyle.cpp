@@ -9,9 +9,6 @@ FilledStyle::FilledStyle(WidgetType widget_type)
         case kFrame: {
             color_ = ColorFromRGBA(0xff);
         } break;
-        case kList: {
-            color_ = ColorFromRGBA(0xa9a9a9ff);
-        } break;
         case kMenuBar: {
             color_ = ColorFromRGBA(0xa9a9a9ff);
         } break;
@@ -23,6 +20,9 @@ FilledStyle::FilledStyle(WidgetType widget_type)
         } break;
         case kLightPanel: {
             color_ = ColorFromRGBA(0xa9a9a9ff);
+        } break;
+        case kMediumPanel: {
+            color_ = ColorFromRGBA(0x505050ff);
         } break;
         case kDarkPanel: {
             color_ = ColorFromRGBA(0x656565ff);

@@ -12,6 +12,7 @@ target_sources(SGUI_GUI
         ${INCROOT}/MenuBar.hpp
         ${INCROOT}/ScrollBar.hpp
         ${INCROOT}/Slider.hpp
+        ${INCROOT}/TabBar.hpp
         ${INCROOT}/TitleBar.hpp
         ${INCROOT}/Widget.hpp
         ${INCROOT}/Window.hpp
@@ -25,6 +26,7 @@ target_sources(SGUI_GUI
         ${SRCROOT}/MenuBar.cpp
         ${SRCROOT}/ScrollBar.cpp
         ${SRCROOT}/Slider.cpp
+        ${SRCROOT}/TabBar.cpp
         ${SRCROOT}/TitleBar.cpp
         ${SRCROOT}/Widget.cpp
         ${SRCROOT}/Window.cpp
