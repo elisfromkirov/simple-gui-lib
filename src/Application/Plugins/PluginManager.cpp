@@ -19,6 +19,7 @@ PluginManager::PluginManager()
     LoadPlugin("Blur.so");
     LoadPlugin("Median.so");
     LoadPlugin("Square.so");
+    LoadPlugin("Star.so");
 }
 
 PluginManager::~PluginManager() {

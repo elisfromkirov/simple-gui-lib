@@ -73,7 +73,9 @@ public:
         median_filter_ = new MedianFilter(api);
     }
 
-    virtual ~Plugin() override {}
+    virtual ~Plugin() override {
+        delete median_filter_;
+    }
 
     virtual std::list<IFilter*> GetFilters() const override {
         return std::list<IFilter*>{median_filter_};

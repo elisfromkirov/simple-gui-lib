@@ -139,7 +139,9 @@ public:
         panel_ = api->GetWidgetFactory()->CreateDefaultPreferencesPanel();
     }
 
-    ~BlurFilter() {}
+    ~BlurFilter() {
+        delete panel_;
+    }
 
     virtual void Apply(ITexture* canvas) override {
         assert(canvas != nullptr);

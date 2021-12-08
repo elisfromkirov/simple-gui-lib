@@ -3,6 +3,7 @@
 #include "Core/Platform/Rectangle.hpp"
 #include "Core/Platform/RenderTexture.hpp"
 #include "Core/Platform/Texture.hpp"
+#include "Core/ResourceManager/ResourceManager.hpp"
 
 PluginTexture::PluginTexture(RenderTexture* texture)
     : texture_{texture} {}
@@ -121,8 +122,7 @@ PluginTextureFactory::~PluginTextureFactory() {}
 ITexture* PluginTextureFactory::CreateTexture(const char* filename) {
     assert(filename != nullptr);
 
-    Texture texture(filename);
-    Image   image(texture);
+    Image   image(ResourceManager::GetInstance()->LoadTexture(filename));
 
     RenderTexture* render_texture = new RenderTexture(image.GetSize());
     render_texture->Clear();
