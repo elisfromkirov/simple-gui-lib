@@ -17,6 +17,7 @@ PluginManager::PluginManager()
     plugin_api_ = new PluginAPI();
 
     LoadPlugin("Blur.so");
+    LoadPlugin("Median.so");
     LoadPlugin("Square.so");
 }
 

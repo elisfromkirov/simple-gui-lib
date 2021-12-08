@@ -11,66 +11,7 @@ public:
 
     ~BlurTool() {}
 
-    virtual void ActionBegin(ITexture* canvas, int x, int y) override {
-        // assert(canvas != nullptr);
-
-        // int32_t width  = canvas->GetWidth();
-        // int32_t height = canvas->GetHieght();
-
-        // Buffer old_buffer = canvas->ReadBuffer();
-        // Buffer buffer     = canvas->ReadBuffer();
-
-        // for (int32_t x = 1; x < width - 1; ++x) {
-        //     for (int32_t y = 1; y < height - 1; ++y) {
-        //         uint32_t r_sum = GetR(old_buffer.pixels[x - 1 + (y + 1) * width])+
-        //                          GetR(old_buffer.pixels[x + 0 + (y + 1) * width])+
-        //                          GetR(old_buffer.pixels[x + 1 + (y + 1) * width])+
-        //                          GetR(old_buffer.pixels[x - 1 + (y + 0) * width])+
-        //                          GetR(old_buffer.pixels[x + 0 + (y + 0) * width])+
-        //                          GetR(old_buffer.pixels[x + 1 + (y + 0) * width])+
-        //                          GetR(old_buffer.pixels[x - 1 + (y - 1) * width])+
-        //                          GetR(old_buffer.pixels[x + 0 + (y - 1) * width])+
-        //                          GetR(old_buffer.pixels[x + 1 + (y - 1) * width]);
-
-        //         uint32_t g_sum = GetG(old_buffer.pixels[x - 1 + (y + 1) * width]) +
-        //                          GetG(old_buffer.pixels[x + 0 + (y + 1) * width]) +
-        //                          GetG(old_buffer.pixels[x + 1 + (y + 1) * width]) +
-        //                          GetG(old_buffer.pixels[x - 1 + (y + 0) * width]) +
-        //                          GetG(old_buffer.pixels[x + 0 + (y + 0) * width]) +
-        //                          GetG(old_buffer.pixels[x + 1 + (y + 0) * width]) +
-        //                          GetG(old_buffer.pixels[x - 1 + (y - 1) * width]) +
-        //                          GetG(old_buffer.pixels[x + 0 + (y - 1) * width]) +
-        //                          GetG(old_buffer.pixels[x + 1 + (y - 1) * width]);
-
-        //         uint32_t b_sum = GetB(old_buffer.pixels[x - 1 + (y + 1) * width]) +
-        //                          GetB(old_buffer.pixels[x + 0 + (y + 1) * width]) +
-        //                          GetB(old_buffer.pixels[x + 1 + (y + 1) * width]) +
-        //                          GetB(old_buffer.pixels[x - 1 + (y + 0) * width]) +
-        //                          GetB(old_buffer.pixels[x + 0 + (y + 0) * width]) +
-        //                          GetB(old_buffer.pixels[x + 1 + (y + 0) * width]) +
-        //                          GetB(old_buffer.pixels[x - 1 + (y - 1) * width]) +
-        //                          GetB(old_buffer.pixels[x + 0 + (y - 1) * width]) +
-        //                          GetB(old_buffer.pixels[x + 1 + (y - 1) * width]);
-                
-        //         uint32_t a_sum = GetA(old_buffer.pixels[x - 1 + (y + 1) * width]) +
-        //                          GetA(old_buffer.pixels[x + 0 + (y + 1) * width]) +
-        //                          GetA(old_buffer.pixels[x + 1 + (y + 1) * width]) +
-        //                          GetA(old_buffer.pixels[x - 1 + (y + 0) * width]) +
-        //                          GetA(old_buffer.pixels[x + 0 + (y + 0) * width]) +
-        //                          GetA(old_buffer.pixels[x + 1 + (y + 0) * width]) +
-        //                          GetA(old_buffer.pixels[x - 1 + (y - 1) * width]) +
-        //                          GetA(old_buffer.pixels[x + 0 + (y - 1) * width]) +
-        //                          GetA(old_buffer.pixels[x + 1 + (y - 1) * width]);
-
-        //         buffer.pixels[x + y * width] = GetRGBA(r_sum / 9, g_sum / 9, b_sum / 9, a_sum / 9);
-        //     }
-        // }        
-
-        // canvas->LoadBuffer(buffer);
-
-        // canvas->ReleaseBuffer(buffer);
-        // canvas->ReleaseBuffer(old_buffer);
-    }
+    virtual void ActionBegin(ITexture* canvas, int x, int y) override {}
 
     virtual void Action(ITexture* canvas, int x, int y, int dx, int dy) override {
         assert(canvas != nullptr);
@@ -156,9 +97,7 @@ public:
         canvas->ReleaseBuffer(old_buffer);
     }
 
-    virtual void ActionEnd(ITexture* canvas, int x, int y) override {
-        assert(canvas != nullptr);
-    }
+    virtual void ActionEnd(ITexture* canvas, int x, int y) override {}
 
     virtual const char* GetIconFileName() const override {
         return "Blur.bmp";
@@ -168,7 +107,7 @@ public:
         return panel_;
     }
 
-public:
+private:
     uint32_t GetR(uint32_t color) {
         return (color >> 24) & 255;
     }
@@ -296,8 +235,7 @@ private:
     IPreferencesPanel* panel_;
 };
 
-class Plugin : public IPlugin
-{
+class Plugin : public IPlugin {
 public:
     Plugin(IAPI* api)
         : blur_tool_{nullptr},
@@ -321,19 +259,16 @@ private:
     BlurFilter* blur_filter_;
 };
 
-extern "C" IPlugin* Create(IAPI* api)
-{
+extern "C" IPlugin* Create(IAPI* api) {
     return new Plugin(api);
 }
 
-extern "C" void Destroy(IPlugin* plugin)
-{
+extern "C" void Destroy(IPlugin* plugin) {
     delete plugin;
 }
 
-extern "C" uint32_t Version()
-{
+extern "C" uint32_t Version() {
     return kVersion;
 }
 
-}
+} // namespace plugin

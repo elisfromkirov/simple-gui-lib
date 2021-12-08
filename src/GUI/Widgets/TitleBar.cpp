@@ -18,7 +18,7 @@ TitleBar::TitleBar(Widget* titled_widget, const std::string& title)
 
     close_button_ = new Button(Rect2(kIconSize * 4 / 3 , kIconSize * 4 / 3));
     close_button_->Move(rect_.position + Vector2i(kIconSize / 3, kIconSize / 3));
-    close_button_->ApplyStyle(new ButtonStyle(kCloseImage));
+    close_button_->ApplyStyle(new LightButtonStyle(kCloseImage));
     close_button_->Clicked.Connect<TitleBar>(this, &TitleBar::CloseTitledWidget);
     Attach(close_button_);
 

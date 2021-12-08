@@ -28,6 +28,22 @@ protected:
     Image image_;
 };
 
+class LightButtonStyle : public IStyle {
+private:
+    static const Color kColorOnRelease;
+    static const Color kColorOnHover;
+    static const Color kColorOnPress;
+
+public:
+    LightButtonStyle(const std::string& image_file);
+    virtual ~LightButtonStyle() override;
+
+    virtual void Apply(Widget* widget, IRenderTarget* render_target) override;
+
+protected:
+    Image image_;
+};
+
 class MenuButtonStyle : public IStyle {
 private:
     static const Color kColorOnRelease;
