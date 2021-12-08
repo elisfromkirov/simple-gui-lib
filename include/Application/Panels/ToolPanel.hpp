@@ -8,6 +8,17 @@
 #include "Application/Tools/ITool.hpp"
 #include "GUI/Widgets/TabBar.hpp"
 
+class SetToolFunctor : public IFunctor<void ()> {
+public:
+    SetToolFunctor(ITool* tool);
+    virtual ~SetToolFunctor() override;
+
+    virtual void operator()() override;
+
+protected:
+    ITool* tool_;
+};
+
 class ToolPanel : public TabBar {
 public:
     static const uint32_t kSliderWidth{240};
@@ -18,6 +29,11 @@ public:
 
     static const uint32_t kIndent{4};    
 
+    static const uint32_t kWidth{kToolButtonHeight + kSliderWidth};
+
+    static const uint32_t kPreferencesPanelWidth{240};
+    static const uint32_t kPreferencesPanelHeight{600};
+
 public:
     ToolPanel(const Rect2& rect);
     virtual ~ToolPanel() override;
@@ -25,6 +41,9 @@ public:
     void InsertTool(ITool* tool);
 
     bool OnChangeToolEvent(const ChangeToolEvent* event);
+
+protected:
+    std::list<std::pair<ITool*, Button*>> tools_;
 };
 
 #endif // __TOOL_PANEL_HPP__

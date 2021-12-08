@@ -13,7 +13,7 @@
 #include "GUI/Widgets/List.hpp"
 
 class Menu : public ContainerWidget {
-protected:
+public:
     static const uint32_t kDefaultHeight{30};
     static const uint32_t kDefaultItemCount{5};
 
@@ -41,8 +41,8 @@ protected:
 };
 
 class MenuBar : public ContainerWidget {
-private:
-    static const uint32_t kDefaultHeight{48};
+public:
+    static const uint32_t kHeight{48};
 
 public:
     MenuBar(Widget* widget);

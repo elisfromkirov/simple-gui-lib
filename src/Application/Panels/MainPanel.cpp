@@ -7,25 +7,25 @@
 MainPanel::MainPanel(const Vector2u& size)
     : ContainerWidget{Rect2(size)},
       menu_bar_{nullptr},
-      tool_panel_{nullptr},
-      editor_panel_{nullptr} {
+      editor_panel_{nullptr},
+      tool_panel_{nullptr} {
     Rect2 rect{};
 
     InitializeMenuBar();
 
-    rect.size.x     = ToolPanel::kToolButtonWidth + ToolPanel::kSliderWidth;
-    rect.size.y     = size.y - menu_bar_->GetSize().y - 2 * kIndent;
-    rect.position.x = size.x - ToolPanel::kToolButtonWidth - ToolPanel::kSliderWidth - kIndent;
-    rect.position.y = menu_bar_->GetSize().y + kIndent;
-
-    InitializeToolPanel(rect);
-
-    rect.size.x     = size.x - tool_panel_->GetSize().x - 3 * kIndent;
-    rect.size.y     = size.y - menu_bar_->GetSize().y - 2 * kIndent;
-    rect.position.x = kIndent;
-    rect.position.y = menu_bar_->GetSize().y + kIndent;
+    rect.size.x     = size.x - ToolPanel::kWidth - MainPanel::kIndent * 3;
+    rect.size.y     = size.y - MenuBar::kHeight - MainPanel::kIndent * 2;
+    rect.position.x = MainPanel::kIndent;
+    rect.position.y = MainPanel::kIndent + MenuBar::kHeight;
 
     InitializeEditorPanel(rect);
+
+    rect.size.x     = ToolPanel::kWidth + ToolPanel::kSliderWidth;
+    rect.size.y     = size.y - MenuBar::kHeight - MainPanel::kIndent * 2;
+    rect.position.x = size.x - ToolPanel::kWidth - MainPanel::kIndent;
+    rect.position.y = MenuBar::kHeight + MainPanel::kIndent;
+
+    InitializeToolPanel(rect);
 
     ApplyStyle(new FilledStyle(FilledStyle::kMainPanel));
 }

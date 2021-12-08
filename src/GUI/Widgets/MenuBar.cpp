@@ -72,7 +72,7 @@ void Menu::Hide() {
 }
 
 MenuBar::MenuBar(Widget* widget)
-    : ContainerWidget{Rect2{Vector2u{widget->GetSize().x, kDefaultHeight}, widget->GetPosition()}},  
+    : ContainerWidget{Rect2{Vector2u{widget->GetSize().x, kHeight}, widget->GetPosition()}},  
       list_{nullptr} {
     list_ = new HorizontalList(rect_);
     list_->ApplyStyle(new FilledStyle(FilledStyle::kLightPanel));
@@ -89,7 +89,7 @@ bool MenuBar::InsertMenu(Menu* menu) {
     Label* label = new Label(menu->GetName(), ResourceManager::GetInstance()->LoadFont(kMediumFont));
     label->SetTextColor(Color(0.f, 0.f, 0.f, 1.f));
 
-    Button* button = new Button(Rect2(label->GetSize().x + kDefaultHeight, kDefaultHeight));
+    Button* button = new Button(Rect2(label->GetSize().x + kHeight, kHeight));
     button->ApplyStyle(new MenuButtonStyle());
     button->Clicked.Connect<Menu>(menu, &Menu::Show);
     button->AttachInMiddle(label);

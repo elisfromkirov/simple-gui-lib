@@ -3,8 +3,9 @@
 #include "GUI/Events/WidgetEvent.hpp"
 #include "GUI/Widgets/Button.hpp"
 
-Button::Button(const Rect2& rect)
-    : ContainerWidget{rect} {}
+Button::Button(const Rect2& rect, bool autoreleased)
+    : ContainerWidget{rect},
+      autoreleased_{autoreleased} {}
 
 Button::~Button() {}
 
@@ -27,7 +28,9 @@ bool Button::OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) {
     if (!pressed_) {
         return false;
     }
-    pressed_ = false;
+    if (autoreleased_) {
+        pressed_ = false;    
+    }
 
     EventManager::GetInstance()->PostEvent<MouseCaptureOutEvent>(this);
 

@@ -24,14 +24,14 @@ public:
 
     virtual const char* GetName() const override;
 
-    virtual ContainerWidget* GetPreferencesPanel() override;
+    virtual Widget* GetPreferencesPanel() override;
 
     void SetColor(const Color& color);
 
 protected:
     Rectangle        rectangle_;
 
-    ContainerWidget* preferences_panel_;
+    Widget* preferences_panel_;
 };
 
 class Eraser : public ITool {
@@ -49,14 +49,14 @@ public:
 
     virtual const char* GetName() const override;
 
-    virtual ContainerWidget* GetPreferencesPanel() override;
+    virtual Widget* GetPreferencesPanel() override;
 
     void SetThickness(uint32_t thickness);
 
 protected:
     Rectangle        rectangle_;
 
-    ContainerWidget* preferences_panel_;
+    Widget* preferences_panel_;
 };
 
 class Brush : public ITool {
@@ -74,7 +74,7 @@ public:
 
     virtual const char* GetName() const override;
 
-    virtual ContainerWidget* GetPreferencesPanel() override;
+    virtual Widget* GetPreferencesPanel() override;
 
     void SetColor(const Color& color);
     void SetThickness(uint32_t thickness);
@@ -82,7 +82,7 @@ public:
 protected:
     Rectangle        rectangle_;
 
-    ContainerWidget* preferences_panel_;
+    Widget* preferences_panel_;
 };
 
 #endif // __TOOLS_HPP__

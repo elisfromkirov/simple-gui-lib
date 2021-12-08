@@ -3,7 +3,7 @@
 
 #include "Core/Math/Vector2.hpp"
 
-class ContainerWidget;
+class Widget;
 class RenderTexture;
 
 class ITool {
@@ -20,7 +20,7 @@ public:
 
     virtual const char* GetName() const = 0;
 
-    virtual ContainerWidget* GetPreferencesPanel() = 0;
+    virtual Widget* GetPreferencesPanel() = 0;
 };
 
 #endif // __I_TOOL_HPP__

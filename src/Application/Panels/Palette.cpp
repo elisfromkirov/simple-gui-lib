@@ -44,8 +44,6 @@ Palette::Palette()
     Attach(red_slider_);
     Attach(green_slider_);
     Attach(blue_slider_);
-
-    ApplyStyle(new FilledStyle(FilledStyle::kLightPanel));
 }
 
 Palette::~Palette() {}
@@ -93,8 +91,6 @@ ThicknessSlider::ThicknessSlider(uint32_t max_thickness)
     slider_->ApplyStyle(new ProgressHorizontalSliderStyle());
     slider_->ValueChanged.Connect<ThicknessSlider>(this, &ThicknessSlider::SliderValueChangeResponse);
     Attach(slider_);
-
-    ApplyStyle(new FilledStyle(FilledStyle::kLightPanel));
 }
 
 ThicknessSlider::~ThicknessSlider() {}

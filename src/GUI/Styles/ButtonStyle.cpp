@@ -6,7 +6,7 @@
 
 const Color ButtonStyle::kColorOnRelease{ColorFromRGBA(0x434343ff)};
 const Color ButtonStyle::kColorOnHover  {ColorFromRGBA(0x505050ff)};
-const Color ButtonStyle::kColorOnPress  {ColorFromRGBA(0x5680c2ff)};
+const Color ButtonStyle::kColorOnPress  {ColorFromRGBA(0x656565ff)};
 
 ButtonStyle::ButtonStyle(const std::string& image_file)
     : image_{ResourceManager::GetInstance()->LoadTexture(image_file)} {}
@@ -35,7 +35,7 @@ void ButtonStyle::Apply(Widget* widget, IRenderTarget* render_target) {
     render_target->RenderImage(image_);
 }
 
-const Color MenuButtonStyle::kColorOnRelease{ColorFromRGBA(0xa6a6a6ff)};
+const Color MenuButtonStyle::kColorOnRelease{ColorFromRGBA(0xa9a9a9ff)};
 const Color MenuButtonStyle::kColorOnHover  {ColorFromRGBA(0x5d84beff)};
 const Color MenuButtonStyle::kColorOnPress  {ColorFromRGBA(0x5d84beff)};
 

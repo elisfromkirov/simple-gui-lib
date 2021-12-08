@@ -19,14 +19,14 @@ public:
 protected:
     void InitializeMenuBar();
 
-    void InitializeToolPanel(const Rect2& rect);
-
     void InitializeEditorPanel(const Rect2& rect);
+
+    void InitializeToolPanel(const Rect2& rect);
 
 protected:
     MenuBar*     menu_bar_;
-    ToolPanel*   tool_panel_;
     EditorPanel* editor_panel_;
+    ToolPanel*   tool_panel_;
 };
 
 #endif // __MAIN_PANEL_HPP__

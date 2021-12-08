@@ -9,7 +9,7 @@
 
 class Button : public ContainerWidget {
 public:
-    Button(const Rect2& rect);
+    Button(const Rect2& rect, bool autoreleased = true);
     virtual ~Button() override;
 
     virtual bool OnMouseButtonPressEvent(const MouseButtonPressEvent* event) override;
@@ -24,6 +24,9 @@ public:
 
 public:
     Signal<void ()> Clicked;
+
+protected:
+    bool autoreleased_;
 };
 
 #endif // __BUTTON_BASE_HPP__

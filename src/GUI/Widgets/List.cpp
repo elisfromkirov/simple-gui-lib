@@ -31,12 +31,20 @@ bool HorizontalList::InsertItem(Widget* widget) {
 bool HorizontalList::OnHorizontalScrollEvent(const HorizontalScrollEvent* event) {
     assert(event != nullptr);
 
-    if (width_ < rect_.size.x) {
+    // if (width_ < rect_.size.x) {
+    //     return true;
+    // }
+    //
+    // Vector2i old_position(children_.front()->GetPosition());
+    // Vector2i     position(rect_.position.x - (static_cast<float>(width_ - rect_.size.x) * event->GetValue()), 
+    //                       rect_.position.y);
+
+    if (children_.empty()) {
         return true;
     }
-
+    
     Vector2i old_position(children_.front()->GetPosition());
-    Vector2i     position(rect_.position.x - (static_cast<float>(width_ - rect_.size.x) * event->GetValue()), 
+    Vector2i     position(rect_.position.x - (static_cast<float>(width_) * event->GetValue()), 
                           rect_.position.y);
 
     Vector2i offset = position - old_position;
@@ -66,13 +74,21 @@ VerticalList::~VerticalList() {}
 bool VerticalList::OnVerticalScrollEvent(const VerticalScrollEvent* event) {
     assert(event != nullptr);
 
-    if (height_ < rect_.size.y) {
+    // if (height_ < rect_.size.y) {
+    //     return true;
+    // }
+    //
+    // Vector2i old_position(children_.front()->GetPosition());
+    // Vector2i     position(rect_.position.x,
+    //                       rect_.position.y - (static_cast<float>(height_ - rect_.size.y) * event->GetValue()));
+
+    if (children_.empty()) {
         return true;
     }
-
+    
     Vector2i old_position(children_.front()->GetPosition());
     Vector2i     position(rect_.position.x,
-                          rect_.position.y - (static_cast<float>(height_ - rect_.size.y) * event->GetValue()));
+                          rect_.position.y - (static_cast<float>(height_) * event->GetValue()));
 
     Vector2i offset = position - old_position;
     for (auto iter = children_.begin(); iter != children_.end(); ++iter) {

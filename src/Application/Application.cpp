@@ -1,6 +1,7 @@
 #include "Application/Application.hpp"
 #include "Application/Panels/MainPanel.hpp"
 #include "Application/Tools/ToolManager.hpp"
+#include "Application/Plugins/PluginManager.hpp"
 #include "Core/EventManager/EventManager.hpp"
 #include "Core/LogManager/LogManager.hpp"
 #include "Core/ResourceManager/ResourceManager.hpp"
@@ -13,12 +14,14 @@ Application::Application(const std::string& name)
       event_manager_{nullptr},
       resource_manager_{nullptr},
       tool_manager_{nullptr},
+      plugin_manager_{nullptr},
       render_window_{name, kDefaultSize},
       window_{kDefaultSize} {
     log_manager_      = LogManager::GetInstance();
     event_manager_    = EventManager::GetInstance();    
     resource_manager_ = ResourceManager::GetInstance();
     tool_manager_     = ToolManager::GetInstance();
+    plugin_manager_   = PluginManager::GetInstance();
 
     window_.Attach(new MainPanel(window_.GetSize()));
 
@@ -30,7 +33,9 @@ Application::~Application() {
     assert(resource_manager_ != nullptr);
     assert(event_manager_    != nullptr);
     assert(log_manager_      != nullptr);
+    assert(plugin_manager_   != nullptr);
 
+    plugin_manager_->Release();
     tool_manager_->Release();
     resource_manager_->Release();
     event_manager_->Release();

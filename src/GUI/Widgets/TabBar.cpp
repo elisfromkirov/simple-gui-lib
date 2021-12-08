@@ -80,7 +80,7 @@ Button* TabBar::InsertTab(Widget* tab, const std::string& image_file) {
     assert(buttons_   != nullptr);
     assert(tab        != nullptr);
 
-    Button* tab_button = new Button(Rect2(tab_button_size_.x, tab_button_size_.y));
+    Button* tab_button = new Button(Rect2(tab_button_size_.x, tab_button_size_.y), false);
     tab_button->ApplyStyle(new ButtonStyle(image_file));
     tab_button->Clicked.Connect(new TabActivateFunctor(this, tab, tab_button));
 
@@ -96,6 +96,11 @@ void TabBar::SetActiveTab(Widget* tab, Button* tab_button) {
     assert(buttons_   != nullptr);
     assert(tab        != nullptr);
     assert(tab_button != nullptr);
+
+    if (active_button_ != nullptr) {
+        active_button_->SetPressed(false);
+    }
+    tab_button->SetPressed(true);
 
     active_tab_    = tab; 
     active_button_ = tab_button;

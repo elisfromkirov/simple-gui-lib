@@ -21,6 +21,10 @@ public:
     virtual void RenderImage(const Image& image) override;
     virtual void RenderRectangle(const Rectangle& rectangle) override;
 
+    uint32_t* GetBuffer();
+    void ReleaseBuffer(uint32_t* pixels);
+    void LoadFromBuffer(uint32_t* pixels);
+
     Vector2u GetSize() const;
     const NativeImage& GetImage() const;
 

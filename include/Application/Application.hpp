@@ -9,6 +9,7 @@ class LogManager;
 class EventManager;
 class ResourceManager;
 class ToolManager;
+class PluginManager;
 
 #include "Core/Platform/RenderWindow.hpp"
 #include "GUI/Widgets/Window.hpp"
@@ -28,6 +29,7 @@ protected:
     EventManager*    event_manager_;
     ResourceManager* resource_manager_;
     ToolManager*     tool_manager_;
+    PluginManager*   plugin_manager_;
 
     RenderWindow     render_window_;
 

@@ -62,7 +62,7 @@ const char* Pencil::GetName() const {
     return "Pencil";
 }
 
-ContainerWidget* Pencil::GetPreferencesPanel() {
+Widget* Pencil::GetPreferencesPanel() {
     return preferences_panel_;
 }
 
@@ -106,7 +106,7 @@ const char* Eraser::GetName() const {
     return "Eraser";
 }
 
-ContainerWidget* Eraser::GetPreferencesPanel() {
+Widget* Eraser::GetPreferencesPanel() {
     return preferences_panel_;
 }
 
@@ -150,7 +150,7 @@ const char* Brush::GetName() const {
     return "Brush";
 }
 
-ContainerWidget* Brush::GetPreferencesPanel() {
+Widget* Brush::GetPreferencesPanel() {
     return preferences_panel_;
 }
 

@@ -18,6 +18,7 @@ target_sources(SGUI_APPLICATION
 add_subdirectory(Commands)
 add_subdirectory(Events)
 add_subdirectory(Panels)
+add_subdirectory(Plugins)
 add_subdirectory(Tools)
 
 target_link_libraries(SGUI_APPLICATION
