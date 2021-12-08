@@ -5,12 +5,14 @@ target_sources(SGUI_APPLICATION
     PUBLIC
         ${INCROOT}/API.hpp
         ${INCROOT}/Plugin.hpp
+        ${INCROOT}/PluginFilter.hpp
         ${INCROOT}/PluginManager.hpp
         ${INCROOT}/PluginTool.hpp
         ${INCROOT}/TextureFactory.hpp
         ${INCROOT}/WidgetFactory.hpp
     PRIVATE
         ${SRCROOT}/API.cpp
+        ${SRCROOT}/PluginFilter.cpp
         ${SRCROOT}/PluginManager.cpp
         ${SRCROOT}/PluginTool.cpp
         ${SRCROOT}/TextureFactory.cpp

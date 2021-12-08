@@ -23,16 +23,16 @@ ITool* ChangeToolEvent::GetTool() const {
     return tool_;
 }
 
-ChangeFilterEvent::ChangeFilterEvent(IFilter* filter)
-    : Event{kChangeFilterEvent},
+ApplyFilterEvent::ApplyFilterEvent(IFilter* filter)
+    : Event{kApplyFilterEvent},
       filter_{filter} {}
 
-ChangeFilterEvent::~ChangeFilterEvent() {}
+ApplyFilterEvent::~ApplyFilterEvent() {}
 
-uint64_t ChangeFilterEvent::GetStaticType() {
-    return kChangeFilterEvent;
+uint64_t ApplyFilterEvent::GetStaticType() {
+    return kApplyFilterEvent;
 }
 
-IFilter* ChangeFilterEvent::GetFilter() const {
+IFilter* ApplyFilterEvent::GetFilter() const {
     return filter_;
 }

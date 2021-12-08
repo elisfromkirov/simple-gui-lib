@@ -14,7 +14,7 @@ enum ApplicationEventType : uint64_t {
     kOpenEditorEvent   = kCustomEventCategory | 0x00000001, 
 
     kChangeToolEvent   = kCustomEventCategory | 0x00000002,
-    kChangeFilterEvent = kCustomEventCategory | 0x00000004
+    kApplyFilterEvent  = kCustomEventCategory | 0x00000004
 };
 
 class OpenEditorEvent : public Event {
@@ -38,10 +38,10 @@ protected:
     ITool* tool_;
 };
 
-class ChangeFilterEvent : public Event {
+class ApplyFilterEvent : public Event {
 public:
-    ChangeFilterEvent(IFilter* filter);
-    virtual ~ChangeFilterEvent() override;
+    ApplyFilterEvent(IFilter* filter);
+    virtual ~ApplyFilterEvent() override;
 
     static uint64_t GetStaticType();
 

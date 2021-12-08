@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <string>
 
+#include "Application/Events/ApplicationEvent.hpp"
 #include "GUI/Widgets/ContainerWidget.hpp"
 #include "GUI/Widgets/TitleBar.hpp"
 
@@ -20,6 +21,8 @@ public:
     virtual bool OnMouseButtonReleaseEvent(const MouseButtonReleaseEvent* event) override;
 
     virtual bool OnMouseMoveEvent(const MouseMoveEvent* event) override;
+
+    bool OnApplyFilterEvent(const ApplyFilterEvent* event);
 };
 
 class Editor : public ContainerWidget {

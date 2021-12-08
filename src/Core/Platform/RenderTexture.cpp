@@ -49,9 +49,9 @@ uint32_t* RenderTexture::GetBuffer() {
             sf::Color color(image.getPixel(x, y));
 
             pixels[x + y * size.x] = (static_cast<uint32_t>(color.r) << 24) + 
-                                     (static_cast<uint32_t>(color.r) << 16) + 
-                                     (static_cast<uint32_t>(color.r) <<  8) + 
-                                     (static_cast<uint32_t>(color.r)      );
+                                     (static_cast<uint32_t>(color.g) << 16) + 
+                                     (static_cast<uint32_t>(color.b) <<  8) + 
+                                     (static_cast<uint32_t>(color.a)      );
         }
     }
 

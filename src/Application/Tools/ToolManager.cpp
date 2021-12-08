@@ -4,10 +4,9 @@
 ToolManager* ToolManager::singleton{nullptr};
 
 ToolManager::ToolManager()
-    : tools_{},
-      active_tool_{nullptr},
-      filters_{},
-      active_filter_{nullptr} {
+    : active_tool_{nullptr}, 
+      tools_{},
+      filters_{} {
     Pencil* pencil = new Pencil();
     AddTool(pencil);
 
@@ -63,13 +62,13 @@ std::list<ITool*>* ToolManager::GetTools() {
     return &tools_;
 }
 
-IFilter* ToolManager::GetActiveFilter() {
-    return active_filter_;
-}
+// IFilter* ToolManager::GetActiveFilter() {
+//     return active_filter_;
+// }
 
-void ToolManager::SetActiveFilter(IFilter* filter) {
-    active_filter_ = filter;
-}
+// void ToolManager::SetActiveFilter(IFilter* filter) {
+//     active_filter_ = filter;
+// }
 
 void ToolManager::AddFilter(IFilter* filter) {
     assert(filter != nullptr);

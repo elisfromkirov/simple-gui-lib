@@ -45,7 +45,7 @@ void MainPanel::InitializeMenuBar() {
     Menu* filter_menu = new Menu(240, "Filter");
     std::list<IFilter*>* filters = ToolManager::GetInstance()->GetFilters();
     for (auto iter = filters->begin(); iter != filters->end(); ++iter) {
-        tool_menu->InsertItem((*iter)->GetName(), new SetFilterCommand(*iter));
+        filter_menu->InsertItem((*iter)->GetName(), new ApplyFilterCommand(*iter));
     }
 
     menu_bar_ = new MenuBar(this);

@@ -2,6 +2,7 @@
 
 #include "Application/Tools/ToolManager.hpp"
 #include "Application/Plugins/API.hpp"
+#include "Application/Plugins/PluginFilter.hpp"
 #include "Application/Plugins/PluginManager.hpp"
 #include "Application/Plugins/PluginTool.hpp"
 
@@ -15,6 +16,7 @@ PluginManager::PluginManager()
       plugins_{} {
     plugin_api_ = new PluginAPI();
 
+    LoadPlugin("Blur.so");
     LoadPlugin("Square.so");
 }
 
@@ -78,6 +80,11 @@ void PluginManager::LoadPlugin(const std::string& name) {
     std::list<plugin::ITool*> tools = plugin_data.plugin->GetTools();
     for (auto iter = tools.begin(); iter != tools.end(); ++iter) {
         ToolManager::GetInstance()->AddTool(new PluginTool(*iter));
+    }
+
+    std::list<plugin::IFilter*> filters = plugin_data.plugin->GetFilters();
+    for (auto iter = filters.begin(); iter != filters.end(); ++iter) {
+        ToolManager::GetInstance()->AddFilter(new PluginFilter(*iter));
     }
 
     plugins_.push_back(plugin_data);

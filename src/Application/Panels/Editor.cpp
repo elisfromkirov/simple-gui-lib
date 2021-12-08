@@ -11,6 +11,8 @@ Canvas::Canvas(const Rect2& rect)
     : ContainerWidget{rect} {
     texture_->Clear(Color(1.f, 1.f, 1.f, 1.f));
     texture_->Display();
+
+    SetEventHandler<Canvas, ApplyFilterEvent>(this, &Canvas::OnApplyFilterEvent);
 }
 
 Canvas::~Canvas() {}
@@ -69,6 +71,16 @@ bool Canvas::OnMouseMoveEvent(const MouseMoveEvent* event) {
 
     return true;
 }
+
+bool Canvas::OnApplyFilterEvent(const ApplyFilterEvent* event) {
+    assert(event != nullptr);
+
+    IFilter* filter = event->GetFilter();
+    filter->Apply(texture_);
+
+    return true;
+}
+
 Editor::Editor(const Rect2& rect, const std::string& name)
     : ContainerWidget{rect},
       title_bar_{nullptr},

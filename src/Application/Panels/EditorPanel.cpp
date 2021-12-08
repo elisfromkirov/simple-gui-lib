@@ -22,7 +22,8 @@ void EditorPanel::InsertEditor(const std::string& name) {
 }
 
 bool EditorPanel::OnOpenEditorEvent(const OpenEditorEvent* event) {
-    InsertEditor("Editor");
+    assert(event != nullptr);
 
+    InsertEditor("Editor");
     return true;
 }

@@ -27,10 +27,10 @@ protected:
     ITool* tool_;
 };
 
-class SetFilterCommand : public IFunctor<void ()> {
+class ApplyFilterCommand : public IFunctor<void ()> {
 public:
-    SetFilterCommand(IFilter* filter);
-    virtual ~SetFilterCommand() override;
+    ApplyFilterCommand(IFilter* filter);
+    virtual ~ApplyFilterCommand() override;
 
     virtual void operator()() override; 
 

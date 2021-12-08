@@ -22,13 +22,11 @@ void SetToolCommand::operator()() {
     ToolManager::GetInstance()->SetActiveTool(tool_);
 }
 
-SetFilterCommand::SetFilterCommand(IFilter* filter)
+ApplyFilterCommand::ApplyFilterCommand(IFilter* filter)
     : filter_{filter} {}   
 
-SetFilterCommand::~SetFilterCommand() {}
+ApplyFilterCommand::~ApplyFilterCommand() {}
 
-void SetFilterCommand::operator()() {
-    EventManager::GetInstance()->PostEvent<ChangeFilterEvent>(filter_);
-
-    ToolManager::GetInstance()->SetActiveFilter(filter_);
+void ApplyFilterCommand::operator()() {
+    EventManager::GetInstance()->PostEvent<ApplyFilterEvent>(filter_);
 }

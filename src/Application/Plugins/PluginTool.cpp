@@ -42,7 +42,7 @@ void PluginTool::Draw(RenderTexture* canvas, const Vector2i& position, const Vec
     assert(canvas != nullptr);
 
     PluginTexture texture(canvas);
-    tool_->Action(&texture, old_position.x, old_position.y, position.x, position.y);
+    tool_->Action(&texture, old_position.x, old_position.y, position.x - old_position.x, position.y - old_position.y);
 }
 
 void PluginTool::EndDraw(RenderTexture* canvas, const Vector2i& position) {

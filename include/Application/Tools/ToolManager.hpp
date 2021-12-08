@@ -22,9 +22,6 @@ public:
 
     std::list<ITool*>* GetTools();
 
-    IFilter* GetActiveFilter();
-    void SetActiveFilter(IFilter* filter);
-
     void AddFilter(IFilter* filter);
     void RemoveFilter(IFilter* filter);
 
@@ -40,11 +37,10 @@ private:
     static ToolManager* singleton;
 
 private:
-    std::list<ITool*>   tools_;
     ITool*              active_tool_;
+    std::list<ITool*>   tools_;
 
     std::list<IFilter*> filters_;
-    IFilter*            active_filter_;
 };
 
 #endif // __TOOL_MANAGER_HPP__
