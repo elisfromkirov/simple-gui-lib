@@ -1,9 +1,6 @@
 #ifndef __PLUGIN_HPP__
 #define __PLUGIN_HPP__
 
-#include <cstdint>
-#include <list>
-
 namespace plugin {
 
 const uint32_t kVersion = 1;
